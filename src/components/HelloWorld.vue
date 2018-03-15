@@ -4,8 +4,8 @@
         <v-flex m3 xs0>
         </v-flex>
         <v-flex xs12 m6>
-          <h3 class="display-3">Welcome to the site</h3>
-          <span class="subheading">A project by devs101 for Mark-Anthony Fouche</span>
+          <h3 class="display-3" v-text="welcomeMsg"></h3>
+          <span class="subheading" v-text="welcomeSubtitle"></span>
           <v-divider class="my-3"></v-divider>
           <v-btn large color="primary" class="mx-0">Get Started</v-btn>
         </v-flex>
@@ -32,3 +32,13 @@ a {
   color: #42b983;
 }
 </style>
+<script>
+export default {
+	data() {
+		return {
+			welcomeMsg: 'Welcome to Trii',
+			welcomeSubtitle: 'A project by devs101'
+		}
+	}
+}
+</script>
