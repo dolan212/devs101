@@ -1,5 +1,5 @@
 <template>
-	<v-container pa-0 fluid fill-height>
+	<v-container fluid fill-height>
   	<div id="cy" ref="cy" style="width:100%; height:100%;"></div>
 	</v-container>
 </template>
