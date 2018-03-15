@@ -1,8 +1,6 @@
 <template>
-	<v-container fill-height>
-    <v-layout fill-height>
-			<div id="cy" ref="cy" style="width:100%; height:100%;"></div>
-		</v-layout>
+	<v-container pa-0 fluid fill-height>
+  	<div id="cy" ref="cy" style="width:100%; height:100%;"></div>
 	</v-container>
 </template>
 
@@ -42,7 +40,7 @@ export default {
 	methods:{
 		addNode: function()
 		{
-			
+
 		}
 	}
 }
