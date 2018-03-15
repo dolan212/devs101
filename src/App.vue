@@ -11,7 +11,7 @@
     >
       <v-list>
         <v-list-tile
-          value="true"
+          value="false"
           v-for="(item, i) in items"
           :key="i"
         >
@@ -73,7 +73,7 @@
 export default {
   data () {
     return {
-      clipped: false,
+      clipped: true,
       drawer: true,
       fixed: false,
       items: [{
