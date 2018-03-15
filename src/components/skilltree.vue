@@ -1,6 +1,6 @@
 <template>
-	<v-container grid-list-md text-xs-center fill-height>
-      		<v-layout row wrap fill-height>
+	<v-container fill-height>
+    <v-layout fill-height>
 			<div id="cy" ref="cy" style="width:100%; height:100%;"></div>
 		</v-layout>
 	</v-container>
@@ -38,6 +38,12 @@ export default {
 				}
 			],
 		});
+	},
+	methods:{
+		addNode: function()
+		{
+			
+		}
 	}
 }
 </script>
