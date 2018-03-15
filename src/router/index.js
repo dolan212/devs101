@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import HelloWorld from '@/components/skilltree'
+import skilltree from '@/components/skilltree'
 
 Vue.use(Router)
 
@@ -13,7 +13,7 @@ export default new Router({
       component: HelloWorld
     },
     {
-      path: '/',
+      path: '/skilltree',
       name: 'skilltree',
       component: skilltree
     }
