@@ -54,13 +54,14 @@ export default {
 					title: 'Edit Tree'
 				},
 				{
-					icon: 'bubble_chart',
-					title: 'About'
+					icon: 'import_export',
+					title: 'Import Tree'
 				},
 				{
-					icon: 'bubble_chart',
-					title: 'Import Tree'
+					icon: 'info',
+					title: 'About'
 				}
+
 			
 			],
 			miniVariant: false,
