@@ -5,3 +5,5 @@ script: npm run lint
 cache:
         directories:
                 - "node_modules"
+notifications:
+        slack: cos301yearproject:sVv90CaLw6ivwPmx8Iukn90E
