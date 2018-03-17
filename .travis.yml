@@ -1,9 +1,22 @@
 language: node_js
 node_js:
-        - "9"
+  - '9'
 script: npm run lint
+after_script:
+        - node_modules/.bin/now-travis --file=now_url
+        - ./run-lighthouse.js --file=now_url
+branches:
+        only:
+                - master
+                - dev
 cache:
-        directories:
-                - "node_modules"
+  directories:
+    - node_modules
 notifications:
-        slack: cos301yearproject:sVv90CaLw6ivwPmx8Iukn90E
+  slack: 'cos301yearproject:sVv90CaLw6ivwPmx8Iukn90E'
+env:
+  global:
+    - secure: >-
+        FkYqulvoKig8oPf3cJyERi/N82wm0si1MAA/rtNJxEBezWW+2p3cKeuBG2DLojN+wNDrUae3lY8AWuDfLqjk1tjy7UWVDq/z0ibhEa2IkvyfcWRZbee1OylsJs03RnJdvLYZZl980okuhiXSgKgiS9/UL0T3t/xdeijbXGxMFFkKFOo9bNxo5ruGG8gsROBoNDBBsK6XYS0WFTE1I2XIKKiy7Dy66zTliZnJN5DmePDfqPgDm8KEGt8ivwr/rHThislcvSTbcq7ryA0A90O/ktXBfX41i3h9FcvNGZVL1d4FEnpP7WA2O5iSckO4u3JNuRQTtFrhQhpV/Pt63ZZghGp8InBQMrirWTn/LwMXKEUaJs1zcV2tM0XUzjZYpKyRLAj8hn+wUQSFAOc3xDhM5UXCpFwt2VpmptrIr/igW8OVeSR7rmRfOE/0JV/+Y/rZ/jOj/5L6naeMg2/mD9vv14ihKUYBUdbXVKuo8QvurM2/coq8RWICNnwOPl0G/GmAYi/cjDYvhRhmTJvgckwJSyoYLZc336md3WucjPNhJHUrGdFFPpFzFxW21B/Dbs3k4pBndwSNpZrYCVxu5/skcaxCn8RyN8VjngWttZ7uQPqf3FeBS1k07keGnd9n7qgRJzDT+vAdY8oSAcEcjCDKG3Lkj9JtP3+GC48uyKbyy3Q=
+    - secure: >-
+        AaJQtFBX9teSpTJmkclXlAFD6YSEQ9zUTjuidY4dOas235h3zdNqNLWe659aRbnzbPwwjuR330JsRbT51/Lqz6lMoAI3SReeIj360paFbjHEsOrLrFx0hSmf28J6um7gkH0tBB4MQFzonyQt5FNLAQHTITPIspx5RGWlwh8wsE8S/k4WaEkZ4gKA8FhSwR2EWMsfmBAKrqZgk4btVR+9Snjxg01AX35ErrQ1QGxH7KBfDAuqJRx256f7D9wxqW7DIhXmDS56I7MneEE09Skbmaf3Wu+tRwP5/sYOfcBj8nHDI0iXK9m16lgqIwQW/bnK75V3k2l+DS0TbMyIJSbGTjpoBsA4k5FE4R7WK7gIGawI0CCX0DklLeFSlT55YJhRPWkyOIrZffp3PELCs7Ada2H3V3QEVG7lvONBwApVPeSFLyLdslcUN6ZtHBIOS/OjYMj/qc055qnvCZ96bNA8OMWJnxGjZXCpOJVfpQtOG7wBabVBJJ6RC9BLB45uIbBlSVnyhfOQv2c4C0NVf5Wee9Ooir/yvBuWhZsMKAy1AaV+kmuCQT/5QEjP6QFuan33As6hXRmwd33q9WayiWDH7HpK+vpFpRNn944FzP1cxfLhql3FztfwWtEUNusAvMyaeMVw47XfcwgMGtM5YnWLA/Geb+tdnbLNSEndCCVi1fg=
