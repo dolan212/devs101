@@ -5,43 +5,21 @@
 </template>
 
 <script>
-import cytoscape from 'cytoscape'
+import * as tree from '@/tree'
 export default {
 	data() {
 		return {
 		}
 	},
 	mounted() {
-		var cy = cytoscape({
-			container: this.$refs.cy,
-			elements: [
-				{
-					data: { id: 'a' }
-				},
-				{
-					data: { id: 'b' }
-				},
-				{
-					data: { id: 'ab', source: 'a', target: 'b' }
-				}
-
-			],
-			style: [
-				{
-					selector: 'node',
-					style: {
-						'background-color': '#666',
-						'label': 'data(id)'
-					}
-				}
-			],
-		});
-	},
-	methods:{
-		addNode: function()
-		{
-
-		}
+		tree.initialize(this.$refs.cy);	
+		tree.addNode();
+		tree.addNode();
+		tree.addNode();
+		tree.addNode();
+		tree.addEdge(tree.tree.nodes[0].id, tree.tree.nodes[1].id);
+		tree.addEdge(tree.tree.nodes[1].id, tree.tree.nodes[3].id);
+		tree.randomLayout();
 	}
 }
 </script>
