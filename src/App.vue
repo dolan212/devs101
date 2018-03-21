@@ -35,13 +35,12 @@
       <v-content>
         <router-view/>
       </v-content>
-      <v-layout row>
+      <v-layout row v-if="['skilltree'].indexOf($route.name) > -1">
         <v-layout row class="left-fab-container">
           <v-speed-dial
           v-model="fab"
           :direction="editDirection"
           :open-on-hover="hov"
-          v-show="isVisible"
           >
             <v-btn
               slot="activator"
@@ -78,7 +77,6 @@
             fab
             dark
             color="red"
-            v-show="isVisible"
           >
             <v-icon>add</v-icon>
           </v-btn>
