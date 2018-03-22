@@ -35,75 +35,60 @@
       <v-content>
         <router-view/>
       </v-content>
-      <v-layout row v-if="['skilltree'].indexOf($route.name) > -1">
-        <v-layout row class="left-fab-container">
-          <v-speed-dial
+      <v-speed-dial
+      v-model="fab"
+      :direction="editDirection"
+      :open-on-hover="hov"
+      bottom
+      right
+      fixed
+      v-if="['skilltree'].indexOf($route.name) > -1"
+      >
+        <v-btn
+          slot="activator"
+          color="blue darken-2"
+          dark
+          fab
           v-model="fab"
-          :direction="editDirection"
-          :open-on-hover="hov"
           >
-            <v-btn
-              slot="activator"
-              color="blue darken-2"
-              dark
-              fab
-              hover
-              v-model="fab"
-              >
-              <v-icon>keyboard_arrow_right</v-icon>
-              <v-icon>close</v-icon>
-            </v-btn>
-            <v-btn
-              fab
-              dark
-              small
-              color="indigo"
-            >
-              <v-icon>edit</v-icon>
-            </v-btn>
-            <v-btn
-              fab
-              dark
-              small
-              color="red"
-            >
-              <v-icon>delete</v-icon>
-            </v-btn>
-          </v-speed-dial>
-        </v-layout>
+          <v-icon>keyboard_arrow_up</v-icon>
+          <v-icon>close</v-icon>
+        </v-btn>
+        <v-btn
+          fab
+          dark
+          small
+          color="green"
+        >
+          <v-icon>add</v-icon>
+        </v-btn>
+        <v-btn
+          fab
+          dark
+          small
+          color="indigo"
+        >
+          <v-icon>edit</v-icon>
+        </v-btn>
+        <v-btn
+          fab
+          dark
+          small
+          color="red"
+        >
+          <v-icon>delete</v-icon>
+        </v-btn>
+      </v-speed-dial>
 
-        <v-layout row class="right-fab-container">
-          <v-btn
-            fab
-            dark
-            color="red"
-          >
-            <v-icon>add</v-icon>
-          </v-btn>
-        </v-layout>
-      </v-layout>
     <v-footer :fixed="fixed" app>
       <span>&copy; 2018 devs101</span>
     </v-footer>
   </v-app>
 </template>
 
-<style>
-  .left-fab-container
-  {
-    position: fixed;
-    bottom: 45px;
-    left: 0;
-  }
-  .right-fab-container
-  {
-    position: fixed;
-    bottom: 45px;
-    right: 0;
-  }
-</style>
-
 <script>
+import * as tree from '@/tree'
+
 export default {
   computed: {
       activeFab () {
@@ -141,12 +126,13 @@ export default {
 			rightDrawer: false,
 			title: 'Trii',
 
-      hov:true,
-      editDirection:'right',
+      hov:false,
+      editDirection:'top',
       isVisible:true,
 
 		}
 	},
 	name: 'Trii'
 }
+
 </script>

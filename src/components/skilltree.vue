@@ -1,13 +1,10 @@
 <template>
-	<v-container fill-height absolute pb-5 pt-0>
-		<v-container id="cy" ref="cy"style="height:100%; width:100%">
-		</v-container>
-	</v-container>
+	<div id="cy" ref="cy"style="height:100%; width:100%">
+	</div>
 </template>
 
 <script>
 import * as tree from '@/tree'
-import * as app from '@/App'
 export default {
 	data() {
 		return {
