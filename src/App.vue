@@ -35,50 +35,52 @@
       <v-content>
         <router-view/>
       </v-content>
-      <v-speed-dial
-      v-model="fab"
-      :direction="editDirection"
-      :open-on-hover="hov"
-      bottom
-      right
-      fixed
-      v-if="['skilltree'].indexOf($route.name) > -1"
-      >
-        <v-btn
-          slot="activator"
-          color="blue darken-2"
-          dark
-          fab
-          v-model="fab"
-          >
-          <v-icon>keyboard_arrow_up</v-icon>
-          <v-icon>close</v-icon>
-        </v-btn>
-        <v-btn
-          fab
-          dark
-          small
-          color="green"
-        >
-          <v-icon>add</v-icon>
-        </v-btn>
-        <v-btn
-          fab
-          dark
-          small
-          color="indigo"
-        >
-          <v-icon>edit</v-icon>
-        </v-btn>
-        <v-btn
-          fab
-          dark
-          small
-          color="red"
-        >
-          <v-icon>delete</v-icon>
-        </v-btn>
-      </v-speed-dial>
+      <v-fab-transition>
+	      <v-speed-dial
+	      v-model="fab"
+	      :direction="editDirection"
+	      :open-on-hover="hov"
+	      bottom
+	      right
+	      fixed
+	      v-show="['skilltree'].indexOf($route.name) > -1"
+	      >
+		<v-btn
+		  slot="activator"
+		  color="blue darken-2"
+		  dark
+		  fab
+		  v-model="fab"
+		  >
+		  <v-icon>keyboard_arrow_up</v-icon>
+		  <v-icon>close</v-icon>
+		</v-btn>
+		<v-btn
+		  fab
+		  dark
+		  small
+		  color="green"
+		>
+		  <v-icon>add</v-icon>
+		</v-btn>
+		<v-btn
+		  fab
+		  dark
+		  small
+		  color="indigo"
+		>
+		  <v-icon>edit</v-icon>
+		</v-btn>
+		<v-btn
+		  fab
+		  dark
+		  small
+		  color="red"
+		>
+		  <v-icon>delete</v-icon>
+		</v-btn>
+	      </v-speed-dial>
+      </v-fab-transition>
 
     <v-footer :fixed="fixed" app>
       <span>&copy; 2018 devs101</span>
