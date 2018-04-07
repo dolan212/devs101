@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1523101410353" clover="3.2.0">
+  <project timestamp="1523101410353" name="All files">
+    <metrics statements="42" coveredstatements="6" conditionals="4" coveredconditionals="0" methods="9" coveredmethods="1" elements="55" coveredelements="7" complexity="0" loc="42" ncloc="42" packages="4" files="6" classes="6">
+      <package name="root">
+        <metrics statements="9" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <file name="unknown" path="unknown">
+          <metrics statements="9" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="10" count="0" type="stmt"/>
+          <line num="14" count="0" type="stmt"/>
+          <line num="15" count="0" type="stmt"/>
+          <line num="16" count="0" type="stmt"/>
+          <line num="17" count="0" type="stmt"/>
+          <line num="18" count="0" type="stmt"/>
+          <line num="19" count="0" type="stmt"/>
+          <line num="20" count="0" type="stmt"/>
+          <line num="21" count="0" type="stmt"/>
+        </file>
+      </package>
+      <package name="root.home.dylan.dev.devs101.src">
+        <metrics statements="18" coveredstatements="2" conditionals="4" coveredconditionals="0" methods="6" coveredmethods="0"/>
+        <file name="App.vue" path="/home/dylan/dev/devs101/src/App.vue">
+          <metrics statements="9" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
+          <line num="92" count="0" type="stmt"/>
+          <line num="96" count="0" type="stmt"/>
+          <line num="97" count="0" type="stmt"/>
+          <line num="98" count="0" type="cond" truecount="0" falsecount="4"/>
+          <line num="99" count="0" type="stmt"/>
+          <line num="100" count="0" type="stmt"/>
+          <line num="101" count="0" type="stmt"/>
+          <line num="105" count="0" type="stmt"/>
+          <line num="106" count="0" type="stmt"/>
+        </file>
+        <file name="tree.js" path="/home/dylan/dev/devs101/src/tree.js">
+          <metrics statements="9" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="9" count="1" type="stmt"/>
+          <line num="12" count="0" type="stmt"/>
+          <line num="39" count="0" type="stmt"/>
+          <line num="40" count="0" type="stmt"/>
+          <line num="48" count="0" type="stmt"/>
+          <line num="55" count="0" type="stmt"/>
+          <line num="56" count="0" type="stmt"/>
+          <line num="57" count="0" type="stmt"/>
+        </file>
+      </package>
+      <package name="root.home.dylan.dev.devs101.src.components">
+        <metrics statements="14" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="1"/>
+        <file name="HelloWorld.vue" path="/home/dylan/dev/devs101/src/components/HelloWorld.vue">
+          <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+          <line num="37" count="1" type="stmt"/>
+          <line num="38" count="1" type="stmt"/>
+        </file>
+        <file name="skilltree.vue" path="/home/dylan/dev/devs101/src/components/skilltree.vue">
+          <metrics statements="12" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+          <line num="7" count="1" type="stmt"/>
+          <line num="9" count="0" type="stmt"/>
+          <line num="10" count="0" type="stmt"/>
+          <line num="13" count="0" type="stmt"/>
+          <line num="14" count="0" type="stmt"/>
+          <line num="15" count="0" type="stmt"/>
+          <line num="16" count="0" type="stmt"/>
+          <line num="17" count="0" type="stmt"/>
+          <line num="18" count="0" type="stmt"/>
+          <line num="19" count="0" type="stmt"/>
+          <line num="20" count="0" type="stmt"/>
+          <line num="21" count="0" type="stmt"/>
+        </file>
+      </package>
+      <package name="root.home.dylan.dev.devs101.src.router">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <file name="index.js" path="/home/dylan/dev/devs101/src/router/index.js">
+          <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="6" count="1" type="stmt"/>
+        </file>
+      </package>
+    </metrics>
+  </project>
+</coverage>

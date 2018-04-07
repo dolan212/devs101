@@ -8,7 +8,8 @@
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
     "build": "node build/build.js",
-    "lint": "eslint --ext .js,.vue src"
+    "lint": "eslint --ext .js,.vue src",
+    "test": "./node_modules/.bin/jest --config test/unit/jest.conf.js --coverage"
   },
   "dependencies": {
     "cytoscape": "^3.2.9",
@@ -44,6 +45,8 @@
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
     "http-proxy-middleware": "^0.17.4",
+    "jest": "^22.4.3",
+    "jest-serializer-vue": "^1.0.0",
     "lighthouse-ci": "github:ebidel/lighthouse-ci",
     "now-travis": "github:ankeetmaini/now-travis",
     "opn": "^5.1.0",
@@ -55,6 +58,7 @@
     "sw-precache-webpack-plugin": "^0.11.4",
     "uglify-es": "^3.1.3",
     "url-loader": "^0.6.2",
+    "vue-jest": "^2.3.0",
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.3",
     "vue-template-compiler": "^2.5.2",
