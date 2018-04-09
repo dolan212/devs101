@@ -43,6 +43,17 @@ export function addNode()
 			data: { id: id, label: 'Temp label'}
 	});
 }
+
+export function addNodeWithLabel(nodeLabel)
+{
+	var id = currentId++;
+	tree.nodes.push({ id: id, label: nodeLabel }),
+	cy.add({
+			group: "nodes",
+			data: { id: id, label: nodeLabel}
+	});
+}
+
 export function randomLayout()
 {
 	cy.layout({

@@ -60,6 +60,7 @@
 		  dark
 		  small
 		  color="green"
+       @click.native.stop="dialog = true"
 		>
 		  <v-icon>add</v-icon>
 		</v-btn>
@@ -81,7 +82,27 @@
 		</v-btn>
 	      </v-speed-dial>
       </v-fab-transition>
-
+      <v-dialog v-model="dialog" persistent max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span class="headline" center>New Node</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container grid-list-md>
+            <v-layout wrap>
+              <v-flex xs12 sm12 md12>
+                <v-text-field label="Node name" v-model="nodeName"></v-text-field>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="dialog = false" v-on:click="addIndirectNode(nodeName)" >Add</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-footer :fixed="fixed" app>
       <span>&copy; 2018 devs101</span>
     </v-footer>
@@ -102,7 +123,8 @@ export default {
         }
       }
     },
-	data () {
+	data ()
+  {
     		return {
       			clipped: true,
       			drawer: false,
@@ -123,18 +145,32 @@ export default {
 
 
 			],
+
 			miniVariant: false,
 			right: true,
 			rightDrawer: false,
 			title: 'Trii',
 
       hov:false,
+      fab:false,
       editDirection:'top',
       isVisible:true,
 
+      dialog:false,
+
 		}
 	},
-	name: 'Trii'
+	name: 'Trii',
+  methods:
+  {
+    addIndirectNode: function(nodeLabel)
+    {
+      tree.addNodeWithLabel(nodeLabel);
+      tree.randomLayout();
+      nodeLabel:""
+    }
+  }
+
 }
 
 </script>
