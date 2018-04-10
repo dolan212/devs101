@@ -13,20 +13,12 @@ export default {
 	mounted()
 	 {
 		tree.initialize(this.$refs.cy);
-		tree.addNode();
-		tree.addNode();
-		tree.addNode();
-		tree.addNode();
-		tree.addEdge(tree.tree.nodes[0].id, tree.tree.nodes[1].id);
-		tree.addEdge(tree.tree.nodes[1].id, tree.tree.nodes[3].id);
-		tree.randomLayout();
 	},
 	methods:
 	{
 		addNodeWrapper: function(value)
 		{
 			tree.addNode();
-			tree.randomLayout();
 		}
 	}
 }

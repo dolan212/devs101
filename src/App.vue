@@ -165,8 +165,8 @@ export default {
   {
     addIndirectNode: function(nodeLabel)
     {
-      tree.addNodeWithLabel(nodeLabel);
-      tree.randomLayout();
+      tree.addNode(nodeLabel);
+      tree.presetLayout();
       nodeLabel:""
     }
   }
