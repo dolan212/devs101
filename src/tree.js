@@ -33,20 +33,48 @@ export function initialize(container)
 				name: 'random',
 			}
 	});
+	cy.maxZoom(2);
 }
-export function addNode()
+export function addNode(label)
 {
 	var id = currentId++;
-	tree.nodes.push({ id: id, label: 'Temp label' }),
+	var node = { id: id, label: label };
+	tree.nodes.push(node),
 	cy.add({
 			group: "nodes",
-			data: { id: id, label: 'Temp label'}
+			data: node 
 	});
 }
+
+export function addNodeWithLabel(nodeLabel)
+{
+	var id = currentId++;
+	tree.nodes.push({ id: id, label: nodeLabel }),
+	cy.add({
+			group: "nodes",
+			data: { id: id, label: nodeLabel},
+			position: { x: cy.width() / 2, y: cy.height() / 2}
+	});
+}
+
 export function randomLayout()
 {
 	cy.layout({
 			name: 'random',
+			animate: true
+	}).run();
+}
+export function coseLayout()
+{
+	cy.layout({
+			name: 'cose',
+			animate: true
+	}).run();
+}
+export function presetLayout()
+{
+	cy.layout({
+			name: 'preset',
 			animate: true
 	}).run();
 }

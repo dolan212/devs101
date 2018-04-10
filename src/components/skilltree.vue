@@ -1,7 +1,6 @@
 <template>
-	<v-container fluid fill-height>
-  	<div id="cy" ref="cy" style="width:100%; height:100%;"></div>
-	</v-container>
+	<div id="cy" ref="cy"style="height:100%; width:100%">
+	</div>
 </template>
 
 <script>
@@ -11,15 +10,16 @@ export default {
 		return {
 		}
 	},
-	mounted() {
-		tree.initialize(this.$refs.cy);	
-		tree.addNode();
-		tree.addNode();
-		tree.addNode();
-		tree.addNode();
-		tree.addEdge(tree.tree.nodes[0].id, tree.tree.nodes[1].id);
-		tree.addEdge(tree.tree.nodes[1].id, tree.tree.nodes[3].id);
-		tree.randomLayout();
+	mounted()
+	 {
+		tree.initialize(this.$refs.cy);
+	},
+	methods:
+	{
+		addNodeWrapper: function(value)
+		{
+			tree.addNode();
+		}
 	}
 }
 </script>
