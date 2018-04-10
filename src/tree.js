@@ -38,23 +38,17 @@ export function initialize(container)
 export function addNode(label)
 {
 	var id = currentId++;
-	var node = { id: id, label: label };
+	var node = { id: id, label: label.trim() };
 	tree.nodes.push(node),
 	cy.add({
 			group: "nodes",
 			data: node 
 	});
-}
 
-export function addNodeWithLabel(nodeLabel)
-{
-	var id = currentId++;
-	tree.nodes.push({ id: id, label: nodeLabel }),
-	cy.add({
-			group: "nodes",
-			data: { id: id, label: nodeLabel},
-			position: { x: cy.width() / 2, y: cy.height() / 2}
-	});
+	var out = "";
+	for(var i = 0; i < tree.nodes.length; i++)
+		out += "(" + tree.nodes[i].id + "," + tree.nodes[i].label + ")";
+	return out;
 }
 
 export function randomLayout()
@@ -86,4 +80,11 @@ export function addEdge(from , to)
 			group: "edges",
 			data: { id: id, source: from, target: to }
 	});
+}
+
+export function clean()
+{
+	cy.destroy();
+	tree.length = 0;
+	currentId = 0;
 }

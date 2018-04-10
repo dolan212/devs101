@@ -10,7 +10,9 @@ describe('HelloWorld.vue', () => {
   it('should render correct contents', () => {
     const Constructor = Vue.extend(HelloWorld)
     const vm = new Constructor({router}).$mount()
-    expect(vm.$el.querySelector('h3').textContent)
+    expect(vm.$el.querySelector('#welcome_title').textContent)
       .toEqual('Welcome to Trii')
+    expect(vm.$el.querySelector("#welcome_sub").textContent).toEqual("A project by devs101")
+    expect(vm.$el.querySelector("#start_button").textContent).toEqual("Get Started")
   })
 })

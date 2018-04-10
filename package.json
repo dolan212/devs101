@@ -9,7 +9,7 @@
     "start": "node build/dev-server.js",
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.vue src",
-    "test": "./node_modules/.bin/jest --config test/unit/jest.conf.js --coverage"
+    "test": "./node_modules/.bin/jest --config test/unit/jest.conf.js"
   },
   "dependencies": {
     "cytoscape": "^3.2.9",
@@ -27,6 +27,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.26.0",
+    "canvas": "^1.6.10",
     "chalk": "^2.1.0",
     "connect-history-api-fallback": "^1.4.0",
     "copy-webpack-plugin": "^4.1.1",

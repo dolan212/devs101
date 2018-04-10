@@ -4,10 +4,10 @@
         <v-flex m3 xs0>
         </v-flex>
         <v-flex xs12 m6>
-          <h3 class="display-3" v-text="welcomeMsg"></h3>
-          <span class="subheading" v-text="welcomeSubtitle"></span>
+          <h3 class="display-3" id="welcome_title" v-text="welcomeMsg"></h3>
+          <span class="subheading" id="welcome_sub" v-text="welcomeSubtitle"></span>
           <v-divider class="my-3"></v-divider>
-          <v-btn large color="primary" :to="{path: '/skilltree'}" class="mx-0">Get Started</v-btn>
+          <v-btn large color="primary" :to="{path: '/skilltree'}" id="start_button" class="mx-0">Get Started</v-btn>
         </v-flex>
         <v-flex m3 xs0>
         </v-flex>
