@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.4.12)  13 APR 2018 12:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.4.12)  13 APR 2018 12:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -247,7 +247,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<images/deployment.jpg, id=60, 1277.77374pt x 615.29875pt>
+<images/deployment.jpg, id=55, 1277.77374pt x 615.29875pt>
 File: images/deployment.jpg Graphic file (type jpg)
 
 <use images/deployment.jpg>
@@ -264,76 +264,76 @@ Underfull \hbox (badness 10000) in paragraph at lines 22--23
  []
 
 
-Overfull \hbox (6.32007pt too wide) in paragraph at lines 26--27
-\OT1/cmr/m/n/10 Google chrome which can be down-loaded here: https://www.google
-.com/chrome/
+Overfull \hbox (6.32007pt too wide) in paragraph at lines 24--25
+\OT1/cmr/m/n/10 Google chrome which can be down-loaded here: []https://www.goog
+le.com/chrome/[]
  []
 
 [2 <./images/deployment.jpg>]
-<images/landingpage.jpg, id=65, 1794.705pt x 943.525pt>
+<images/landingpage.jpg, id=62, 1794.705pt x 943.525pt>
 File: images/landingpage.jpg Graphic file (type jpg)
 
 <use images/landingpage.jpg>
-Package pdftex.def Info: images/landingpage.jpg used on input line 29.
+Package pdftex.def Info: images/landingpage.jpg used on input line 27.
 (pdftex.def)             Requested size: 448.67516pt x 235.88066pt.
 
-<images/treeView.jpg, id=66, 922.44624pt x 494.84875pt>
+<images/treeView.jpg, id=63, 922.44624pt x 494.84875pt>
 File: images/treeView.jpg Graphic file (type jpg)
 
 <use images/treeView.jpg>
-Package pdftex.def Info: images/treeView.jpg used on input line 31.
+Package pdftex.def Info: images/treeView.jpg used on input line 29.
 (pdftex.def)             Requested size: 452.00261pt x 242.47801pt.
 
-<images/fabSelected.jpg, id=67, 921.4425pt x 494.84875pt>
+<images/fabSelected.jpg, id=64, 921.4425pt x 494.84875pt>
 File: images/fabSelected.jpg Graphic file (type jpg)
 
 <use images/fabSelected.jpg>
-Package pdftex.def Info: images/fabSelected.jpg used on input line 34.
+Package pdftex.def Info: images/fabSelected.jpg used on input line 32.
 (pdftex.def)             Requested size: 451.51079pt x 242.47801pt.
 
-Overfull \hbox (103.67516pt too wide) in paragraph at lines 28--36
+Overfull \hbox (103.67516pt too wide) in paragraph at lines 26--34
 [] 
  []
 
 
-Overfull \hbox (107.00261pt too wide) in paragraph at lines 28--36
+Overfull \hbox (107.00261pt too wide) in paragraph at lines 26--34
 [] 
  []
 
 
-Overfull \hbox (106.51079pt too wide) in paragraph at lines 28--36
+Overfull \hbox (106.51079pt too wide) in paragraph at lines 26--34
 [] 
  []
 
 [3 <./images/landingpage.jpg>] [4 <./images/treeView.jpg> <./images/fabSelected
 .jpg>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 39.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 37.
  [5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 39.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 37.
  (./UserManual.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 39.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 39.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 37.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 37.
 Package rerunfilecheck Info: File `UserManual.out' has not changed.
-(rerunfilecheck)             Checksum: 94839835BD5D11B07C589581187309B4;505.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 39.
+(rerunfilecheck)             Checksum: 2BD1A5E81CA7E2D8D0A6D1D0A5A31940;444.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 37.
  ) 
 Here is how much of TeX's memory you used:
- 5097 strings out of 493029
- 75737 string characters out of 6136234
+ 5095 strings out of 493029
+ 75707 string characters out of 6136234
  157152 words of memory out of 5000000
- 8600 multiletter control sequences out of 15000+600000
+ 8599 multiletter control sequences out of 15000+600000
  7895 words of font info for 28 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 29i,6n,28p,541b,319s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 29i,6n,28p,633b,319s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on UserManual.pdf (5 pages, 138449 bytes).
+Output written on UserManual.pdf (5 pages, 138418 bytes).
 PDF statistics:
- 103 PDF objects out of 1000 (max. 8388607)
- 86 compressed objects within 1 object stream
- 16 named destinations out of 1000 (max. 500000)
- 93 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 100 PDF objects out of 1000 (max. 8388607)
+ 83 compressed objects within 1 object stream
+ 15 named destinations out of 1000 (max. 500000)
+ 85 words of extra memory for PDF output out of 10000 (max. 10000000)
 
