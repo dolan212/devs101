@@ -1,0 +1,17 @@
+\contentsline {section}{\numberline {1}\bfseries \selectfont {Naming Conventions}}{3}
+\contentsline {subsection}{\numberline {1.1}Class Names}{3}
+\contentsline {subsection}{\numberline {1.2}Exception Classes}{3}
+\contentsline {subsection}{\numberline {1.3}Constants}{3}
+\contentsline {subsection}{\numberline {1.4}Methods or Functions}{3}
+\contentsline {subsection}{\numberline {1.5}Variables and Attributes}{3}
+\contentsline {subsection}{\numberline {1.6}Accessors}{3}
+\contentsline {subsection}{\numberline {1.7}Mutators}{4}
+\contentsline {subsection}{\numberline {1.8}Packages}{4}
+\contentsline {subsection}{\numberline {1.9}File names}{4}
+\contentsline {section}{\numberline {2}\bfseries \selectfont {Exceptions}}{4}
+\contentsline {section}{\numberline {3}\bfseries \selectfont {Bracketing}}{4}
+\contentsline {section}{\numberline {4}\bfseries \selectfont {Identifiers}}{5}
+\contentsline {section}{\numberline {5}\bfseries \selectfont {Final Variables}}{5}
+\contentsline {section}{\numberline {6}\bfseries \selectfont {Indentation and Layout}}{6}
+\contentsline {section}{\numberline {7}\bfseries \selectfont {Imports}}{6}
+\contentsline {section}{\numberline {8}\bfseries \selectfont {General Commenting}}{7}
