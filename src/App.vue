@@ -147,7 +147,7 @@ export default {
 	methods: {
 		addNode: function(nodeLabel) {
 			controller.addNode(nodeLabel);
-			nodeName = "";
+			this.nodeName = "";
 		}
 	}
 }
