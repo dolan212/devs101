@@ -15,6 +15,14 @@ export function initialize(container)
 					}
 				},
 				{
+					selector: 'node:selected',
+					style: {
+						'border-color': 'yellow',
+						'border-width': 3,
+						'border-opacity': 1
+					}
+				},
+				{
 					selector: 'edge',
 					style: {
 						'width': 3,
