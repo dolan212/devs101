@@ -25,8 +25,19 @@ function onDeselect(id) {
 	if(i != -1) selectedNodes.splice(i, 1);
 }
 
+export function deleteSelectedNodes() {
+	for(var i = 0; i < selectedNodes.length; i++)
+		deleteNode(selectedNodes[i]);
+}
+
 function deleteNode(id) {
-	//TODO: Implement deleting of nodes
+	try {
+		tree.deleteNode(id);
+		view.deleteNode(id);
+	}
+	catch(exception) {
+		alert(exception);
+	}
 }
 export function setupView(container) {
 	view.initialize(container); //initialize the cytoscape using the specified container

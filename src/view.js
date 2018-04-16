@@ -59,6 +59,10 @@ export function addNode(id, label) {
 	});
 }
 
+export function deleteNode(id) {
+	cy.$id(id).remove();
+}
+
 export function getLabel(id) {
 	if(!cy) throw "Cytoscape not initialized";
 	let el = cy.$id(id);

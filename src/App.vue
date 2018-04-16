@@ -60,7 +60,7 @@
 		  dark
 		  small
 		  color="green"
-       @click.native.stop="dialog = true"
+		  @click.native.stop="dialog = true"
 		>
 		  <v-icon>add</v-icon>
 		</v-btn>
@@ -77,6 +77,7 @@
 		  dark
 		  small
 		  color="red"
+		  @click.native.stop="deleteNodes()"
 		>
 		  <v-icon>delete</v-icon>
 		</v-btn>
@@ -148,6 +149,9 @@ export default {
 		addNode: function(nodeLabel) {
 			controller.addNode(nodeLabel);
 			this.nodeName = "";
+		},
+		deleteNodes: () => {
+			controller.deleteSelectedNodes();
 		}
 	}
 }
