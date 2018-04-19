@@ -99,7 +99,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="dialog = false" v-on:click="addIndirectNode(nodeName)" >Add</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="dialog = false" v-on:click="addNode(nodeName)" >Add</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -110,67 +110,46 @@
 </template>
 
 <script>
-import * as tree from '@/tree'
+import * as controller from '@/controller'
 
 export default {
-  computed: {
-      activeFab () {
-        switch (this.tabs) {
-          case 'one': return { 'class': 'purple', icon: 'account_circle' }
-          case 'two': return { 'class': 'red', icon: 'edit' }
-          case 'three': return { 'class': 'green', icon: 'keyboard_arrow_up' }
-          default: return {}
-        }
-      }
-    },
-	data ()
-  {
-    		return {
-      			clipped: true,
+	computed: {
+		activeFab () {
+			switch (this.tabs) {
+				case 'one': return { 'class': 'purple', icon: 'account_circle' }
+				case 'two': return { 'class': 'red', icon: 'edit' }
+				case 'three': return { 'class': 'green', icon: 'keyboard_arrow_up' }
+				default: return {}
+			}
+		}
+	},
+	data () {
+		return {
+			clipped: true,
       			drawer: false,
-      			fixed: false,
-		      	items: [
-				{
-					icon: 'bubble_chart',
-					title: 'Edit Tree'
-				},
-				{
-					icon: 'import_export',
-					title: 'Import Tree'
-				},
-				{
-					icon: 'info',
-					title: 'About'
-				}
-
-
-			],
-
 			miniVariant: false,
-			right: true,
-			rightDrawer: false,
+      			fixed: false,
+			nodeName: "",
+		      	items: [
+				{ icon: 'bubble_chart', title: 'Edit Tree' },
+				{ icon: 'import_export', title: 'Import Tree' },
+				{ icon: 'info', title: 'About' }
+			],
 			title: 'Trii',
-
-      hov:false,
-      fab:false,
-      editDirection:'top',
-      isVisible:true,
-
-      dialog:false,
-
+			hov:false,
+			fab:false,
+			editDirection:'top',
+			isVisible:true,
+			dialog:false,
 		}
 	},
 	name: 'Trii',
-  methods:
-  {
-    addIndirectNode: function(nodeLabel)
-    {
-      tree.addNode(nodeLabel);
-      tree.presetLayout();
-      nodeLabel:""
-    }
-  }
-
+	methods: {
+		addNode: function(nodeLabel) {
+			controller.addNode(nodeLabel);
+			this.nodeName = "";
+		}
+	}
 }
 
 </script>

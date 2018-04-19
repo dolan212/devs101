@@ -1,24 +1,43 @@
 import * as tree from '@/tree'
-import Vue from 'vue'
-import Vuetify from 'vuetify'
-import skilltree from '@/components/skilltree'
-import Router from 'vue-router'
-import router from '@/router'
-import cytoscape from 'cytoscape'
+import * as utils from '@/utils/utils'
 
-Vue.use(Vuetify)
-Vue.use(Router)
-describe('skilltree.vue and tree.js', () => {
-  it('should add nodes correctly', () => {
-    const Constructor = Vue.extend(skilltree)
-    const vm = new Constructor({router}).$mount()
-    //test basic adding
-    expect(tree.addNode("test")).toEqual("(0,test)");
-    //test spaces
-    expect(tree.addNode("aaa bbb")).toEqual("(0,test)(1,aaa bbb)");
-    //test trimming and special characters
-    expect(tree.addNode("   0192~_\\  ")).toEqual("(0,test)(1,aaa bbb)(2,0192~_\\)")
-    //clean up
-    tree.clean();
-  })
+describe('tree.js', () => {
+  	it('should throw an appropriate error when not initialized', () => {
+		expect(() => {
+			tree.addNode('anything')
+		}).toThrow('Tree not initialized');
+
+	})
+	it('should add nodes without error', () => {
+		tree.initialize();
+		expect(() => {
+			tree.addNode('also anything')
+		}).not.toThrow();
+		tree.clean(); //clean up
+	})
+	it('should add nodes correctly', () => {
+		tree.initialize();
+		for(var i = 0; i < 100; i++) {
+			let label = utils.randomString();
+			expect(
+				tree.addNode(label)
+			).toBe(i);
+			expect(
+				tree.getLabel(i)
+			).toBe(label);
+		}
+	})
+	it('should throw an appropriate error when a node is not found', () => {
+		expect(() => {
+			tree.getLabel(1000);
+		}).toThrow('Node not found');
+	})
+	it('should clean up properly', () => {
+		tree.clean();
+		expect(() => {
+			tree.getLabel(0);
+		}).toThrow('Node not found');
+		expect(tree.addNode('test')).toEqual(0);
+		tree.clean();
+	})
 })

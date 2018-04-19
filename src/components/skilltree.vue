@@ -4,20 +4,18 @@
 </template>
 
 <script>
-import * as tree from '@/tree'
+import * as controller from '@/controller'
 export default {
 	data() {
 		return {
 		}
 	},
-	mounted()
-	 {
-		tree.initialize(this.$refs.cy);
+	mounted() {
+		controller.initialize();
+		controller.setupView(this.$refs.cy);
 	},
-	methods:
-	{
-		addNodeWrapper: function(value)
-		{
+	methods: {
+		addNodeWrapper: function(value) {
 			tree.addNode();
 		}
 	}
