@@ -1,4 +1,4 @@
-class Node {
+export class Node {
 	constructor(id, label) {
 		this._id = id;
 		this._label = label;
@@ -8,7 +8,7 @@ class Node {
 	get id() { return this._id; }
 }
 
-class Tree {
+export class Tree {
 	constructor() {
 		this.nodes = [];
 		this.edges = [];
