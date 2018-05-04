@@ -1,15 +1,19 @@
 import * as tree from '@/tree'
 import * as view from '@/view'
+import {store} from './store/index.js'
 
-export function initialize() {
+export function initialize()
+{
+
 	tree.initialize();
 }
 
 export function addNode(label) {
 	try {
 		let id = tree.addNode(label);
-		view.addNode(id, label);
-		view.layout();
+		store.commit('addNode',label);
+		//view.addNode(id, label);
+		store.commit('layout');//view.layout();
 	}
 	catch(exception) {
 		alert(exception);
@@ -40,7 +44,8 @@ function deleteNode(id) {
 	}
 }
 export function setupView(container) {
-	view.initialize(container); //initialize the cytoscape using the specified container
-	view.addSelectListener(onSelect);
-	view.addDeselectListener(onDeselect);
+	//view.initialize(container); //initialize the cytoscape using the specified container
+	store.commit('init',container);
+	//view.addSelectListener(onSelect);
+	//view.addDeselectListener(onDeselect);
 }
