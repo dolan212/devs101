@@ -5,6 +5,7 @@ const state =
 {
   tree: new Tree(),
   currentId: 0,
+  edgeId: 0,
   cy: null
 }
 const getters =
@@ -71,6 +72,21 @@ const mutations =
 
 
     return id; //return id to be used for cytoscape
+  },
+  addEdge(state, source, target)
+  {
+    if(!state.tree) throw "Tree not initialized";
+    let id = state.edgeId++;
+    let edge = new Edge(id, source, target);
+    state.tree.addEdge(source, target);
+
+    if(!state.cy) throw "Cytoscape not initialized";
+    state.cy.add({
+      group: "edges"
+  		data: {id: id, source: source, target: target}
+    });
+
+    return id;
   },
   layout(state)
   {

@@ -53,6 +53,7 @@ export class Tree {
 }
 
 var currentId;
+var edgeId;
 
 var tree;
 
@@ -71,7 +72,7 @@ export function addNode(label) {
 
 export function addEdge(source, target){
 	if(!tree) throw "Tree not initialized";
-	let id = currentId++;
+	let id = edgeId++;
 	let edge = new Edge(id, source, target);
 	tree.addEdge(source, target);
 	return id;
