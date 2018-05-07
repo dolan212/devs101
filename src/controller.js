@@ -20,6 +20,17 @@ export function addNode(label) {
 	}
 }
 
+export function addEdge(source, target) {
+	try {
+		let id = tree.addEdge(source, destination);
+		store.commit('addEdge',source,destination);
+		store.commit('layout')
+	}
+	catch(exception) {
+		alert(exception);
+	}
+}
+
 let selectedNodes = [];
 function onSelect(id) {
 	selectedNodes.push(id);

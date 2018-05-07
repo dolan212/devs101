@@ -1,3 +1,16 @@
+export class Edge{
+	constructor(id, source, target){
+		this._id = id;
+		this._source = source;
+		this._target = target;
+	}
+	get id() { return this._id }
+	set source(source) { this._source = source; }
+	get source() { return this._source; }
+	set target(target) { this._target = target; }
+	get target() { return this._target; }
+}
+
 export class Node {
 	constructor(id, label) {
 		this._id = id;
@@ -54,6 +67,14 @@ export function addNode(label) {
 	let node = new Node(id, label);
 	tree.addNode(node);
 	return id; //return id to be used for cytoscape
+}
+
+export function addEdge(source, target){
+	if(!tree) throw "Tree not initialized";
+	let id = currentId++;
+	let edge = new Edge(id, source, target);
+	tree.addEdge(source, target);
+	return id;
 }
 
 export function deleteNode(id) {
