@@ -22,7 +22,6 @@ export function addNode(label) {
 
 let selectedNodes = [];
 function onSelect(id) {
-	console.log("selected", id);
 	selectedNodes.push(id);
 }
 function onDeselect(id) {

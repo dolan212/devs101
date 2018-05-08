@@ -1,5 +1,5 @@
 <template>
-	<div @keyup.delete="deleteNodes" id="cy" ref="cy"style="height:100%; width:100%">
+	<div id="cy" ref="cy"style="height:100%; width:100%">
 	</div>
 </template>
 
@@ -13,13 +13,16 @@ export default {
 	mounted() {
 		controller.initialize();
 		controller.setupView(this.$refs.cy);
+		window.addEventListener('keyup', this.keyPressed);
 	},
 	methods: {
 		addNodeWrapper: function(value) {
 			tree.addNode();
 		},
-		deleteNodes: () => {
-			controller.deleteSelectedNodes();
+		keyPressed: (event) => {
+			if(event.which === 46) { //delete
+				controller.deleteSelectedNodes();
+			}
 		}
 	}
 }
