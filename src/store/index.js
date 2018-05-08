@@ -11,8 +11,4 @@ export const store = new Vuex.Store({
   {
     tree
   },
-  plugins: [createPersistedState({
-    reducer: state => ({
-        }),
-  })],
 });
