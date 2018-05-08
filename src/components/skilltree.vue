@@ -1,5 +1,5 @@
 <template>
-	<div id="cy" ref="cy"style="height:100%; width:100%">
+	<div @keyup.delete="deleteNodes" id="cy" ref="cy"style="height:100%; width:100%">
 	</div>
 </template>
 
@@ -17,6 +17,9 @@ export default {
 	methods: {
 		addNodeWrapper: function(value) {
 			tree.addNode();
+		},
+		deleteNodes: () => {
+			controller.deleteSelectedNodes();
 		}
 	}
 }

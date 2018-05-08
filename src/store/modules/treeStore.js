@@ -72,12 +72,29 @@ const mutations =
 
     return id; //return id to be used for cytoscape
   },
+  deleteNode(state, id) {
+	  if(!state.tree) throw "Tree not initialized";
+	  state.tree.deleteNode(id);
+	  state.cy.remove("#" + id);
+  },
   layout(state)
   {
     state.cy.layout({
   		name: 'preset',
   		animate: true
   	}).run();
+  },
+  addSelectListener(state, payload) {
+	  let listener = payload.listener;
+	state.cy.on('select', 'node', (evt) => {
+		listener(evt.target.id());
+	});
+  },
+  addDeselectListener(state, payload) {
+	  let listener = payload.listener;
+	state.cy.on('unselect', 'node', (evt) => {
+		listener(evt.target.id());
+	});
   }
 }
 const watch = {
