@@ -3,12 +3,15 @@ import * as controller from '@/controller'
 import cytoscape from 'cytoscape'
 const state =
 {
-  tree: new Tree(),
+  tree: null,
   currentId: 0,
   cy: null
 }
 const getters =
 {
+	getNodeLabel(state) {
+		return id => state.tree.getNode(id).label;
+	}
 }
 
 // actions
@@ -21,6 +24,7 @@ const mutations =
 {
   init(state,container)
   {
+	  state.tree = new Tree();
     state.cy = cytoscape({
   			container: container,
   			elements: [],
@@ -95,6 +99,11 @@ const mutations =
 	state.cy.on('unselect', 'node', (evt) => {
 		listener(evt.target.id());
 	});
+  },
+  clean(state) {
+	state.tree.clean();
+	state.cy.destroy();
+	state.currentId = 0;
   }
 }
 const watch = {
