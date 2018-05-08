@@ -1,11 +1,16 @@
 import {Tree,Node} from '@/tree'
 import * as controller from '@/controller'
 import cytoscape from 'cytoscape'
+import cytoscapeundoredo from 'cytoscape-undo-redo'
+
+  cytoscapeundoredo(cytoscape)
+
 const state =
 {
   tree: null,
   currentId: 0,
-  cy: null
+  cy: null,
+  ur: null
 }
 const getters =
 {
@@ -58,6 +63,7 @@ const mutations =
   			}
   	});
   	state.cy.maxZoom(2);
+    state.ur=cy.undoRedo();
   },
   addNode(state,label)
   {
