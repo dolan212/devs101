@@ -61,7 +61,6 @@ const mutations =
   },
   addNode(state,label)
   {
-    console.log("EAT MY ASS");
     if(!state.tree) throw "Tree not initialized"; //tree hasn't been initialized yet, so we error
     let id = state.currentId++;
     let node = new Node(id, label);
