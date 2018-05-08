@@ -1,12 +1,17 @@
 import {Tree,Node} from '@/tree'
 import * as controller from '@/controller'
 import cytoscape from 'cytoscape'
+import undoredo from 'cytoscape-undo-redo'
+
+cytoscape.use(undoredo);
 
 const state =
 {
   tree: null,
   currentId: 0,
   cy: null,
+  ur: null,
+
 }
 const getters =
 {
@@ -59,6 +64,7 @@ const mutations =
   			}
   	});
   	state.cy.maxZoom(2);
+    state.ur = state.cy.undoRedo();
   },
   addNode(state,label)
   {
@@ -68,18 +74,19 @@ const mutations =
     state.tree.addNode(node);
 
     if(!state.cy) throw "Cytoscape not initialized";
-  	state.cy.add({
+  	let added=state.cy.add({
   		group: "nodes",
   		data: { id: id, label: label }
   	});
-
+    state.ur.do("add",added);
 
     return id; //return id to be used for cytoscape
   },
   deleteNode(state, id) {
 	  if(!state.tree) throw "Tree not initialized";
 	  state.tree.deleteNode(id);
-	  state.cy.remove("#" + id);
+	  let removed=state.cy.remove("#" + id);
+    state.ur.do("remove",removed);
   },
   layout(state)
   {
@@ -104,7 +111,15 @@ const mutations =
 	state.tree.clean();
 	state.cy.destroy();
 	state.currentId = 0;
-  }
+},
+
+undo(state){
+  state.ur.undo();
+},
+
+redo(state){
+  state.ur.redo();
+}
 }
 const watch = {
   cy:{
