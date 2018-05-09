@@ -62,7 +62,7 @@ export function addNode(id, label) {
 export function addEdge(id, source, target) {
 	if(!cy) throw "Cytoscape not initialized";
 	cy.add({
-		group: "edges"
+		group: "edges",
 		data: {id: id, source: source, target: target}
 	});
 }

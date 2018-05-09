@@ -22,8 +22,8 @@ export function addNode(label) {
 
 export function addEdge(source, target) {
 	try {
-		let id = tree.addEdge(source, destination);
-		store.commit('addEdge',source,destination);
+		let pos = {source: source, target: target};
+		store.commit('addEdge', pos);
 		store.commit('layout')
 	}
 	catch(exception) {
