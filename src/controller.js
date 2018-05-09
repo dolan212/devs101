@@ -20,6 +20,17 @@ export function addNode(label) {
 	}
 }
 
+export function addEdge(source, target) {
+	try {
+		let pos = {source: source, target: target};
+		store.commit('addEdge', pos);
+		store.commit('layout')
+	}
+	catch(exception) {
+		alert(exception);
+	}
+}
+
 let selectedNodes = [];
 function onSelect(id) {
 	selectedNodes.push(id);
