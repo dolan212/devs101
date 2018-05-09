@@ -2,11 +2,8 @@
   <v-app>
     <v-navigation-drawer
       persistent
-      :mini-variant="miniVariant"
-      :clipped="clipped"
       v-model="drawer"
       enable-resize-watcher
-      fixed
       app
     >
       <v-list>
@@ -27,29 +24,7 @@
 	
 	<!--  adding nav bar to be placed to the right of the navigation side bar -->
 	
-		<v-navigation-drawer :mini-variant.sync="miniVariant" v-model="drawer" stateless hide-overlay>
-		<v-toolbar flat class="transparent">
-		</v-toolbar>
-		<v-list class="pt-0" dense>
-		  <v-divider></v-divider>
-			<v-list-tile-content>
-				<v-list-tile-title>Title:  </v-list-tile-title>
-				<v-list-tile-title>{{ item.title }}</v-list-tile-title>
-			</v-list-tile-content>
-			 <v-divider></v-divider>
-			<v-list-tile-content>
-				<v-list-tile-title>Label:  </v-list-tile-title>
-				<v-list-tile-title>{{ item.label }}</v-list-tile-title>
-			</v-list-tile-content>
-			 <v-divider></v-divider>
-			<v-list-tile-content>
-				<v-list-tile-title>Color:  </v-list-tile-title>
-				<v-list-tile-title>{{ item.color}}</v-list-tile-title>
-			</v-list-tile-content>
-		  </v-list-tile>
-		</v-list>
-	</v-navigation-drawer>
-  
+		  
   <!-- closing nav bar  -->
   
     <v-toolbar
@@ -61,10 +36,36 @@
       <v-btn @click.stop="redo" flat small><v-icon>redo</v-icon></v-btn>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
+	  <v-btn icon @click.stop="settingsDrawer = !settingsDrawer">
+	  	<v-icon>settings</v-icon>
+	  </v-btn>
     </v-toolbar>
       <v-content>
         <router-view/>
       </v-content>
+	<!-- Node settings drawer -->
+	<v-navigation-drawer
+	temporary
+	:right="true"
+	v-model="nodeDrawer" 
+	app
+	>
+		<v-toolbar flat>
+			<v-list>
+				<v-list-tile>
+					<v-list-tile-content>
+						<v-list-tile-title>Editing: {{ selectedNode.label }}</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+			</v-list>
+		</v-toolbar>
+		<v-divider></v-divider>
+		<v-container fluid>
+					<v-text-field label="Skill Name" v-model="selectedNode.label"></v-text-field>
+					<v-text-field label="Node Colour" v-model="selectedNode.colour"></v-text-field>
+		</v-container>
+	</v-navigation-drawer>
+
       <v-fab-transition>
 	      <v-speed-dial
 	      v-model="fab"
@@ -99,6 +100,7 @@
 		  dark
 		  small
 		  color="indigo"
+		  @click.native.stop="editNode()"
 		>
 		  <v-icon>edit</v-icon>
 		</v-btn>
@@ -158,6 +160,8 @@ export default {
 		return {
 			clipped: true,
       			drawer: false,
+				nodeDrawer: false,
+				settingsDrawer: false,
 			miniVariant: false,
       			fixed: false,
 			nodeName: "",
@@ -172,11 +176,15 @@ export default {
 			editDirection:'top',
 			isVisible:true,
 			dialog:false,
+			selectedNode: { id: 0, label: 'example', colour: '#AAAAAA' } //just some example data
+			
+			
 		}
 	},
 	name: 'Trii',
 	methods: {
 		addNode: function(nodeLabel) {
+			console.log(this.nodeName);
 			controller.addNode(nodeLabel);
 			this.nodeName = "";
 		},
@@ -186,25 +194,19 @@ export default {
 		deleteNodes: () => {
 			controller.deleteSelectedNodes();
 		},
-		undo: () => {
+		undo: function() {
 			controller.undo();
 		},
-		redo: () => {
+		redo: function() {
 			controller.redo();
+		},
+		editNode: function() {
+			console.log(this.nodeDrawer);
+			this.nodeDrawer = true;
+		},
+		editSettings: function() {
+			this.settingsDrawer = true;
 		}
 	}
-	
-	/* data for second nav bar which is to the right */
-	,data () {
-      return {
-        drawer: true,
-        items: [
-          { title: 'nodeName'},
-          { label: 'nodeLabel'},
-		   { color: 'nodeColor'}
-        ],
-        right: null
-      }
-    }
 }
 </script>
