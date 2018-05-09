@@ -44,7 +44,7 @@
 			 <v-divider></v-divider>
 			<v-list-tile-content>
 				<v-list-tile-title>Color:  </v-list-tile-title>
-				<v-list-tile-title>{{ item.color }}</v-list-tile-title>
+				<v-list-tile-title>{{ item.color}}</v-list-tile-title>
 			</v-list-tile-content>
 		  </v-list-tile>
 		</v-list>
