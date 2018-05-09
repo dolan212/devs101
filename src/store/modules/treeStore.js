@@ -2,7 +2,6 @@ import {Tree,Node} from '@/tree'
 import * as controller from '@/controller'
 import cytoscape from 'cytoscape'
 import undoredo from 'cytoscape-undo-redo'
-import createPersistedState from 'vuex-persistedstate'
 
 cytoscape.use(undoredo);
 
@@ -86,7 +85,6 @@ const mutations =
   		data: { id: id, label: label }
   	});
     state.ur.do("add",added);
-    console.log(state.currentId);
 
     return id; //return id to be used for cytoscape
   },
@@ -149,17 +147,10 @@ const watch = {
   }
 }
 
-const plugins = [createPersistedState({
-					reducer: state => ({
-							currentId: state.currentId
-
-					})
-})];
 
 
 export default
 {
-  plugins: plugins,
   state: state,
   getters: getters,
   actions: actions,
