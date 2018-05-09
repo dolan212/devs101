@@ -38,17 +38,7 @@ export function initialize(container)
 	cy.maxZoom(2);
 }
 
-export function addSelectListener(listener) {
-	cy.on('select', 'node', (evt) => {
-		listener(evt.target.id());
-	});
-}
 
-export function addDeselectListener(listener) {
-	cy.on('unselect', 'node', (evt) => {
-		listener(evt.target.id());
-	});
-}
 
 
 export function addNode(id, label) {
@@ -56,6 +46,14 @@ export function addNode(id, label) {
 	cy.add({
 		group: "nodes",
 		data: { id: id, label: label }
+	});
+}
+
+export function addEdge(id, source, target) {
+	if(!cy) throw "Cytoscape not initialized";
+	cy.add({
+		group: "edges",
+		data: {id: id, source: source, target: target}
 	});
 }
 

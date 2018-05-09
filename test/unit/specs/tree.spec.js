@@ -1,43 +1,44 @@
-import * as tree from '@/tree'
+import {store} from '@/store/index'
 import * as utils from '@/utils/utils'
 
-describe('tree.js', () => {
+describe('treeStore.js', () => {
   	it('should throw an appropriate error when not initialized', () => {
 		expect(() => {
-			tree.addNode('anything')
+			store.commit('addNode', "something");
 		}).toThrow('Tree not initialized');
 
 	})
 	it('should add nodes without error', () => {
-		tree.initialize();
+		let container = document.createElement('div');
+		store.commit('init', container)
 		expect(() => {
-			tree.addNode('also anything')
+			store.commit('addNode', 'also anything')
 		}).not.toThrow();
-		tree.clean(); //clean up
+		store.commit('clean') //clean up
 	})
 	it('should add nodes correctly', () => {
-		tree.initialize();
+		let container = document.createElement('div');
+		store.commit('init', container);
 		for(var i = 0; i < 100; i++) {
 			let label = utils.randomString();
+			expect(() => {
+				store.commit("addNode", label)
+			}).not.toThrow();
 			expect(
-				tree.addNode(label)
-			).toBe(i);
-			expect(
-				tree.getLabel(i)
+				store.getters.getNodeLabel(i)
 			).toBe(label);
 		}
 	})
 	it('should throw an appropriate error when a node is not found', () => {
 		expect(() => {
-			tree.getLabel(1000);
+			store.getters.getNodeLabel(1000)
 		}).toThrow('Node not found');
 	})
 	it('should clean up properly', () => {
-		tree.clean();
+		store.commit('clean');
 		expect(() => {
-			tree.getLabel(0);
+			store.getters.getNodeLabel(0)
 		}).toThrow('Node not found');
-		expect(tree.addNode('test')).toEqual(0);
-		tree.clean();
+		store.commit('clean');
 	})
 })

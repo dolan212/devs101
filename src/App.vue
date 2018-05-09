@@ -54,6 +54,8 @@
       :clipped-left="clipped"
     >
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-btn @click.stop="undo" flat small><v-icon>undo</v-icon></v-btn>
+      <v-btn @click.stop="redo" flat small><v-icon>redo</v-icon></v-btn>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
@@ -175,8 +177,17 @@ export default {
 			controller.addNode(nodeLabel);
 			this.nodeName = "";
 		},
+    addEdge: function(source, target) {
+      controller.addEdge(source, target);
+    },
 		deleteNodes: () => {
 			controller.deleteSelectedNodes();
+		},
+		undo: () => {
+			controller.undo();
+		},
+		redo: () => {
+			controller.redo();
 		}
 	}
 	
