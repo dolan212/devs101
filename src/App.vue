@@ -25,30 +25,33 @@
       </v-list>
     </v-navigation-drawer>
 	
-	<!--  adding nav bar -->
-	<v-navigation-drawer :mini-variant.sync="miniVariant" v-model="drawer" stateless hide-overlay>
-    <v-toolbar flat class="transparent">
-      <v-list class="pa-0">
-          <v-list-tile-content>
-            <v-list-tile-title>John Leider</v-list-tile-title>
-          </v-list-tile-content>
-       
-      </v-list>
-    </v-toolbar>
-    <v-list class="pt-0" dense>
-      <v-divider></v-divider>
-      <v-list-tile v-for="item in items" :key="item.title" @click="">
-        <v-list-tile-action>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-    </v-list>
-  </v-navigation-drawer>
+	<!--  adding nav bar to be placed to the right of the navigation side bar -->
+	
+		<v-navigation-drawer :mini-variant.sync="miniVariant" v-model="drawer" stateless hide-overlay>
+		<v-toolbar flat class="transparent">
+		</v-toolbar>
+		<v-list class="pt-0" dense>
+		  <v-divider></v-divider>
+			<v-list-tile-content>
+				<v-list-tile-title>Title:  </v-list-tile-title>
+				<v-list-tile-title>{{ item.title }}</v-list-tile-title>
+			</v-list-tile-content>
+			 <v-divider></v-divider>
+			<v-list-tile-content>
+				<v-list-tile-title>Label:  </v-list-tile-title>
+				<v-list-tile-title>{{ item.label }}</v-list-tile-title>
+			</v-list-tile-content>
+			 <v-divider></v-divider>
+			<v-list-tile-content>
+				<v-list-tile-title>Color:  </v-list-tile-title>
+				<v-list-tile-title>{{ item.color }}</v-list-tile-title>
+			</v-list-tile-content>
+		  </v-list-tile>
+		</v-list>
+	</v-navigation-drawer>
   
-  <!-- closing nav bar -->
+  <!-- closing nav bar  -->
+  
     <v-toolbar
       app
       :clipped-left="clipped"
@@ -191,13 +194,14 @@ export default {
 		}
 	}
 	
-	/* second navigation drawer is here for the side Nav bar */
+	/* data for second nav bar which is to the right */
 	,data () {
       return {
         drawer: true,
         items: [
-          { title: 'Home', icon: 'dashboard' },
-          { title: 'About', icon: 'question_answer' }
+          { title: 'nodeName'},
+          { label: 'nodeLabel'},
+		   { color: 'nodeColor'}
         ],
         right: null
       }
