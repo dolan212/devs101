@@ -24,6 +24,31 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
+	
+	<!--  adding nav bar -->
+	<v-navigation-drawer :mini-variant.sync="miniVariant" v-model="drawer" stateless hide-overlay>
+    <v-toolbar flat class="transparent">
+      <v-list class="pa-0">
+          <v-list-tile-content>
+            <v-list-tile-title>John Leider</v-list-tile-title>
+          </v-list-tile-content>
+       
+      </v-list>
+    </v-toolbar>
+    <v-list class="pt-0" dense>
+      <v-divider></v-divider>
+      <v-list-tile v-for="item in items" :key="item.title" @click="">
+        <v-list-tile-action>
+          <v-icon>{{ item.icon }}</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+    </v-list>
+  </v-navigation-drawer>
+  
+  <!-- closing nav bar -->
     <v-toolbar
       app
       :clipped-left="clipped"
@@ -154,6 +179,17 @@ export default {
 			controller.deleteSelectedNodes();
 		}
 	}
+	
+	/* second navigation drawer is here for the side Nav bar */
+	,data () {
+      return {
+        drawer: true,
+        items: [
+          { title: 'Home', icon: 'dashboard' },
+          { title: 'About', icon: 'question_answer' }
+        ],
+        right: null
+      }
+    }
 }
-
 </script>
