@@ -1,4 +1,4 @@
-import {Tree,Node} from '@/tree'
+import {Tree,Node,Edge} from '@/tree'
 import * as controller from '@/controller'
 import cytoscape from 'cytoscape'
 
@@ -6,7 +6,8 @@ const state =
 {
   tree: null,
   currentId: 0,
-  cy: null,
+  edgeId: 0,
+  cy: null
 }
 const getters =
 {
@@ -75,6 +76,23 @@ const mutations =
 
 
     return id; //return id to be used for cytoscape
+  },
+  addEdge(state, pos)
+  {
+    let source = pos.source;
+    let target = pos.target;
+    if(!state.tree) throw "Tree not initialized";
+    let id = state.edgeId++;
+    let edge = new Edge(id, source, target);
+    state.tree.addEdge(edge);
+
+    if(!state.cy) throw "Cytoscape not initialized";
+    state.cy.add({
+      group: "edges",
+  		data: {id: id, source: source, target: target}
+    });
+
+    return id;
   },
   deleteNode(state, id) {
 	  if(!state.tree) throw "Tree not initialized";

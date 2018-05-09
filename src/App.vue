@@ -150,6 +150,9 @@ export default {
 			controller.addNode(nodeLabel);
 			this.nodeName = "";
 		},
+    addEdge: function(source, target) {
+      controller.addEdge(source, target);
+    },
 		deleteNodes: () => {
 			controller.deleteSelectedNodes();
 		}
