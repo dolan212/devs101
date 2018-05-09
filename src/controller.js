@@ -47,8 +47,7 @@ export function deleteSelectedNodes() {
 
 function deleteNode(id) {
 	try {
-		tree.deleteNode(id);
-		view.deleteNode(id);
+		store.commit('deleteNode', id);
 	}
 	catch(exception) {
 		alert(exception);
@@ -57,6 +56,6 @@ function deleteNode(id) {
 export function setupView(container) {
 	//view.initialize(container); //initialize the cytoscape using the specified container
 	store.commit('init',container);
-	//view.addSelectListener(onSelect);
-	//view.addDeselectListener(onDeselect);
+	store.commit({ type: 'addSelectListener', listener: onSelect });
+	store.commit({ type: 'addDeselectListener', listener: onDeselect });
 }

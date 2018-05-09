@@ -1,15 +1,19 @@
 import {Tree,Node,Edge} from '@/tree'
 import * as controller from '@/controller'
 import cytoscape from 'cytoscape'
+
 const state =
 {
-  tree: new Tree(),
+  tree: null,
   currentId: 0,
   edgeId: 0,
   cy: null
 }
 const getters =
 {
+	getNodeLabel(state) {
+		return id => state.tree.getNode(id).label;
+	}
 }
 
 // actions
@@ -22,6 +26,7 @@ const mutations =
 {
   init(state,container)
   {
+	  state.tree = new Tree();
     state.cy = cytoscape({
   			container: container,
   			elements: [],
@@ -58,7 +63,6 @@ const mutations =
   },
   addNode(state,label)
   {
-    console.log("EAT MY ASS");
     if(!state.tree) throw "Tree not initialized"; //tree hasn't been initialized yet, so we error
     let id = state.currentId++;
     let node = new Node(id, label);
@@ -90,12 +94,34 @@ const mutations =
 
     return id;
   },
+  deleteNode(state, id) {
+	  if(!state.tree) throw "Tree not initialized";
+	  state.tree.deleteNode(id);
+	  state.cy.remove("#" + id);
+  },
   layout(state)
   {
     state.cy.layout({
   		name: 'preset',
   		animate: true
   	}).run();
+  },
+  addSelectListener(state, payload) {
+	  let listener = payload.listener;
+	state.cy.on('select', 'node', (evt) => {
+		listener(evt.target.id());
+	});
+  },
+  addDeselectListener(state, payload) {
+	  let listener = payload.listener;
+	state.cy.on('unselect', 'node', (evt) => {
+		listener(evt.target.id());
+	});
+  },
+  clean(state) {
+	state.tree.clean();
+	state.cy.destroy();
+	state.currentId = 0;
   }
 }
 const watch = {
