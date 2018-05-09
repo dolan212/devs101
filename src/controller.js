@@ -48,3 +48,10 @@ export function setupView(container) {
 	store.commit({ type: 'addSelectListener', listener: onSelect });
 	store.commit({ type: 'addDeselectListener', listener: onDeselect });
 }
+
+export function undo() {
+	store.commit('undo');
+}
+export function redo() {
+	store.commit('redo');
+}

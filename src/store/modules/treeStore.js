@@ -2,6 +2,7 @@ import {Tree,Node} from '@/tree'
 import * as controller from '@/controller'
 import cytoscape from 'cytoscape'
 import undoredo from 'cytoscape-undo-redo'
+import createPersistedState from 'vuex-persistedstate'
 
 cytoscape.use(undoredo);
 
@@ -11,6 +12,10 @@ const state =
   currentId: 0,
   cy: null,
   ur: null,
+  treeUndoStack: [],
+  jsonUndoStack: [],
+  treeRedoStack: [],
+  jsonRedoStack: []
 
 }
 const getters =
@@ -69,22 +74,27 @@ const mutations =
   addNode(state,label)
   {
     if(!state.tree) throw "Tree not initialized"; //tree hasn't been initialized yet, so we error
+    state.treeUndoStack.push(state.tree);
     let id = state.currentId++;
     let node = new Node(id, label);
     state.tree.addNode(node);
 
     if(!state.cy) throw "Cytoscape not initialized";
+    state.jsonUndoStack.push(state.cy.json());
   	let added=state.cy.add({
   		group: "nodes",
   		data: { id: id, label: label }
   	});
     state.ur.do("add",added);
+    console.log(state.currentId);
 
     return id; //return id to be used for cytoscape
   },
   deleteNode(state, id) {
 	  if(!state.tree) throw "Tree not initialized";
+	  state.treeUndoStack.push(state.tree);
 	  state.tree.deleteNode(id);
+	  state.jsonUndoStack.push(state.cy.json());
 	  let removed=state.cy.remove("#" + id);
     state.ur.do("remove",removed);
   },
@@ -114,11 +124,19 @@ const mutations =
 },
 
 undo(state){
-  state.ur.undo();
+  //state.ur.undo();
+  if(state.jsonUndoStack.length == 0) return;
+  let json = state.jsonUndoStack.pop();
+  state.jsonRedoStack.push(state.cy.json());
+  state.cy.json(json);
 },
 
 redo(state){
-  state.ur.redo();
+  //state.ur.redo();
+  if(state.jsonRedoStack.length == 0) return;
+  let json = state.jsonRedoStack.pop();
+  state.jsonUndoStack.push(state.cy.json());
+  state.cy.json(json);
 }
 }
 const watch = {
@@ -131,11 +149,20 @@ const watch = {
   }
 }
 
+const plugins = [createPersistedState({
+					reducer: state => ({
+							currentId: state.currentId
+
+					})
+})];
+
+
 export default
 {
-  state,
-  getters,
-  actions,
-  mutations,
-  watch
+  plugins: plugins,
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations,
+  watch: watch
 }
