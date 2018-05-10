@@ -72,6 +72,7 @@
 		  small
 		  color="yellow"
 		  @click.stop="dialog2 = true"
+      v-on:click= "getNodes()"
 		>
 		  <v-icon>call_split</v-icon>
 		</v-btn>
@@ -125,8 +126,34 @@
         <v-container grid-list-md>
           <v-layout wrap>
             <v-flex xs12 sm12 md12>
-              <v-text-field label= "Source" v-model="source"></v-text-field>
-              <v-text-field label= "Target" v-model="target"></v-text-field>
+              <v-subheader>Source Node</v-subheader>
+            </v-flex>
+            <v-flex xs12 sm12 md12>
+              <v-select
+              :items="nodes"
+              v-model="source"
+              label="Select"
+              single-line
+              item-text="label"
+              item-value="id"
+              return-object
+              persistant-hint
+              ></v-select>
+            </v-flex>
+            <v-flex xs12 sm12 md12>
+              <v-subheader>Target Node</v-subheader>
+            </v-flex>
+            <v-flex xs12 sm12 md12>
+              <v-select
+              :items="nodes"
+              v-model="target"
+              label="Select"
+              single-line
+              item-text="label"
+              item-value="id"
+              return-object
+              persistant-hint
+              ></v-select>
             </v-flex>
           </v-layout>
         </v-container>
@@ -147,7 +174,7 @@
 
 <script>
 import * as controller from '@/controller'
-
+var nodes = null;
 export default {
 	computed: {
 		activeFab () {
@@ -166,13 +193,15 @@ export default {
 			miniVariant: false,
       			fixed: false,
 			nodeName: "",
-      source:"",
-      target:"",
+      source: null,
+      target: null,
+      select:{id: '-1', label: 'node'},
 		      	items: [
 				{ icon: 'bubble_chart', title: 'Edit Tree' },
 				{ icon: 'import_export', title: 'Import Tree' },
 				{ icon: 'info', title: 'About' }
 			],
+      nodes: [],
 			title: 'Trii',
 			hov:false,
 			fab:false,
@@ -189,9 +218,9 @@ export default {
 			this.nodeName = "";
 		},
     addEdge: function(source, target) {
-      controller.addEdge(source, target);
-      this.source = "";
-      this.target = "";
+      controller.addEdge(source.id, target.id);
+      this.source = null;
+      this.target = null;
     },
 		deleteNodes: () => {
 			controller.deleteSelectedNodes();
@@ -201,7 +230,10 @@ export default {
 		},
 		redo: () => {
 			controller.redo();
-		}
+		},
+    getNodes: function(){
+      this.nodes = controller.getNodes();
+    }
 	}
 }
 

@@ -21,6 +21,9 @@ const getters =
 {
 	getNodeLabel(state) {
 		return id => state.tree.getNode(id).label;
+	},
+	getNodes(state) {
+		return state.tree.getNodes();
 	}
 }
 
@@ -85,7 +88,7 @@ const mutations =
   		data: { id: id, label: label }
   	});
     state.ur.do("add",added);
-
+    console.log(state.cy.nodes().json());
     return id; //return id to be used for cytoscape
   },
   addEdge(state, pos)
@@ -105,6 +108,12 @@ const mutations =
     });
 
     return id;
+  },
+  getNodes() {
+    if(state.cy == null)
+      return null;
+    else
+      return state.cy.nodes().json();
   },
   deleteNode(state, id) {
 	  if(!state.tree) throw "Tree not initialized";
