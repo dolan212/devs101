@@ -88,7 +88,6 @@ const mutations =
   		data: { id: id, label: label }
   	});
     state.ur.do("add",added);
-    console.log(state.cy.nodes().json());
     return id; //return id to be used for cytoscape
   },
   addEdge(state, pos)
