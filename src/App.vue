@@ -43,6 +43,24 @@
       <v-content>
         <router-view/>
       </v-content>
+	<!-- Global settings drawer -->
+	<v-navigation-drawer
+		temporary
+		:right="true"
+		v-model="settingsDrawer"
+		app
+	>
+		<v-toolbar flat>
+			<v-list>
+				<v-list-tile>
+					<v-list-tile-content>
+						<v-list-tile-title>Settings</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+			</v-list>
+		</v-toolbar>
+	</v-navigation-drawer>
+	
 	<!-- Node settings drawer -->
 	<v-navigation-drawer
 	temporary
