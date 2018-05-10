@@ -22,6 +22,8 @@ export function addNode(label) {
 
 export function addEdge(source, target) {
 	try {
+		if(source == target)
+			return;
 		let pos = {source: source, target: target};
 		store.commit('addEdge', pos);
 		store.commit('layout')

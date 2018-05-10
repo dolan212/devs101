@@ -57,7 +57,7 @@
 		  <v-icon>keyboard_arrow_up</v-icon>
 		  <v-icon>close</v-icon>
 		</v-btn>
-		<v-btn
+    <v-btn
 		  fab
 		  dark
 		  small
@@ -65,6 +65,15 @@
 		  @click.native.stop="dialog = true"
 		>
 		  <v-icon>add</v-icon>
+		</v-btn>
+    <v-btn
+		  fab
+		  dark
+		  small
+		  color="yellow"
+		  @click.stop="dialog2 = true"
+		>
+		  <v-icon>call_split</v-icon>
 		</v-btn>
 		<v-btn
 		  fab
@@ -106,6 +115,30 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-dialog v-model="dialog2" persistent max-width="500px">
+    <v-card>
+      <v-card-title>
+        <span class="headline" center>New Edge</span>
+      </v-card-title>
+      <v-card-text>
+        <v-container grid-list-md>
+          <v-layout wrap>
+            <v-flex xs12 sm12 md12>
+              <v-text-field label= "Source" v-model="source"></v-text-field>
+              <v-text-field label= "Target" v-model="target"></v-text-field>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="blue darken-1" flat @click.native="dialog2 = false">Close</v-btn>
+        <v-btn color="blue darken-1" flat @click.native="dialog2 = false" v-on:click="addEdge(source,target)" >Add</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
     <v-footer :fixed="fixed" app>
       <span>&copy; 2018 devs101</span>
     </v-footer>
@@ -133,6 +166,8 @@ export default {
 			miniVariant: false,
       			fixed: false,
 			nodeName: "",
+      source:"",
+      target:"",
 		      	items: [
 				{ icon: 'bubble_chart', title: 'Edit Tree' },
 				{ icon: 'import_export', title: 'Import Tree' },
@@ -144,6 +179,7 @@ export default {
 			editDirection:'top',
 			isVisible:true,
 			dialog:false,
+      dialog2:false,
 		}
 	},
 	name: 'Trii',
@@ -154,6 +190,8 @@ export default {
 		},
     addEdge: function(source, target) {
       controller.addEdge(source, target);
+      this.source = "";
+      this.target = "";
     },
 		deleteNodes: () => {
 			controller.deleteSelectedNodes();
