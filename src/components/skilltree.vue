@@ -13,10 +13,16 @@ export default {
 	mounted() {
 		controller.initialize();
 		controller.setupView(this.$refs.cy);
+		window.addEventListener('keyup', this.keyPressed);
 	},
 	methods: {
 		addNodeWrapper: function(value) {
 			tree.addNode();
+		},
+		keyPressed: (event) => {
+			if(event.which === 46) { //delete
+				controller.deleteSelectedNodes();
+			}
 		}
 	}
 }

@@ -29,6 +29,8 @@
       :clipped-left="clipped"
     >
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-btn @click.stop="undo" icon><v-icon>undo</v-icon></v-btn>
+      <v-btn @click.stop="redo" icon><v-icon>redo</v-icon></v-btn>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
@@ -55,7 +57,7 @@
 		  <v-icon>keyboard_arrow_up</v-icon>
 		  <v-icon>close</v-icon>
 		</v-btn>
-		<v-btn
+    <v-btn
 		  fab
 		  dark
 		  small
@@ -63,6 +65,16 @@
 		  @click.native.stop="dialog = true"
 		>
 		  <v-icon>add</v-icon>
+		</v-btn>
+    <v-btn
+		  fab
+		  dark
+		  small
+		  color="yellow"
+		  @click.stop="dialog2 = true"
+      v-on:click= "getNodes()"
+		>
+		  <v-icon>call_split</v-icon>
 		</v-btn>
 		<v-btn
 		  fab
@@ -104,6 +116,56 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-dialog v-model="dialog2" persistent max-width="500px">
+    <v-card>
+      <v-card-title>
+        <span class="headline" center>New Edge</span>
+      </v-card-title>
+      <v-card-text>
+        <v-container grid-list-md>
+          <v-layout wrap>
+            <v-flex xs12 sm12 md12>
+              <v-subheader>Source Node</v-subheader>
+            </v-flex>
+            <v-flex xs12 sm12 md12>
+              <v-select
+              :items="nodes"
+              v-model="source"
+              label="Select"
+              single-line
+              item-text="label"
+              item-value="id"
+              return-object
+              persistant-hint
+              ></v-select>
+            </v-flex>
+            <v-flex xs12 sm12 md12>
+              <v-subheader>Target Node</v-subheader>
+            </v-flex>
+            <v-flex xs12 sm12 md12>
+              <v-select
+              :items="nodes"
+              v-model="target"
+              label="Select"
+              single-line
+              item-text="label"
+              item-value="id"
+              return-object
+              persistant-hint
+              ></v-select>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="blue darken-1" flat @click.native="dialog2 = false">Close</v-btn>
+        <v-btn color="blue darken-1" flat @click.native="dialog2 = false" v-on:click="addEdge(source,target)" >Add</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
     <v-footer :fixed="fixed" app>
       <span>&copy; 2018 devs101</span>
     </v-footer>
@@ -112,7 +174,7 @@
 
 <script>
 import * as controller from '@/controller'
-
+var nodes = null;
 export default {
 	computed: {
 		activeFab () {
@@ -131,17 +193,22 @@ export default {
 			miniVariant: false,
       			fixed: false,
 			nodeName: "",
+      source: null,
+      target: null,
+      select:{id: '-1', label: 'node'},
 		      	items: [
 				{ icon: 'bubble_chart', title: 'Edit Tree' },
 				{ icon: 'import_export', title: 'Import Tree' },
 				{ icon: 'info', title: 'About' }
 			],
+      nodes: [],
 			title: 'Trii',
 			hov:false,
 			fab:false,
 			editDirection:'top',
 			isVisible:true,
 			dialog:false,
+      dialog2:false,
 		}
 	},
 	name: 'Trii',
@@ -150,9 +217,23 @@ export default {
 			controller.addNode(nodeLabel);
 			this.nodeName = "";
 		},
+    addEdge: function(source, target) {
+      controller.addEdge(source.id, target.id);
+      this.source = null;
+      this.target = null;
+    },
 		deleteNodes: () => {
 			controller.deleteSelectedNodes();
-		}
+		},
+		undo: () => {
+			controller.undo();
+		},
+		redo: () => {
+			controller.redo();
+		},
+    getNodes: function(){
+      this.nodes = controller.getNodes();
+    }
 	}
 }
 

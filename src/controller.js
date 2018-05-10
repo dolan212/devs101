@@ -1,19 +1,40 @@
 import * as tree from '@/tree'
 import * as view from '@/view'
+import {store} from './store/index.js'
 
-export function initialize() {
+export function initialize()
+{
+
 	tree.initialize();
 }
 
 export function addNode(label) {
 	try {
 		let id = tree.addNode(label);
-		view.addNode(id, label);
-		view.layout();
+		store.commit('addNode',label);
+		//view.addNode(id, label);
+		store.commit('layout');//view.layout();
 	}
 	catch(exception) {
 		alert(exception);
 	}
+}
+
+export function addEdge(source, target) {
+	try {
+		if(source == target)
+			return;
+		let pos = {source: source, target: target};
+		store.commit('addEdge', pos);
+		store.commit('layout');
+	}
+	catch(exception) {
+		alert(exception);
+	}
+}
+
+export function getNodes(){
+	return store.getters.getNodes;
 }
 
 let selectedNodes = [];
@@ -32,15 +53,22 @@ export function deleteSelectedNodes() {
 
 function deleteNode(id) {
 	try {
-		tree.deleteNode(id);
-		view.deleteNode(id);
+		store.commit('deleteNode', id);
 	}
 	catch(exception) {
 		alert(exception);
 	}
 }
 export function setupView(container) {
-	view.initialize(container); //initialize the cytoscape using the specified container
-	view.addSelectListener(onSelect);
-	view.addDeselectListener(onDeselect);
+	//view.initialize(container); //initialize the cytoscape using the specified container
+	store.commit('init',container);
+	store.commit({ type: 'addSelectListener', listener: onSelect });
+	store.commit({ type: 'addDeselectListener', listener: onDeselect });
+}
+
+export function undo() {
+	store.commit('undo');
+}
+export function redo() {
+	store.commit('redo');
 }
