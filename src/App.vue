@@ -218,7 +218,6 @@ export default {
 			this.nodeName = "";
 		},
     addEdge: function(source, target) {
-	    console.log(source, target);
       controller.addEdge(source.id, target.id);
       this.source = null;
       this.target = null;
@@ -233,9 +232,7 @@ export default {
 			controller.redo();
 		},
     getNodes: function(){
-	    console.log(this.nodes);
       this.nodes = controller.getNodes();
-      console.log(this.nodes);
     }
 	}
 }
