@@ -51,7 +51,25 @@ export function deleteSelectedNodes() {
 		deleteNode(selectedNodes[i]);
 }
 
-function deleteNode(id) {
+export function getSelectedNodes() {
+	return selectedNodes;
+}
+
+export function updateNode(id, payload) {
+	try {
+		let p = {
+			id: id,
+			label: payload.label
+		}
+		store.commit('updateNode', p);
+	}
+	catch(exception) {
+		alert(exception);
+	}
+
+}
+
+export function deleteNode(id) {
 	try {
 		store.commit('deleteNode', id);
 	}

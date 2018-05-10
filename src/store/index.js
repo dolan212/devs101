@@ -95,6 +95,15 @@ export const store = new Vuex.Store({
 		state.json=state.cy.json();
      return id; //return id to be used for cytoscape
    },
+   updateNode(state, payload) {
+	   	state.treeUndoStack.push(state.tree);
+		state.tree.updateNode(payload.id, payload.label);
+		state.jsonUndoStack.push(state.cy.json());
+		state.cy.$("#" + payload.id).data({ 
+				label: payload.label
+		});
+		state.json = state.cy.json();
+   },
    addEdge(state, pos)
    {
      let source = pos.source;

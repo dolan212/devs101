@@ -63,7 +63,6 @@
 	
 	<!-- Node settings drawer -->
 	<v-navigation-drawer
-	temporary
 	:right="true"
 	v-model="nodeDrawer" 
 	app
@@ -72,17 +71,27 @@
 			<v-list>
 				<v-list-tile>
 					<v-list-tile-content>
-						<v-list-tile-title>Editing: {{ selectedNode.label }}</v-list-tile-title>
+						<v-list-tile-title>Edit Nodes</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
 			</v-list>
 		</v-toolbar>
 		<v-divider></v-divider>
-		<v-container fluid>
-					<v-text-field label="Skill Name" v-model="selectedNode.label"></v-text-field>
-					<v-text-field label="Node Colour" v-model="selectedNode.colour"></v-text-field>
+		<v-container v-for="item in nodes" :key="item.id" v-if="item.selected" fluid>
+					<v-subheader>{{ item.label }}</v-subheader>
+					<v-text-field label="Skill Name" v-model="item.label"></v-text-field>
+					<v-divider></v-divider>
 		</v-container>
+		<v-btn v-on:click="saveNodes()">Save</v-btn>
 	</v-navigation-drawer>
+	<v-snackbar
+		:timeout="noSelectionSnack.timeout"
+		top
+		v-model="noSelectionSnack.enabled"
+	>
+		{{ noSelectionSnack.text }}
+		<v-btn flat color="pink" @click.native="noSelectionSnack.enabled = false">Close</v-btn>
+	</v-snackbar>
 
       <v-fab-transition>
 	      <v-speed-dial
@@ -252,6 +261,7 @@ export default {
 				{ icon: 'info', title: 'About' }
 			],
       nodes: [],
+	  noSelectionSnack: { text: "Please select a skill first", timeout: 6000, enabled: false },
 			title: 'Trii',
 			hov:false,
 			fab:false,
@@ -259,7 +269,7 @@ export default {
 			isVisible:true,
 			dialog:false,
 			dialog2: false,
-			selectedNode: { id: 0, label: 'example', colour: '#AAAAAA' } //just some example data
+			selectedNode: null
 			
 			
 		}
@@ -289,8 +299,31 @@ export default {
 			controller.redo();
 		},
 		editNode: function() {
-			console.log(this.nodeDrawer);
+			this.getNodes();
+			var selectedNodes = controller.getSelectedNodes();
+			if(selectedNodes.length == 0) {
+				this.noSelectionSnack.enabled = true;
+				return;
+			}
+			for(var i = 0; i < this.nodes.length; i++) {
+				let n = this.nodes[i];
+				for(var j = 0; j < selectedNodes.length; j++) {
+					if(n.id == selectedNodes[j]) {
+						this.nodes[i].selected = true;
+						break;
+					}
+					n.selected = false;
+				}
+			}
 			this.nodeDrawer = true;
+		},
+		saveNodes: function() {
+			var selectedNodes = controller.getSelectedNodes();
+			let n = this.nodes.filter(x => selectedNodes.includes("" + x.id));
+			for(var i = 0; i < n.length; i++) {
+				controller.updateNode(n[i].id, { label: n[i].label });
+			}
+			this.nodeDrawer = false;
 		},
 		editSettings: function() {
 			this.settingsDrawer = true;
