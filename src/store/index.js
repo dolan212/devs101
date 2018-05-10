@@ -165,15 +165,11 @@ export const store = new Vuex.Store({
 	 reducer: state => ({
             tree: state.tree,
             currentId: state.currentId,
-<<<<<<< Updated upstream
-						json:state.cy.json(),
 						jsonUndoStack: state.jsonUndoStack,
 						jsonRedoStack: state.jsonRedoStack,
+						json:state.json,
 						treeUndoStack: state.treeUndoStack,
 						treeRedoStack: state.treeRedoStack
-=======
-						json:state.json,
->>>>>>> Stashed changes
         }),
  })],
 });
