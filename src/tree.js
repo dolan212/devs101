@@ -16,7 +16,7 @@ export class Node {
 		this._id = id;
 		this._label = label;
 	}
-	set label(label) { this.label = label; }
+	set label(label) { this._label = label; }
 	get label() { return this._label; }
 	get id() { return this._id; }
 }
@@ -37,6 +37,10 @@ export class Tree {
 			if(this.nodes[i].id === id) return this.nodes[i];
 		}
 		throw "Node not found";
+	}
+	updateNode(id, _label) {
+		var n = this.nodes.find(x => x.id == id);
+		n.label = _label;
 	}
 	getNodes() {
 		var nodesList = [];
