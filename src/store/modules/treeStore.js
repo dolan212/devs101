@@ -92,6 +92,7 @@ const mutations =
   {
     let source = pos.source;
     let target = pos.target;
+    if(source == target) return;
     if(!state.tree) throw "Tree not initialized";
     let id = pos.source + "-" + pos.target;
     let edge = new Edge(id, source, target);
