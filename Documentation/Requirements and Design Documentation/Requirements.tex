@@ -8,32 +8,32 @@
 \newpage
 
 \section{Functional Requirements}
-The Editor must be able to do the following:
-\begin{itemize}
-\item Add a new node to the tree.
-\item Move an existing node around in the tree view.
-\item Delete an existing node from the tree.
-\item Copy a node and all its properties.
-\item Paste a copied node to the tree view.
+The user must be able to do the following:
+\begin{enumerate}
+\item Add a new node to the tree. This is the most important functionality, because nodes must be added to create a tree.
+\item Delete an existing node from the tree. It is important that if a user can add a node, the user should also be able to remove a node if it is no longer needed or wanted.
 \item Edit the following settings of a node:
  \begin{itemize}
-  \item	Name
-  \item ID
-  \item Description
-  \item Visible
-  \item Enabled
-  \item Max
-  \item Cost
+  \item Name. This is a String variable, it is the label of the node and the name that will be used to refer to this node.
+  \item ID. This is a String variable and it must be unique, it is the nodes unique identification, it will be used by the program to retrieve this node.
+  \item Description. This is a String variable, it is a custom user defined description of the node and its use.
+  \item Visible. This is a boolean variable, it states whether or not the node should be display.
+  \item Enabled. This is a boolean variable that is determined if all of the nodes prerequisites are met or not. This value is usually automatically set using a function, however a user can manually change it for testing purposes.
+  \item Max. This is a integer variable, it states how many times this skill/node can be bought/upgraded.
+  \item Cost. This is a integer variable, it states how many points is needed to acquire/upgrade this skill/node.
  \end{itemize}
-\item Links between nodes must be automatically created, but links can also be manually set and changed in the editor.
-\item Save and Load the state of the tree at any point in time. Save data must be stored in a JSON format.
-\item Undo and Redo any actions or changes performed on the tree at any point in time. Must be able to undo as many times as actions where performed, undo until original tree state is reached.
-\item Multi selection of nodes. Must be able to select multiple nodes at once and perform all node operations (Move, Copy, Paste, Delete, Edit, etc.) to all selected nodes at once.
-\item Automatically produce a layout of the current nodes.
-\item Zoom in and out of the tree view.
-\item The user must also be able to create custom global variables that will be used in the tree structure.
-\item The custom variables must be usable in the node settings.
-\end{itemize}
+ \item Links between nodes must be automatically created, but links can also be manually set and changed in the editor. This is important, because a tree is a structure of interconnected nodes. If the nodes had no links then it would not be a tree.
+\item Create custom global variables that will be used in the tree structure. This allows the users to add their own data that will be used by the system.
+\item The custom variables must be usable in the node settings. This is important for the users data to be used by the system, the user can use their data to change a node’s settings or provide conditions to certain settings.
+\item Automatically produce a layout of the current nodes. This is important, because this determines where newly added nodes appear on the screen.
+\item Move an existing node around in the tree view. This allows the user to create their own layout of the tree.
+\item Zoom in and out of the tree view. This is a simple but important functionality to be able to view the tree in different ways.
+\item Save and Load the state of the tree at any point in time. Save data must be stored in a JSON format. This is very important to keep track of the user's progress and keep it safe incase something happens and the site crashes that the tree and the data is not lost.
+\item Undo and Redo any actions or changes performed on the tree at any point in time. Must be able to undo as many times as actions were performed, undo until original tree state is reached. This uses the previous saved states of the tree. This is useful for quickly undoing a small mistake.
+\item Copy a node and all its properties. This is useful for when a user wants identical nodes or if the user wants to add a node from one tree to another tree without creating a new node from scratch.
+\item Paste a copied node to the tree view. This is needed for the copying of a node. This recreates the node/nodes with all the properties that was copied. Without the paste functionality,  the copy functionality would be pointless.
+\item Multi selection of nodes. Must be able to select multiple nodes at once and perform all node operations (Move, Copy, Paste, Delete, Edit, etc.) to all selected nodes at once. This is useful for when the user wishes to work in bulk.
+\end{enumerate}
 
 Testing must be performed on the skill tree.
 
