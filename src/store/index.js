@@ -64,6 +64,7 @@ export const store = new Vuex.Store({
    					style: {
    						'width': 3,
    						'line-color': '#ccc',
+						'curve-style': 'bezier',
    						'target-arrow-shape': 'triangle'
    					}
    				}
