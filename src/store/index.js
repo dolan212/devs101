@@ -38,6 +38,8 @@ export const store = new Vuex.Store({
    init(state,container)
    {
  	  	state.tree = new Tree();
+		if(state.treeNodes) state.tree.nodes = Array.from(state.treeNodes, x => new Node(x._id, x._label));
+		if(state.treeEdges) state.tree.edges = Array.from(state.treeNodes, x => new Edge(x._id, x._source, x._target));
      state.cy = cytoscape({
    			container: container,
    			elements: [],
@@ -167,6 +169,8 @@ export const store = new Vuex.Store({
  plugins:[persistentState({
 	 reducer: state => ({
             tree: state.tree,
+			treeNodes: state.tree.nodes,
+			treeEdges: state.tree.edges,
             currentId: state.currentId,
 						jsonUndoStack: state.jsonUndoStack,
 						jsonRedoStack: state.jsonRedoStack,
