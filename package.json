@@ -49,6 +49,7 @@
     "html-webpack-plugin": "^2.30.1",
     "http-proxy-middleware": "^0.17.4",
     "jest": "^22.4.3",
+    "jest-localstorage-mock": "^2.2.0",
     "jest-serializer-vue": "^1.0.0",
     "lighthouse-ci": "github:ebidel/lighthouse-ci",
     "now-travis": "github:ankeetmaini/now-travis",
