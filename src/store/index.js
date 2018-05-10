@@ -162,7 +162,11 @@ export const store = new Vuex.Store({
 	 reducer: state => ({
             tree: state.tree,
             currentId: state.currentId,
-						json:state.cy.json()
+						json:state.cy.json(),
+						jsonUndoStack: state.jsonUndoStack,
+						jsonRedoStack: state.jsonRedoStack,
+						treeUndoStack: state.treeUndoStack,
+						treeRedoStack: state.treeRedoStack
         }),
  })],
 });
