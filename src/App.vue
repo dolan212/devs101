@@ -2,11 +2,8 @@
   <v-app>
     <v-navigation-drawer
       persistent
-      :mini-variant="miniVariant"
-      :clipped="clipped"
       v-model="drawer"
       enable-resize-watcher
-      fixed
       app
     >
       <v-list>
@@ -24,6 +21,12 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
+	
+	<!--  adding nav bar to be placed to the right of the navigation side bar -->
+	
+		  
+  <!-- closing nav bar  -->
+  
     <v-toolbar
       app
       :clipped-left="clipped"
@@ -33,10 +36,54 @@
       <v-btn @click.stop="redo" icon><v-icon>redo</v-icon></v-btn>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
+	  <v-btn icon @click.stop="settingsDrawer = !settingsDrawer">
+	  	<v-icon>settings</v-icon>
+	  </v-btn>
     </v-toolbar>
       <v-content>
         <router-view/>
       </v-content>
+	<!-- Global settings drawer -->
+	<v-navigation-drawer
+		temporary
+		:right="true"
+		v-model="settingsDrawer"
+		app
+	>
+		<v-toolbar flat>
+			<v-list>
+				<v-list-tile>
+					<v-list-tile-content>
+						<v-list-tile-title>Settings</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+			</v-list>
+		</v-toolbar>
+	</v-navigation-drawer>
+	
+	<!-- Node settings drawer -->
+	<v-navigation-drawer
+	temporary
+	:right="true"
+	v-model="nodeDrawer" 
+	app
+	>
+		<v-toolbar flat>
+			<v-list>
+				<v-list-tile>
+					<v-list-tile-content>
+						<v-list-tile-title>Editing: {{ selectedNode.label }}</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+			</v-list>
+		</v-toolbar>
+		<v-divider></v-divider>
+		<v-container fluid>
+					<v-text-field label="Skill Name" v-model="selectedNode.label"></v-text-field>
+					<v-text-field label="Node Colour" v-model="selectedNode.colour"></v-text-field>
+		</v-container>
+	</v-navigation-drawer>
+
       <v-fab-transition>
 	      <v-speed-dial
 	      v-model="fab"
@@ -81,6 +128,7 @@
 		  dark
 		  small
 		  color="indigo"
+		  @click.native.stop="editNode()"
 		>
 		  <v-icon>edit</v-icon>
 		</v-btn>
@@ -190,6 +238,8 @@ export default {
 		return {
 			clipped: true,
       			drawer: false,
+				nodeDrawer: false,
+				settingsDrawer: false,
 			miniVariant: false,
       			fixed: false,
 			nodeName: "",
@@ -208,12 +258,16 @@ export default {
 			editDirection:'top',
 			isVisible:true,
 			dialog:false,
-      dialog2:false,
+			dialog2: false,
+			selectedNode: { id: 0, label: 'example', colour: '#AAAAAA' } //just some example data
+			
+			
 		}
 	},
 	name: 'Trii',
 	methods: {
 		addNode: function(nodeLabel) {
+			console.log(this.nodeName);
 			controller.addNode(nodeLabel);
 			this.nodeName = "";
 		},
@@ -222,19 +276,25 @@ export default {
       this.source = null;
       this.target = null;
     },
+	getNodes: function() {
+		this.nodes = controller.getNodes();
+	},
 		deleteNodes: () => {
 			controller.deleteSelectedNodes();
 		},
-		undo: () => {
+		undo: function() {
 			controller.undo();
 		},
-		redo: () => {
+		redo: function() {
 			controller.redo();
 		},
-    getNodes: function(){
-      this.nodes = controller.getNodes();
-    }
+		editNode: function() {
+			console.log(this.nodeDrawer);
+			this.nodeDrawer = true;
+		},
+		editSettings: function() {
+			this.settingsDrawer = true;
+		}
 	}
 }
-
 </script>
