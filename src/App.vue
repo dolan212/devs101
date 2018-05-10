@@ -72,6 +72,7 @@
 		  small
 		  color="yellow"
 		  @click.stop="dialog2 = true"
+      v-on:click= "getNodes()"
 		>
 		  <v-icon>call_split</v-icon>
 		</v-btn>
@@ -125,8 +126,36 @@
         <v-container grid-list-md>
           <v-layout wrap>
             <v-flex xs12 sm12 md12>
-              <v-text-field label= "Source" v-model="source"></v-text-field>
-              <v-text-field label= "Target" v-model="target"></v-text-field>
+              <v-subheader>Source Node</v-subheader>
+            </v-flex>
+            <v-flex xs12 sm12 md12>
+              <v-select
+              :items="nodes"
+              v-model="Object"
+              :hint="'${Object.id}, ${Object.label}'"
+              label="Select"
+              single-line
+              item-text="label"
+              item-value="id"
+              return-object
+              persistant-hint
+              ></v-select>
+            </v-flex>
+            <v-flex xs12 sm12 md12>
+              <v-subheader>Target Node</v-subheader>
+            </v-flex>
+            <v-flex xs12 sm12 md12>
+              <v-select
+              :items="nodes"
+              v-model="Object"
+              :hint="'${Object.id}, ${Object.label}'"
+              label="Select"
+              single-line
+              item-text="label"
+              item-value="id"
+              return-object
+              persistant-hint
+              ></v-select>
             </v-flex>
           </v-layout>
         </v-container>
@@ -147,7 +176,7 @@
 
 <script>
 import * as controller from '@/controller'
-
+var nodes = null;
 export default {
 	computed: {
 		activeFab () {
@@ -168,11 +197,13 @@ export default {
 			nodeName: "",
       source:"",
       target:"",
+      select:{id: '-1', label: 'node'},
 		      	items: [
 				{ icon: 'bubble_chart', title: 'Edit Tree' },
 				{ icon: 'import_export', title: 'Import Tree' },
 				{ icon: 'info', title: 'About' }
 			],
+      nodes: [],
 			title: 'Trii',
 			hov:false,
 			fab:false,
@@ -201,7 +232,10 @@ export default {
 		},
 		redo: () => {
 			controller.redo();
-		}
+		},
+    getNodes: function(){
+      nodes = controller.getNodes();
+    }
 	}
 }
 

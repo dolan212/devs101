@@ -26,11 +26,15 @@ export function addEdge(source, target) {
 			return;
 		let pos = {source: source, target: target};
 		store.commit('addEdge', pos);
-		store.commit('layout')
+		store.commit('layout');
 	}
 	catch(exception) {
 		alert(exception);
 	}
+}
+
+export function getNodes(){
+	store.commit('getNodes');
 }
 
 let selectedNodes = [];
