@@ -27,7 +27,10 @@ export const store = new Vuex.Store({
  	{
 	 getNodeLabel(state) {
 		 return id => state.tree.getNode(id).label;
-	 }
+	 },
+	 	getNodes(state) {
+	 		return state.tree.getNodes();
+	 	}
  },
 
  mutations:
@@ -95,11 +98,13 @@ export const store = new Vuex.Store({
      let source = pos.source;
      let target = pos.target;
      if(!state.tree) throw "Tree not initialized";
+		 state.treeUndoStack.push(state.tree);
      let id = pos.source + "-" + pos.target;
      let edge = new Edge(id, source, target);
      state.tree.addEdge(edge);
 
      if(!state.cy) throw "Cytoscape not initialized";
+		 state.jsonUndoStack.push(state.cy.json());
      state.cy.add({
        group: "edges",
    		data: {id: id, source: source, target: target}
