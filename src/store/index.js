@@ -7,7 +7,6 @@ import * as controller from '@/controller'
 import cytoscape from 'cytoscape'
 import undoredo from 'cytoscape-undo-redo'
 
-cytoscape.use(undoredo);
 Vue.use(Vuex);
 
 
@@ -17,7 +16,6 @@ export const store = new Vuex.Store({
 	  tree: null,
 	  currentId: 0,
 	  cy: null,
-	  ur: null,
 	  treeUndoStack: [],
 	  jsonUndoStack: [],
 	  treeRedoStack: [],
@@ -36,8 +34,7 @@ export const store = new Vuex.Store({
  {
    init(state,container)
    {
-		 console.log("HERE");
- 	  state.tree = new Tree();
+ 	  	state.tree = new Tree();
      state.cy = cytoscape({
    			container: container,
    			elements: [],
@@ -71,8 +68,12 @@ export const store = new Vuex.Store({
    			}
    	});
    	state.cy.maxZoom(2);
-     state.ur = state.cy.undoRedo();
 		 state.cy.json(state.json);
+		 state.cy.on("free",function(event){
+ 			console.log(state.cy.json());
+ 			state.json=state.cy.json();
+ 			console.log(state.json);
+ 	});
    },
    addNode(state,label)
    {
@@ -88,8 +89,7 @@ export const store = new Vuex.Store({
    		group: "nodes",
    		data: { id: id, label: label }
    	});
-     state.ur.do("add",added);
-		 console.log(state.currentId);
+		state.json=state.cy.json();
      return id; //return id to be used for cytoscape
    },
    addEdge(state, pos)
@@ -106,7 +106,7 @@ export const store = new Vuex.Store({
        group: "edges",
    		data: {id: id, source: source, target: target}
      });
-
+		 state.json=state.cy.json();
      return id;
    },
    deleteNode(state, id) {
@@ -115,7 +115,7 @@ export const store = new Vuex.Store({
  	  state.tree.deleteNode(id);
  	  state.jsonUndoStack.push(state.cy.json());
  	  let removed=state.cy.remove("#" + id);
-     state.ur.do("remove",removed);
+    state.json=state.cy.json();
    },
    layout(state)
    {
@@ -123,6 +123,7 @@ export const store = new Vuex.Store({
    		name: 'preset',
    		animate: true
    	}).run();
+		state.json=state.cy.json();
    },
    addSelectListener(state, payload) {
  	  let listener = payload.listener;
@@ -148,6 +149,7 @@ export const store = new Vuex.Store({
    let json = state.jsonUndoStack.pop();
    state.jsonRedoStack.push(state.cy.json());
    state.cy.json(json);
+	 state.json=state.cy.json();
  },
 
  redo(state){
@@ -156,17 +158,22 @@ export const store = new Vuex.Store({
    let json = state.jsonRedoStack.pop();
    state.jsonUndoStack.push(state.cy.json());
    state.cy.json(json);
- 		}
+	 state.json=state.cy.json();
+ }
  },
  plugins:[persistentState({
 	 reducer: state => ({
             tree: state.tree,
             currentId: state.currentId,
+<<<<<<< Updated upstream
 						json:state.cy.json(),
 						jsonUndoStack: state.jsonUndoStack,
 						jsonRedoStack: state.jsonRedoStack,
 						treeUndoStack: state.treeUndoStack,
 						treeRedoStack: state.treeRedoStack
+=======
+						json:state.json,
+>>>>>>> Stashed changes
         }),
  })],
 });
