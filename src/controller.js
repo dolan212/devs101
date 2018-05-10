@@ -34,7 +34,7 @@ export function addEdge(source, target) {
 }
 
 export function getNodes(){
-	store.commit('getNodes');
+	return store.getters.getNodes;
 }
 
 let selectedNodes = [];

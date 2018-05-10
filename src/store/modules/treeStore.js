@@ -21,6 +21,9 @@ const getters =
 {
 	getNodeLabel(state) {
 		return id => state.tree.getNode(id).label;
+	},
+	getNodes(state) {
+		return state.tree.getNodes();
 	}
 }
 

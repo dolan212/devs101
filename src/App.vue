@@ -131,8 +131,7 @@
             <v-flex xs12 sm12 md12>
               <v-select
               :items="nodes"
-              v-model="Object"
-              :hint="'${Object.id}, ${Object.label}'"
+              v-model="source"
               label="Select"
               single-line
               item-text="label"
@@ -147,8 +146,7 @@
             <v-flex xs12 sm12 md12>
               <v-select
               :items="nodes"
-              v-model="Object"
-              :hint="'${Object.id}, ${Object.label}'"
+              v-model="target"
               label="Select"
               single-line
               item-text="label"
@@ -195,8 +193,8 @@ export default {
 			miniVariant: false,
       			fixed: false,
 			nodeName: "",
-      source:"",
-      target:"",
+      source: null,
+      target: null,
       select:{id: '-1', label: 'node'},
 		      	items: [
 				{ icon: 'bubble_chart', title: 'Edit Tree' },
@@ -220,9 +218,10 @@ export default {
 			this.nodeName = "";
 		},
     addEdge: function(source, target) {
-      controller.addEdge(source, target);
-      this.source = "";
-      this.target = "";
+	    console.log(source, target);
+      controller.addEdge(source.id, target.id);
+      this.source = null;
+      this.target = null;
     },
 		deleteNodes: () => {
 			controller.deleteSelectedNodes();
@@ -234,7 +233,9 @@ export default {
 			controller.redo();
 		},
     getNodes: function(){
-      nodes = controller.getNodes();
+	    console.log(this.nodes);
+      this.nodes = controller.getNodes();
+      console.log(this.nodes);
     }
 	}
 }

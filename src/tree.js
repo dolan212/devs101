@@ -38,6 +38,17 @@ export class Tree {
 		}
 		throw "Node not found";
 	}
+	getNodes() {
+		var nodesList = [];
+		for(var i = 0; i < this.nodes.length; i++) {
+			var n = this.nodes[i];
+			nodesList.push({
+					id: n.id,
+					label: n.label
+			});
+		}
+		return nodesList;
+	}
 	deleteNode(id) {
 		let index = -1;
 		for(var i = 0; i < this.nodes.length; i++) {
