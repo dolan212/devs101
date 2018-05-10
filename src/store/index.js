@@ -70,10 +70,8 @@ export const store = new Vuex.Store({
    	state.cy.maxZoom(2);
 		 state.cy.json(state.json);
 		 state.cy.on("free",function(event){
- 			console.log(state.cy.json());
  			state.json=state.cy.json();
- 			console.log(state.json);
- 	});
+ 			});
    },
    addNode(state,label)
    {
