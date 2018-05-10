@@ -1,4 +1,4 @@
-class globals{
+class Global{
 
   constructor(name, type, defaultVal, req) {
     this._name = name;
@@ -20,7 +20,7 @@ class globals{
 }
 
 
-class globalString extends globals{
+class GlobalString extends Global{
 
   constructor(name, type, defaultVal, req) {
     //this._name = name;
@@ -55,7 +55,7 @@ class globalString extends globals{
 
 }
 
-class globalNumber extends globals{
+class GlobalNumber extends Global{
 
   constructor(name, type, defaultVal, req) {
     //this._name = name;
@@ -92,7 +92,7 @@ class globalNumber extends globals{
 
 }
 
-class globalMultiSelect extends globals{
+class GlobalMultiSelect extends Global{
 
   constructor(name, type, defaultVal, req, vals) {
     //this._name = name;
@@ -184,11 +184,8 @@ class globalMultiSelect extends globals{
       this._options = [];
     }
   }
-
-  export function globals(name, type, defaultVal, req) {
-    var gVar = globals(name, type, defaultVal, req);
-    return gVar;
-  }
-
 }
-
+export function globals(name, type, defaultVal, req) {
+  var gVar = Global(name, type, defaultVal, req);
+  return gVar;
+}
