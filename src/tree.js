@@ -81,6 +81,17 @@ export class Tree {
         this.nodes.length = 0;
         this.edges.length = 0;
     }
+	clone() {
+		let newTree = new Tree();
+		for(var i = 0; i < this.nodes.length; i++) {
+			newTree.addNode(this.nodes[i]);
+		}
+		for(var i = 0; i < this.edges.length; i++) {
+			newTree.addEdge(this.edges[i]);
+		}
+
+		return newTree;
+	}
 }
 
 var currentId;

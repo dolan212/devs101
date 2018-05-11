@@ -80,13 +80,12 @@ export const store = new Vuex.Store({
         },
         addNode(state, label) {
             if (!state.tree) throw "Tree not initialized"; //tree hasn't been initialized yet, so we error
-            state.treeUndoStack.push(state.tree);
+            if (!state.cy) throw "Cytoscape not initialized";
+			pushUndo(state);
             let id = state.currentId++;
             let node = new Node(id, label);
             state.tree.addNode(node);
 
-            if (!state.cy) throw "Cytoscape not initialized";
-            state.jsonUndoStack.push(state.cy.json());
             let added = state.cy.add({
                 group: "nodes",
                 data: {
@@ -95,32 +94,26 @@ export const store = new Vuex.Store({
                 }
             });
             state.json = state.cy.json();
-			state.jsonRedoStack.length = 0;
-			state.treeRedoStack.length = 0;
             return id; //return id to be used for cytoscape
         },
         updateNode(state, payload) {
-            state.treeUndoStack.push(state.tree);
+			pushUndo(state);
             state.tree.updateNode(payload.id, payload.label);
-            state.jsonUndoStack.push(state.cy.json());
             state.cy.$("#" + payload.id).data({
                 label: payload.label
             });
             state.json = state.cy.json();
-			state.jsonRedoStack.length = 0;
-			state.treeRedoStack.length = 0;
         },
         addEdge(state, pos) {
             let source = pos.source;
             let target = pos.target;
             if (!state.tree) throw "Tree not initialized";
-            state.treeUndoStack.push(state.tree);
+            if (!state.cy) throw "Cytoscape not initialized";
+			pushUndo(state);
             let id = pos.source + "-" + pos.target;
             let edge = new Edge(id, source, target);
             state.tree.addEdge(edge);
 
-            if (!state.cy) throw "Cytoscape not initialized";
-            state.jsonUndoStack.push(state.cy.json());
             state.cy.add({
                 group: "edges",
                 data: {
@@ -130,19 +123,14 @@ export const store = new Vuex.Store({
                 }
             });
             state.json = state.cy.json();
-			state.jsonRedoStack.length = 0;
-			state.treeRedoStack.length = 0;
             return id;
         },
         deleteNode(state, id) {
             if (!state.tree) throw "Tree not initialized";
-            state.treeUndoStack.push(state.tree);
+			pushUndo(state);
             state.tree.deleteNode(id);
-            state.jsonUndoStack.push(state.cy.json());
             let removed = state.cy.remove("#" + id);
             state.json = state.cy.json();
-			state.jsonRedoStack.length = 0;
-			state.treeRedoStack.length = 0;
         },
         layout(state) {
             state.cy.layout({
@@ -180,6 +168,10 @@ export const store = new Vuex.Store({
             state.jsonRedoStack.push(state.cy.json());
             state.cy.json(json);
             state.json = state.cy.json();
+			if(state.treeUndoStack.length == 0) return;
+			let tree = state.treeUndoStack.pop();
+			state.treeRedoStack.push(state.tree.clone());
+			state.tree = tree;
         },
 
         redo(state) {
@@ -189,6 +181,10 @@ export const store = new Vuex.Store({
             state.jsonUndoStack.push(state.cy.json());
             state.cy.json(json);
             state.json = state.cy.json();
+			if(state.treeRedoStack.length == 0) return;
+			let tree = state.treeRedoStack.pop();
+			state.treeUndoStack.push(state.tree.clone());
+			state.tree = tree;
         }
     },
     plugins: [persistentState({
@@ -205,3 +201,13 @@ export const store = new Vuex.Store({
         }),
     })],
 });
+
+function pushUndo(state) {
+	let tree = state.tree.clone();
+	state.treeUndoStack.push(tree);
+	let json = state.cy.json();
+	state.jsonUndoStack.push(json);
+
+	state.jsonRedoStack.length = 0;
+	state.treeRedoStack.length = 0;
+}

@@ -309,7 +309,6 @@
         name: 'Trii',
         methods: {
             addNode: function(nodeLabel) {
-                console.log(this.nodeName);
                 controller.addNode(nodeLabel);
                 this.nodeName = "";
             },
