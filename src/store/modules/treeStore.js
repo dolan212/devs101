@@ -108,12 +108,6 @@ const mutations =
 
     return id;
   },
-  getNodes() {
-    if(state.cy == null)
-      return null;
-    else
-      return state.cy.nodes().json();
-  },
   deleteNode(state, id) {
 	  if(!state.tree) throw "Tree not initialized";
 	  state.treeUndoStack.push(state.tree);

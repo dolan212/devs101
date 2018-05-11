@@ -4,26 +4,24 @@
 </template>
 
 <script>
-import * as controller from '@/controller'
-export default {
-	data() {
-		return {
-		}
-	},
-	mounted() {
-		controller.initialize();
-		controller.setupView(this.$refs.cy);
-		window.addEventListener('keyup', this.keyPressed);
-	},
-	methods: {
-		addNodeWrapper: function(value) {
-			tree.addNode();
-		},
-		keyPressed: (event) => {
-			if(event.which === 46) { //delete
-				controller.deleteSelectedNodes();
-			}
-		}
-	}
-}
+    import * as controller from '@/controller'
+    export default {
+        data() {
+            return {}
+        },
+        mounted() {
+            controller.setupView(this.$refs.cy);
+            window.addEventListener('keyup', this.keyPressed);
+        },
+        methods: {
+            addNodeWrapper: function(value) {
+                tree.addNode();
+            },
+            keyPressed: (event) => {
+                if (event.which === 46) { //delete
+                    controller.deleteSelectedNodes();
+                }
+            }
+        }
+    }
 </script>

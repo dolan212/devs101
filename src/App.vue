@@ -2,11 +2,9 @@
   <v-app>
     <v-navigation-drawer
       persistent
-      :mini-variant="miniVariant"
-      :clipped="clipped"
       v-model="drawer"
       enable-resize-watcher
-      fixed
+	  clipped
       app
     >
       <v-list>
@@ -19,24 +17,86 @@
             <v-icon v-html="item.icon"></v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"></v-list-tile-title>
+		  <v-list-tile-title v-text="item.title"></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
+	
+	<!--  adding nav bar to be placed to the right of the navigation side bar -->
+	
+		  
+  <!-- closing nav bar  -->
+  
     <v-toolbar
       app
-      :clipped-left="clipped"
+      clipped-left
     >
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-btn @click.stop="undo" icon><v-icon>undo</v-icon></v-btn>
       <v-btn @click.stop="redo" icon><v-icon>redo</v-icon></v-btn>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
+	  <v-btn icon @click.stop="settingsDrawer = !settingsDrawer">
+	  	<v-icon>settings</v-icon>
+	  </v-btn>
     </v-toolbar>
       <v-content>
         <router-view/>
       </v-content>
+	<!-- Global settings drawer -->
+	<v-navigation-drawer
+		temporary
+		:right="true"
+		v-model="settingsDrawer"
+		app
+	>
+		<v-toolbar flat>
+			<v-list>
+				<v-list-tile>
+					<v-list-tile-content>
+						<v-list-tile-title>Settings</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+			</v-list>
+		</v-toolbar>
+		<v-container fluid>
+			<v-btn flat v-on:click="newTree">Clear Tree</v-btn>
+		</v-container>
+	</v-navigation-drawer>
+	
+	<!-- Node settings drawer -->
+	<v-navigation-drawer
+	:right="true"
+	v-model="nodeDrawer" 
+	app
+	>
+		<v-toolbar flat>
+			<v-list>
+				<v-list-tile>
+					<v-list-tile-content>
+						<v-list-tile-title>Edit Nodes</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+			</v-list>
+		</v-toolbar>
+		<v-divider></v-divider>
+		<v-container v-for="item in nodes" :key="item.id" v-if="item.selected" fluid>
+					<v-subheader>{{ item.label }}</v-subheader>
+					<v-text-field label="Skill Name" v-model="item.label"></v-text-field>
+					<v-divider></v-divider>
+		</v-container>
+		<v-btn v-on:click="saveNodes()">Save</v-btn>
+	</v-navigation-drawer>
+	<v-snackbar
+		:timeout="noSelectionSnack.timeout"
+		top
+		v-model="noSelectionSnack.enabled"
+	>
+		{{ noSelectionSnack.text }}
+		<v-btn flat color="pink" @click.native="noSelectionSnack.enabled = false">Close</v-btn>
+	</v-snackbar>
+
       <v-fab-transition>
 	      <v-speed-dial
 	      v-model="fab"
@@ -81,6 +141,7 @@
 		  dark
 		  small
 		  color="indigo"
+		  @click.native.stop="editNode()"
 		>
 		  <v-icon>edit</v-icon>
 		</v-btn>
@@ -173,68 +234,136 @@
 </template>
 
 <script>
-import * as controller from '@/controller'
-var nodes = null;
-export default {
-	computed: {
-		activeFab () {
-			switch (this.tabs) {
-				case 'one': return { 'class': 'purple', icon: 'account_circle' }
-				case 'two': return { 'class': 'red', icon: 'edit' }
-				case 'three': return { 'class': 'green', icon: 'keyboard_arrow_up' }
-				default: return {}
-			}
-		}
-	},
-	data () {
-		return {
-			clipped: true,
-      			drawer: false,
-			miniVariant: false,
-      			fixed: false,
-			nodeName: "",
-      source: null,
-      target: null,
-      select:{id: '-1', label: 'node'},
-		      	items: [
-				{ icon: 'bubble_chart', title: 'Edit Tree' },
-				{ icon: 'import_export', title: 'Import Tree' },
-				{ icon: 'info', title: 'About' }
-			],
-      nodes: [],
-			title: 'Trii',
-			hov:false,
-			fab:false,
-			editDirection:'top',
-			isVisible:true,
-			dialog:false,
-      dialog2:false,
-		}
-	},
-	name: 'Trii',
-	methods: {
-		addNode: function(nodeLabel) {
-			controller.addNode(nodeLabel);
-			this.nodeName = "";
-		},
-    addEdge: function(source, target) {
-      controller.addEdge(source.id, target.id);
-      this.source = null;
-      this.target = null;
-    },
-		deleteNodes: () => {
-			controller.deleteSelectedNodes();
-		},
-		undo: () => {
-			controller.undo();
-		},
-		redo: () => {
-			controller.redo();
-		},
-    getNodes: function(){
-      this.nodes = controller.getNodes();
-    }
-	}
-}
+    import * as controller from '@/controller'
+    var nodes = null;
+    export default {
+        computed: {
+            activeFab() {
+                switch (this.tabs) {
+                    case 'one':
+                        return {
+                            'class': 'purple',
+                            icon: 'account_circle'
+                        }
+                    case 'two':
+                        return {
+                            'class': 'red',
+                            icon: 'edit'
+                        }
+                    case 'three':
+                        return {
+                            'class': 'green',
+                            icon: 'keyboard_arrow_up'
+                        }
+                    default:
+                        return {}
+                }
+            }
+        },
+        data() {
+            return {
+                clipped: true,
+                drawer: false,
+                nodeDrawer: false,
+                settingsDrawer: false,
+                miniVariant: false,
+                fixed: false,
+                nodeName: "",
+                source: null,
+                target: null,
+                select: {
+                    id: '-1',
+                    label: 'node'
+                },
+                items: [{
+						icon: 'add',
+						title: 'New Tree',
+					},
+					{
+                        icon: 'import_export',
+                        title: 'Import Tree'
+                    },
+                    {
+                        icon: 'info',
+                        title: 'About'
+                    }
+                ],
+                nodes: [],
+                noSelectionSnack: {
+                    text: "Please select a skill first",
+                    timeout: 6000,
+                    enabled: false
+                },
+                title: 'Trii',
+                hov: false,
+                fab: false,
+                editDirection: 'top',
+                isVisible: true,
+                dialog: false,
+                dialog2: false,
+                selectedNode: null
 
+
+            }
+        },
+        name: 'Trii',
+        methods: {
+            addNode: function(nodeLabel) {
+                controller.addNode(nodeLabel);
+                this.nodeName = "";
+            },
+            addEdge: function(source, target) {
+                controller.addEdge(source.id, target.id);
+                this.source = null;
+                this.target = null;
+            },
+            getNodes: function() {
+                this.nodes = controller.getNodes();
+            },
+            deleteNodes: () => {
+                controller.deleteSelectedNodes();
+            },
+            undo: function() {
+                controller.undo();
+            },
+            redo: function() {
+                controller.redo();
+            },
+            editNode: function() {
+                this.getNodes();
+                var selectedNodes = controller.getSelectedNodes();
+                if (selectedNodes.length == 0) {
+                    this.noSelectionSnack.enabled = true;
+                    return;
+                }
+                for (var i = 0; i < this.nodes.length; i++) {
+                    let n = this.nodes[i];
+                    for (var j = 0; j < selectedNodes.length; j++) {
+                        if (n.id == selectedNodes[j]) {
+                            this.nodes[i].selected = true;
+                            break;
+                        }
+                        n.selected = false;
+                    }
+                }
+                this.nodeDrawer = true;
+            },
+            saveNodes: function() {
+                var selectedNodes = controller.getSelectedNodes();
+                let n = this.nodes.filter(x => selectedNodes.includes("" + x.id));
+                for (var i = 0; i < n.length; i++) {
+                    controller.updateNode(n[i].id, {
+                        label: n[i].label
+                    });
+                }
+                this.nodeDrawer = false;
+            },
+            editSettings: function() {
+                this.settingsDrawer = true;
+            },
+			newTree: function() {
+				controller.clear();
+			}
+        }
+    }
 </script>
