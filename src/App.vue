@@ -4,6 +4,7 @@
       persistent
       v-model="drawer"
       enable-resize-watcher
+	  clipped
       app
     >
       <v-list>
@@ -16,7 +17,7 @@
             <v-icon v-html="item.icon"></v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"></v-list-tile-title>
+		  <v-list-tile-title v-text="item.title"></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -29,7 +30,7 @@
   
     <v-toolbar
       app
-      :clipped-left="clipped"
+      clipped-left
     >
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-btn @click.stop="undo" icon><v-icon>undo</v-icon></v-btn>
@@ -59,6 +60,9 @@
 				</v-list-tile>
 			</v-list>
 		</v-toolbar>
+		<v-container fluid>
+			<v-btn flat v-on:click="newTree">Clear Tree</v-btn>
+		</v-container>
 	</v-navigation-drawer>
 	
 	<!-- Node settings drawer -->
@@ -230,104 +234,137 @@
 </template>
 
 <script>
-import * as controller from '@/controller'
-var nodes = null;
-export default {
-	computed: {
-		activeFab () {
-			switch (this.tabs) {
-				case 'one': return { 'class': 'purple', icon: 'account_circle' }
-				case 'two': return { 'class': 'red', icon: 'edit' }
-				case 'three': return { 'class': 'green', icon: 'keyboard_arrow_up' }
-				default: return {}
+    import * as controller from '@/controller'
+    var nodes = null;
+    export default {
+        computed: {
+            activeFab() {
+                switch (this.tabs) {
+                    case 'one':
+                        return {
+                            'class': 'purple',
+                            icon: 'account_circle'
+                        }
+                    case 'two':
+                        return {
+                            'class': 'red',
+                            icon: 'edit'
+                        }
+                    case 'three':
+                        return {
+                            'class': 'green',
+                            icon: 'keyboard_arrow_up'
+                        }
+                    default:
+                        return {}
+                }
+            }
+        },
+        data() {
+            return {
+                clipped: true,
+                drawer: false,
+                nodeDrawer: false,
+                settingsDrawer: false,
+                miniVariant: false,
+                fixed: false,
+                nodeName: "",
+                source: null,
+                target: null,
+                select: {
+                    id: '-1',
+                    label: 'node'
+                },
+                items: [{
+						icon: 'add',
+						title: 'New Tree',
+					},
+					{
+                        icon: 'import_export',
+                        title: 'Import Tree'
+                    },
+                    {
+                        icon: 'info',
+                        title: 'About'
+                    }
+                ],
+                nodes: [],
+                noSelectionSnack: {
+                    text: "Please select a skill first",
+                    timeout: 6000,
+                    enabled: false
+                },
+                title: 'Trii',
+                hov: false,
+                fab: false,
+                editDirection: 'top',
+                isVisible: true,
+                dialog: false,
+                dialog2: false,
+                selectedNode: null
+
+
+            }
+        },
+        name: 'Trii',
+        methods: {
+            addNode: function(nodeLabel) {
+                console.log(this.nodeName);
+                controller.addNode(nodeLabel);
+                this.nodeName = "";
+            },
+            addEdge: function(source, target) {
+                controller.addEdge(source.id, target.id);
+                this.source = null;
+                this.target = null;
+            },
+            getNodes: function() {
+                this.nodes = controller.getNodes();
+            },
+            deleteNodes: () => {
+                controller.deleteSelectedNodes();
+            },
+            undo: function() {
+                controller.undo();
+            },
+            redo: function() {
+                controller.redo();
+            },
+            editNode: function() {
+                this.getNodes();
+                var selectedNodes = controller.getSelectedNodes();
+                if (selectedNodes.length == 0) {
+                    this.noSelectionSnack.enabled = true;
+                    return;
+                }
+                for (var i = 0; i < this.nodes.length; i++) {
+                    let n = this.nodes[i];
+                    for (var j = 0; j < selectedNodes.length; j++) {
+                        if (n.id == selectedNodes[j]) {
+                            this.nodes[i].selected = true;
+                            break;
+                        }
+                        n.selected = false;
+                    }
+                }
+                this.nodeDrawer = true;
+            },
+            saveNodes: function() {
+                var selectedNodes = controller.getSelectedNodes();
+                let n = this.nodes.filter(x => selectedNodes.includes("" + x.id));
+                for (var i = 0; i < n.length; i++) {
+                    controller.updateNode(n[i].id, {
+                        label: n[i].label
+                    });
+                }
+                this.nodeDrawer = false;
+            },
+            editSettings: function() {
+                this.settingsDrawer = true;
+            },
+			newTree: function() {
+				controller.clear();
 			}
-		}
-	},
-	data () {
-		return {
-			clipped: true,
-      			drawer: false,
-				nodeDrawer: false,
-				settingsDrawer: false,
-			miniVariant: false,
-      			fixed: false,
-			nodeName: "",
-      source: null,
-      target: null,
-      select:{id: '-1', label: 'node'},
-		      	items: [
-				{ icon: 'bubble_chart', title: 'Edit Tree' },
-				{ icon: 'import_export', title: 'Import Tree' },
-				{ icon: 'info', title: 'About' }
-			],
-      nodes: [],
-	  noSelectionSnack: { text: "Please select a skill first", timeout: 6000, enabled: false },
-			title: 'Trii',
-			hov:false,
-			fab:false,
-			editDirection:'top',
-			isVisible:true,
-			dialog:false,
-			dialog2: false,
-			selectedNode: null
-			
-			
-		}
-	},
-	name: 'Trii',
-	methods: {
-		addNode: function(nodeLabel) {
-			console.log(this.nodeName);
-			controller.addNode(nodeLabel);
-			this.nodeName = "";
-		},
-    addEdge: function(source, target) {
-      controller.addEdge(source.id, target.id);
-      this.source = null;
-      this.target = null;
-    },
-	getNodes: function() {
-		this.nodes = controller.getNodes();
-	},
-		deleteNodes: () => {
-			controller.deleteSelectedNodes();
-		},
-		undo: function() {
-			controller.undo();
-		},
-		redo: function() {
-			controller.redo();
-		},
-		editNode: function() {
-			this.getNodes();
-			var selectedNodes = controller.getSelectedNodes();
-			if(selectedNodes.length == 0) {
-				this.noSelectionSnack.enabled = true;
-				return;
-			}
-			for(var i = 0; i < this.nodes.length; i++) {
-				let n = this.nodes[i];
-				for(var j = 0; j < selectedNodes.length; j++) {
-					if(n.id == selectedNodes[j]) {
-						this.nodes[i].selected = true;
-						break;
-					}
-					n.selected = false;
-				}
-			}
-			this.nodeDrawer = true;
-		},
-		saveNodes: function() {
-			var selectedNodes = controller.getSelectedNodes();
-			let n = this.nodes.filter(x => selectedNodes.includes("" + x.id));
-			for(var i = 0; i < n.length; i++) {
-				controller.updateNode(n[i].id, { label: n[i].label });
-			}
-			this.nodeDrawer = false;
-		},
-		editSettings: function() {
-			this.settingsDrawer = true;
-		}
-	}
-}
+        }
+    }
 </script>
