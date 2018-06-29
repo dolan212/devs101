@@ -20,15 +20,22 @@ export class Edge {
         return this._target;
     }
 }
-
+var desc = '';
 export class Node {
-    constructor(id, label) {
+    constructor(id, label,description) {
         this._id = id;
         this._label = label;
+		this._description  = description;
     }
     set label(label) {
         this._label = label;
     }
+	set description(description){
+		this._description = description;
+	}
+	get description(){
+		return this._description;
+	}
     get label() {
         return this._label;
     }
@@ -107,7 +114,8 @@ export function initialize() {
 export function addNode(label) {
     if (!tree) throw "Tree not initialized"; //tree hasn't been initialized yet, so we error
     let id = currentId++;
-    let node = new Node(id, label);
+	let description = desc;// description set to null on addition of a node
+    let node = new Node(id, label,description);
     tree.addNode(node);
     return id; //return id to be used for cytoscape
 }
@@ -128,6 +136,11 @@ export function deleteNode(id) {
 export function getLabel(id) {
     let node = tree.getNode(id);
     return node.label;
+}
+
+export function getDescription(id) {
+	let node = tree.getNode(id);
+	return node.description;
 }
 
 export function clean() {

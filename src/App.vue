@@ -82,9 +82,14 @@
 		</v-toolbar>
 		<v-divider></v-divider>
 		<v-container v-for="item in nodes" :key="item.id" v-if="item.selected" fluid>
-					<v-subheader>{{ item.label }}</v-subheader>
+					<v-subheader>{{ item.label }} </v-subheader>
 					<v-text-field label="Skill Name" v-model="item.label"></v-text-field>
 					<v-divider></v-divider>
+					
+					<v-subheader>{{ item.description }} </v-subheader>
+					<v-text-field label="Skill Description" v-model="item.description"></v-text-field>
+					<v-divider></v-divider>
+					
 		</v-container>
 		<v-btn v-on:click="saveNodes()">Save</v-btn>
 	</v-navigation-drawer>
