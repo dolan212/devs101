@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import tree from './modules/treeStore'
 import persistentState from "vuex-persistedstate"
 import {
     Tree,
@@ -11,6 +10,7 @@ import * as rules from '@/rules'
 import * as controller from '@/controller'
 import cytoscape from 'cytoscape'
 import undoredo from 'cytoscape-undo-redo'
+import Global from '@/globalVars'
 
 Vue.use(Vuex);
 
@@ -24,20 +24,28 @@ export const store = new Vuex.Store({
         jsonUndoStack: [],
         treeRedoStack: [],
         jsonRedoStack: [],
-        json: ""
+        json: "",
+        globals: []
 
     },
     getters: {
+
         getNodeLabel(state) {
             return id => state.tree.getNode(id).label;
         },
         getNodes(state) {
             return state.tree.getNodes();
+        },
+        getGlobals(state){
+          return state.globals;
+        },
+        getGlobal(state, name){
+          return state.globals[name];
         }
     },
 
     mutations: {
-        init(state, container) {
+      init(state, container) {
             state.tree = new Tree();
             if (state.treeNodes) state.tree.nodes = Array.from(state.treeNodes, x => new Node(x._id, x._label));
             if (state.treeEdges) state.tree.edges = Array.from(state.treeNodes, x => new Edge(x._id, x._source, x._target));
@@ -126,6 +134,7 @@ export const store = new Vuex.Store({
             state.json = state.cy.json();
             return id;
         },
+
         deleteNode(state, id) {
             if (!state.tree) throw "Tree not initialized";
 			pushUndo(state);
@@ -133,6 +142,7 @@ export const store = new Vuex.Store({
             let removed = state.cy.remove("#" + id);
             state.json = state.cy.json();
         },
+
         layout(state) {
             state.cy.layout({
                 name: 'preset',
@@ -140,12 +150,14 @@ export const store = new Vuex.Store({
             }).run();
             state.json = state.cy.json();
         },
+
         addSelectListener(state, payload) {
             let listener = payload.listener;
             state.cy.on('select', 'node', (evt) => {
                 listener(evt.target.id());
             });
         },
+
         addDeselectListener(state, payload) {
             let listener = payload.listener;
             state.cy.on('unselect', 'node', (evt) => {
@@ -188,11 +200,22 @@ export const store = new Vuex.Store({
             state.jsonUndoStack.push(state.cy.json());
             state.cy.json(json);
             state.json = state.cy.json();
-			if(state.treeRedoStack.length == 0) return;
-			let tree = state.treeRedoStack.pop();
-			state.treeUndoStack.push(state.tree.clone());
-			state.tree = tree;
-        }
+			      if(state.treeRedoStack.length == 0) return;
+			      let tree = state.treeRedoStack.pop();
+			      state.treeUndoStack.push(state.tree.clone());
+			      state.tree = tree;
+       },
+
+       addGlobalVar(state, globalVar){
+          if(state.globals[globalVar.name()]!=null) return;
+          state.globals[globalVar.name()] = globalVar;
+       },
+
+       deleteGlovalVar(state, globalVarName){
+         if(state.globals[globalVarName]!=null) return;
+         state.globals[globalVarName]=null;
+       }
+
     },
     plugins: [persistentState({
         reducer: state => ({
@@ -204,7 +227,8 @@ export const store = new Vuex.Store({
             jsonRedoStack: state.jsonRedoStack,
             json: state.json,
             treeUndoStack: state.treeUndoStack,
-            treeRedoStack: state.treeRedoStack
+            treeRedoStack: state.treeRedoStack,
+            globals: state.globals
         }),
     })],
 });
