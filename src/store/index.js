@@ -7,6 +7,7 @@ import {
     Node,
     Edge
 } from '@/tree'
+import * as rules from '@/rules'
 import * as controller from '@/controller'
 import cytoscape from 'cytoscape'
 import undoredo from 'cytoscape-undo-redo'
@@ -150,6 +151,12 @@ export const store = new Vuex.Store({
             state.cy.on('unselect', 'node', (evt) => {
                 listener(evt.target.id());
             });
+        },
+        addRule(state, payload) {
+            let skill = payload.skill;
+            let rule = payload.rule;
+            pushUndo(state);
+            state.tree.addRule(skill, rule);
         },
         clean(state) {
             state.tree.clean();

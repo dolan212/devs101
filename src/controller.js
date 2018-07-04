@@ -31,6 +31,14 @@ export function getNodes() {
     return store.getters.getNodes;
 }
 
+export function addRule(skill, rule) {
+    try {
+        store.commit('addRule', {skill: skill, rule: rule});
+    } catch (exception) {
+        alert(exception);
+    }
+}
+
 let selectedNodes = [];
 
 function onSelect(id) {

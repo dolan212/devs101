@@ -26,6 +26,7 @@ export class Node {
         this._id = id;
         this._label = label;
 		this._description  = description;
+		this.rules = [];
     }
     set label(label) {
         this._label = label;
@@ -83,6 +84,10 @@ export class Tree {
         }
         if (index == -1) this.nodes.splice(index, 1);
         else throw "Node not found";
+    }
+    addRule(skill, rule) {
+        let node = getNode(skill);
+        node.rules.push(rule);
     }
     clean() {
         this.nodes.length = 0;
