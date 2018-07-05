@@ -366,6 +366,9 @@
             editSettings: function() {
                 this.settingsDrawer = true;
             },
+            autoLayout: function() {
+                controller.autoLayout();
+            },
 			newTree: function() {
 				controller.clear();
 			}
