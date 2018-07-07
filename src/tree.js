@@ -43,6 +43,9 @@ export class Node {
     get id() {
         return this._id;
     }
+	getRules() {
+		return this.rules;
+	}
 }
 
 export class Tree {
@@ -67,28 +70,51 @@ export class Tree {
         n.label = _label;
     }
     getNodes() {
-        var nodesList = [];
-        for (var i = 0; i < this.nodes.length; i++) {
-            var n = this.nodes[i];
-            nodesList.push({
-                id: n.id,
-                label: n.label
-            });
-        }
-        return nodesList;
+		return this.nodes;
     }
     deleteNode(id) {
         let index = -1;
         for (var i = 0; i < this.nodes.length; i++) {
-            if (this.nodes[i].id === id) index = i;
+            if (this.nodes[i].id == id) index = i;
         }
-        if (index == -1) this.nodes.splice(index, 1);
+        if (index != -1) {
+			let edgesToDelete = [];
+			for(var i in this.edges) {
+				if(this.edges[i].source == id || this.edges[i].target == id)
+					edgesToDelete.push(this.edges[i].id);
+			}
+			this.nodes.splice(index, 1);
+			for(var i in edgesToDelete) {
+				this.deleteEdge(edgesToDelete[i]);
+			}
+		}
         else throw "Node not found";
     }
+	deleteEdge(id) {
+		let index = -1;
+		for(var i = 0; i < this.edges.length; i++) {
+			if(this.edges[i].id == id) index = i;
+		}
+		if(index != -1) this.edges.splice(index, 1);
+		else throw "Edge not found";
+	}
+	getConnectedEdges(id) {
+		var edges = [];
+		for(var i in this.edges) {
+			if(this.edges[i].target == id)
+				edges.push(this.edges[i]);
+		}
+		return edges;
+	}
     addRule(skill, rule) {
-        let node = getNode(skill);
+        let node = this.getNode(skill);
         node.rules.push(rule);
+		console.log(node.rules.length);
     }
+	getRules(skill) {
+		let node = getNode(skill);
+		return node.getRules();
+	}
     clean() {
         this.nodes.length = 0;
         this.edges.length = 0;
