@@ -159,6 +159,15 @@
 		>
 		  <v-icon>delete</v-icon>
 		</v-btn>
+		<v-btn
+		  fab
+		  dark
+		  small
+		  color="orange"
+		  @click.native.stop="autoLayout()"
+		>
+		  <v-icon>auto-Layout</v-icon>
+		</v-btn>
 	      </v-speed-dial>
       </v-fab-transition>
       <v-dialog v-model="dialog" persistent max-width="500px">
