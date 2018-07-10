@@ -325,18 +325,15 @@
               fr = new FileReader();
 
               fr.onload = function(e){
-                console.log(fr.result);
-                results=fr.results;
+                results = fr.results;
+                console.log(typeof(results));
+                controller.buildFromJson(fr.results);
               }
 
               fr.onError = function(e){
                 console.log("An error occured");
               }
               fr.readAsText(file);
-            },
-            buildFromJson(jsonData)
-            {
-
             },
             addNode: function(nodeLabel) {
                 controller.addNode(nodeLabel);

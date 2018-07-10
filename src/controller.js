@@ -101,3 +101,8 @@ export function redo() {
 export function clear() {
 	store.commit('clean');
 }
+
+export function buildFromJson(jsonData){
+    let val = String(jsonData);
+    console.log(jsonData);
+}
