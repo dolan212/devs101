@@ -82,8 +82,8 @@
 		</v-toolbar>
 		<v-divider></v-divider>
 		<v-container v-for="item in nodes" :key="item.id" v-if="item.selected" fluid>
-					<v-subheader>{{ item.label }}</v-subheader>
-					<v-text-field label="Skill Name" v-model="item.label"></v-text-field>
+					<v-subheader color="lightgray darken-1">{{ item.label }}</v-subheader>
+					<v-text-field color="lightgray darken-1" label="Skill Name" v-model="item.label"></v-text-field>
 					<v-divider></v-divider>
 		</v-container>
 		<v-btn v-on:click="saveNodes()">Save</v-btn>
