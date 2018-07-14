@@ -101,3 +101,7 @@ export function redo() {
 export function clear() {
 	store.commit('clean');
 }
+
+export function autoLayout() {
+        store.commit('autoLayout');
+}
