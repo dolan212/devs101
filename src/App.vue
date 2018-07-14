@@ -22,12 +22,12 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-	
+
 	<!--  adding nav bar to be placed to the right of the navigation side bar -->
-	
-		  
+
+
   <!-- closing nav bar  -->
-  
+
     <v-toolbar
       app
       clipped-left
@@ -62,13 +62,14 @@
 		</v-toolbar>
 		<v-container fluid>
 			<v-btn flat v-on:click="newTree">Clear Tree</v-btn>
+      <v-btn flat @click.native.stop="autoLayout()">Auto Layout</v-btn>
 		</v-container>
 	</v-navigation-drawer>
-	
+
 	<!-- Node settings drawer -->
 	<v-navigation-drawer
 	:right="true"
-	v-model="nodeDrawer" 
+	v-model="nodeDrawer"
 	app
 	>
 		<v-toolbar flat>
@@ -85,11 +86,11 @@
 					<v-subheader>{{ item.label }} </v-subheader>
 					<v-text-field label="Skill Name" v-model="item.label"></v-text-field>
 					<v-divider></v-divider>
-					
+
 					<v-subheader>{{ item.description }} </v-subheader>
 					<v-text-field label="Skill Description" v-model="item.description"></v-text-field>
 					<v-divider></v-divider>
-					
+
 		</v-container>
 		<v-btn v-on:click="saveNodes()">Save</v-btn>
 	</v-navigation-drawer>
@@ -158,15 +159,6 @@
 		  @click.native.stop="deleteNodes()"
 		>
 		  <v-icon>delete</v-icon>
-		</v-btn>
-		<v-btn
-		  fab
-		  dark
-		  small
-		  color="orange"
-		  @click.native.stop="autoLayout()"
-		>
-		  <v-icon>auto-Layout</v-icon>
 		</v-btn>
 	      </v-speed-dial>
       </v-fab-transition>
