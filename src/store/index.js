@@ -41,6 +41,12 @@ export const store = new Vuex.Store({
         },
         getGlobal(state, name){
           return state.globals[name];
+        },
+        getTree(state){
+          return state.tree;
+        },
+        getCytoscapeJson(state){
+          return state.json;
         }
     },
 

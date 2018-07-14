@@ -64,7 +64,9 @@
 			<v-btn flat v-on:click="newTree">Clear Tree</v-btn>
 		</v-container>
     <v-container fluid>
+      <p>Import Skill Tree</p>
 			<input type="file" accept=".json" @change="onFileChange">
+      <v-btn flat v-on:click="exportTree">Export Skill Tree</v-btn>
 		</v-container>
 	</v-navigation-drawer>
 
@@ -316,7 +318,10 @@
         },
         name: 'Trii',
         methods: {
-          onFileChange(e) {
+          exportTree: function() {
+            var cont = controller.getTreeAsJson();
+          },
+          onFileChange: function(e) {
               var files = e.target.files || e.dataTransfer.files;
               var file, fr, results;
               if (!files.length)

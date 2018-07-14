@@ -106,3 +106,15 @@ export function buildFromJson(jsonData){
     let val = String(jsonData);
     console.log(jsonData);
 }
+
+export function getTreeAsJson(){
+  var tree =store.getters.getTree;
+  tree = "tree: "+JSON.stringify(tree);
+  var globals = store.getters.getGlobals;
+  globals = "globals: "+JSON.stringify(globals);
+  var cyt = store.getters.getCytoscapeJson;
+  cyt = "cytoscape: "+JSON.stringify(cyt);
+
+  var finalJson = tree+",\n"+globals+",\n"+cyt
+  console.log(finalJson);
+}
