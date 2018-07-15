@@ -22,12 +22,12 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-	
+
 	<!--  adding nav bar to be placed to the right of the navigation side bar -->
-	
-		  
+
+
   <!-- closing nav bar  -->
-  
+
     <v-toolbar
       app
       clipped-left
@@ -35,6 +35,10 @@
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-btn @click.stop="undo" icon><v-icon>undo</v-icon></v-btn>
       <v-btn @click.stop="redo" icon><v-icon>redo</v-icon></v-btn>
+
+      <v-btn fab small @click.native.stop="copy()" ><v-icon>file_copy</v-icon></v-btn>
+      <v-btn fab small @click.native.stop="paste()" ><v-icon>archive</v-icon></v-btn>
+
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
 	  <v-btn icon @click.stop="settingsDrawer = !settingsDrawer">
@@ -64,11 +68,11 @@
 			<v-btn flat v-on:click="newTree">Clear Tree</v-btn>
 		</v-container>
 	</v-navigation-drawer>
-	
+
 	<!-- Node settings drawer -->
 	<v-navigation-drawer
 	:right="true"
-	v-model="nodeDrawer" 
+	v-model="nodeDrawer"
 	app
 	>
 		<v-toolbar flat>
@@ -107,7 +111,9 @@
 	      fixed
 	      v-show="['skilltree'].indexOf($route.name) > -1"
 	      >
-		<v-btn
+      </v-btn>
+
+    <v-btn
 		  slot="activator"
 		  color="blue darken-2"
 		  dark
@@ -269,6 +275,7 @@
                 miniVariant: false,
                 fixed: false,
                 nodeName: "",
+                copyName: [],
                 source: null,
                 target: null,
                 select: {
@@ -328,6 +335,33 @@
             },
             redo: function() {
                 controller.redo();
+            },
+            copy: function(){
+                for(var k = 0; k <= this.copyName.length; k++)
+                  this.copyName.splice(0);
+                this.getNodes();
+                var selectedNodes = controller.getSelectedNodes();
+                for (var i = 0; i < this.nodes.length; i++) {
+                    let n = this.nodes[i];
+                    for (var j = 0; j < selectedNodes.length; j++) {
+                        if (n.id == selectedNodes[j]) {
+                            this.copyName.push(n.label);
+                            break;
+                        }
+                    }
+                }
+                console.log(this.copyName);
+            },
+            paste: function(){
+                if(this.copyName.lenth == 0)
+                  return;
+                else
+                {
+                  for(var i = 0; i < this.copyName.length; i++)
+                  {
+                    controller.addNode(this.copyName[i]);
+                  }
+                }
             },
             editNode: function() {
                 this.getNodes();
