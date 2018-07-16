@@ -31,9 +31,9 @@ export function getNodes() {
     return store.getters.getNodes;
 }
 
-export function addRule(skill, rule) {
+export function addRule(skill) {
     try {
-        store.commit('addRule', {skill: skill, rule: rule});
+        store.commit('addRule', {skill: skill});
     } catch (exception) {
         alert(exception);
     }
@@ -51,12 +51,31 @@ function onDeselect(id) {
 }
 
 export function deleteSelectedNodes() {
+	var temp = [];
     for (var i = 0; i < selectedNodes.length; i++)
+	{
         deleteNode(selectedNodes[i]);
+		temp.push(selectedNodes[i]);
+	}
+	for(var i in temp) {
+		onDeselect(temp[i]);
+	}
+}
+
+export function updateDependencies(id) {
+	try {
+		store.commit('updateDependencies', id);
+	} catch(exception) {
+		alert(exception);
+	}
 }
 
 export function getSelectedNodes() {
     return selectedNodes;
+}
+
+export function getRules(id) {
+	return store.getters.getRules;
 }
 
 export function updateNode(id, payload) {
@@ -78,6 +97,13 @@ export function deleteNode(id) {
     } catch (exception) {
         alert(exception);
     }
+}
+export function updateDisplay() {
+	try {
+		store.commit('updateDisplay');
+	} catch (exception) {
+		alert(exception);
+	}
 }
 export function setupView(container) {
     store.commit('init', container);

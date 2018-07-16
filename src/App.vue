@@ -75,6 +75,7 @@
 	:right="true"
 	v-model="nodeDrawer"
 	app
+	temporary
 	>
 		<v-toolbar flat>
 			<v-list>
@@ -86,15 +87,57 @@
 			</v-list>
 		</v-toolbar>
 		<v-divider></v-divider>
-		<v-container v-for="item in nodes" :key="item.id" v-if="item.selected" fluid>
-					<v-subheader>{{ item.label }} </v-subheader>
-					<v-text-field label="Skill Name" v-model="item.label"></v-text-field>
-					<v-divider></v-divider>
+		<v-container grid-list-md text-xs-center v-for="item in nodes" :key="item.id" v-if="item.selected">
+			<v-layout row wrap>
+				<v-flex xs12>
+					<v-subheader>Editing {{ item.label }} </v-subheader>
+					<v-card dark>
+						<v-container fill-height fluid>
+							<v-layout fill-height>
+								<v-flex xs12 align-end flexbox>
+									<v-text-field label="Skill Name" v-model="item.label"></v-text-field>
+									<v-text-field label="Skill Description" v-model="item.description"></v-text-field>
+								</v-flex>
+							</v-layout>
+						</v-container>
+					</v-card>
+				</v-flex>
 
-					<v-subheader>{{ item.description }} </v-subheader>
-					<v-text-field label="Skill Description" v-model="item.description"></v-text-field>
-					<v-divider></v-divider>
-
+				<v-subheader>Skill Rules</v-subheader>
+				<v-flex xs12 v-for="rule in item.rules" :key="rule.id">
+					<v-card dark>
+						<v-container fill-height fluid>
+							<v-layout fill-height>
+								<v-flex xs12 align-end flexbox>
+									<v-select
+										v-model="rule.type"
+										:items="rule_types"
+										item-text="name"
+										item-value="value"
+									></v-select>
+									<v-select
+										v-if="rule.type == 'dependency'"
+										v-model="rule.node"
+										:items="nodes"
+										item-text="label"
+										item-value="id"
+									></v-select>
+									<v-text-field label="Level Requirement"
+										v-model="rule.level" 
+										v-if="rule.type == 'level'"
+									></v-text-field>
+									<v-text-field
+										label="Skill Points Required"
+										v-model="rule.skillpoints"
+										v-if="rule.type == 'skillpoint'"
+									></v-text-field>
+								</v-flex>
+							</v-layout>
+						</v-container>
+					</v-card>
+				</v-flex>
+				<v-btn v-on:click="addRule(item.id)">Add Rule</v-btn>
+			</v-layout>
 		</v-container>
 		<v-btn v-on:click="saveNodes()">Save</v-btn>
 	</v-navigation-drawer>
@@ -314,7 +357,13 @@
                 isVisible: true,
                 dialog: false,
                 dialog2: false,
-                selectedNode: null
+                selectedNode: null,
+				rules: [],
+				rule_types: [
+					{ name: "Dependency", value: "dependency" },
+					{ name: "Level", value: "level" },
+					{ name: "Skill Point", value: "skillpoint" }
+				]
 
 
             }
@@ -386,8 +435,18 @@
                         n.selected = false;
                     }
                 }
+				if(selectedNodes.length == 1) {
+					var rules = controller.getRules(selectedNodes[0]);
+					this.rules = rules;
+				}
+				else {
+					this.rules = [];
+				}
                 this.nodeDrawer = true;
             },
+			updateDependencies(id) {
+				controller.updateDependencies(id);
+			},
             saveNodes: function() {
                 var selectedNodes = controller.getSelectedNodes();
                 let n = this.nodes.filter(x => selectedNodes.includes("" + x.id));
@@ -395,9 +454,13 @@
                     controller.updateNode(n[i].id, {
                         label: n[i].label
                     });
+					this.updateDependencies(n[i].id);
                 }
                 this.nodeDrawer = false;
             },
+			addRule: function(id) {
+				controller.addRule(id);
+			},
             editSettings: function() {
                 this.settingsDrawer = true;
             },

@@ -19,6 +19,7 @@ export const store = new Vuex.Store({
     state: {
         tree: null,
         currentId: 0,
+		currentRuleId: 0,
         cy: null,
         treeUndoStack: [],
         jsonUndoStack: [],
@@ -39,16 +40,23 @@ export const store = new Vuex.Store({
         getGlobals(state){
           return state.globals;
         },
-        getGlobal(state, name){
-          return state.globals[name];
-        }
+        getGlobal(state){
+          return name => state.globals[name];
+        },
+		getRules(state) {
+			return id => state.tree.getRules(id);
+		}
     },
 
     mutations: {
       init(state, container) {
             state.tree = new Tree();
-            if (state.treeNodes) state.tree.nodes = Array.from(state.treeNodes, x => new Node(x._id, x._label));
-            if (state.treeEdges) state.tree.edges = Array.from(state.treeNodes, x => new Edge(x._id, x._source, x._target));
+            if (state.treeNodes) state.tree.nodes = Array.from(state.treeNodes, x => {
+				let n = new Node(x._id, x._label);
+				n.rules = x.rules;
+				return n;
+			});
+            if (state.treeEdges) state.tree.edges = Array.from(state.treeEdges, x => new Edge(x._id, x._source, x._target));
             state.cy = cytoscape({
                 container: container,
                 elements: [],
@@ -113,6 +121,15 @@ export const store = new Vuex.Store({
             });
             state.json = state.cy.json();
         },
+		updateDisplay(state) {
+			let nodes = state.tree.getNodes();
+			for(var i in nodes) {
+				let n = nodes[i];
+				let data = state.cy.$("#" + n.id).data();
+				data.label = n.label;
+				state.cy.$("#" + n.id).data(data);
+			}
+		},
         addEdge(state, pos) {
             let source = pos.source;
             let target = pos.target;
@@ -142,7 +159,42 @@ export const store = new Vuex.Store({
             let removed = state.cy.remove("#" + id);
             state.json = state.cy.json();
         },
+		deleteEdge(state, id) {
+			if(!state.tree) throw "Tree not initialized";
+			pushUndo(state);
+			state.tree.deleteEdge(id);
+			let removed = state.cy.remove("#" + id);
+			state.json = state.cy.json();
+		},
+		updateDependencies(state, id) {
+			if(!state.tree) throw "Tree not initialized";
+			let edges = state.tree.getConnectedEdges(id);
+			for(var i in edges) {
+				state.tree.deleteEdge(edges[i].id);
+				state.cy.remove("#" + edges[i].id);
+			}
+			let node = state.tree.getNode(id);
+			for(var i in node.rules) {
+				if(node.rules[i].type == "dependency" && node.rules[i].node !== undefined && node.rules[i].node !== null) {
+					let source = node.rules[i].node;
+					let target = node.id;
 
+					let id = source + "-" + target;
+					let edge = new Edge(id, source, target);
+					state.tree.addEdge(edge);
+
+					state.cy.add({
+						group: "edges",
+						data: {
+							id: id,
+							source: source,
+							target: target
+						}
+					});
+					state.json = state.cy.json();
+				}
+			}
+		},
         layout(state) {
             state.cy.layout({
                 name: 'preset',
@@ -193,8 +245,9 @@ export const store = new Vuex.Store({
         },
         addRule(state, payload) {
             let skill = payload.skill;
-            let rule = payload.rule;
             pushUndo(state);
+			let rule = new rules.DependencyRule(state.currentRuleId);
+			state.currentRuleId++;
             state.tree.addRule(skill, rule);
         },
         clean(state) {
