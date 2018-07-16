@@ -116,5 +116,17 @@ export function getTreeAsJson(){
   cyt = "cytoscape: "+JSON.stringify(cyt);
 
   var finalJson = tree+",\n"+globals+",\n"+cyt
-  console.log(finalJson);
+  return finalJson;
+}
+
+export function saveJsonDocument(filename, data){
+  var blob = new Blob([data],{type: "application/json"});
+  var url  = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+
+  a.href = url;
+  a.download = filename+".json";
+  a.textContent = "Download backup.json";
+
+  a.click();
 }

@@ -66,7 +66,7 @@
     <v-container fluid>
       <p>Import Skill Tree</p>
 			<input type="file" accept=".json" @change="onFileChange">
-      <v-btn flat v-on:click="exportTree">Export Skill Tree</v-btn>
+      <v-btn flat @click.native.stop="fileDialog = true">Export Skill Tree</v-btn>
 		</v-container>
 	</v-navigation-drawer>
 
@@ -167,19 +167,19 @@
 	      </v-speed-dial>
       </v-fab-transition>
       <v-dialog v-model="dialog" persistent max-width="500px">
-      <v-card>
-        <v-card-title>
-          <span class="headline" center>New Node</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container grid-list-md>
-            <v-layout wrap>
-              <v-flex xs12 sm12 md12>
-                <v-text-field label="Node name" v-model="nodeName"></v-text-field>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-card-text>
+        <v-card>
+          <v-card-title>
+            <span class="headline" center>New Node</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12 sm12 md12>
+                  <v-text-field label="Node name" v-model="nodeName"></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
@@ -189,53 +189,78 @@
     </v-dialog>
 
     <v-dialog v-model="dialog2" persistent max-width="500px">
-    <v-card>
-      <v-card-title>
-        <span class="headline" center>New Edge</span>
-      </v-card-title>
-      <v-card-text>
-        <v-container grid-list-md>
-          <v-layout wrap>
-            <v-flex xs12 sm12 md12>
-              <v-subheader>Source Node</v-subheader>
-            </v-flex>
-            <v-flex xs12 sm12 md12>
-              <v-select
-              :items="nodes"
-              v-model="source"
-              label="Select"
-              single-line
-              item-text="label"
-              item-value="id"
-              return-object
-              persistant-hint
-              ></v-select>
-            </v-flex>
-            <v-flex xs12 sm12 md12>
-              <v-subheader>Target Node</v-subheader>
-            </v-flex>
-            <v-flex xs12 sm12 md12>
-              <v-select
-              :items="nodes"
-              v-model="target"
-              label="Select"
-              single-line
-              item-text="label"
-              item-value="id"
-              return-object
-              persistant-hint
-              ></v-select>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" flat @click.native="dialog2 = false">Close</v-btn>
-        <v-btn color="blue darken-1" flat @click.native="dialog2 = false" v-on:click="addEdge(source,target)" >Add</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+      <v-card>
+        <v-card-title>
+          <span class="headline" center>New Edge</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container grid-list-md>
+            <v-layout wrap>
+              <v-flex xs12 sm12 md12>
+                <v-subheader>Source Node</v-subheader>
+              </v-flex>
+              <v-flex xs12 sm12 md12>
+                <v-select
+                :items="nodes"
+                v-model="source"
+                label="Select"
+                single-line
+                item-text="label"
+                item-value="id"
+                return-object
+                persistant-hint
+                ></v-select>
+              </v-flex>
+              <v-flex xs12 sm12 md12>
+                <v-subheader>Target Node</v-subheader>
+              </v-flex>
+              <v-flex xs12 sm12 md12>
+                <v-select
+                :items="nodes"
+                v-model="target"
+                label="Select"
+                single-line
+                item-text="label"
+                item-value="id"
+                return-object
+                persistant-hint
+                ></v-select>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" flat @click.native="dialog2 = false">Close</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="dialog2 = false" v-on:click="addEdge(source,target)" >Add</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+  <v-dialog v-model="fileDialog" persistent max-width="500px">
+  <v-card>
+    <v-card-title>
+      <span class="headline" center>File Name</span>
+    </v-card-title>
+    <v-card-text>
+      <v-container grid-list-md>
+        <v-layout wrap>
+          <v-flex xs10 sm10 md10>
+            <v-text-field label="File name" v-model="fileName"></v-text-field>
+          </v-flex>
+          <v-flex xs2 sm2 md2>
+            <br><p>.json</p>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-card-text>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn color="blue darken-1" flat @click.native="fileDialog = false; fileName=''">Close</v-btn>
+      <v-btn color="blue darken-1" flat @click.native="fileDialog = false" v-on:click="exportTree(fileName)" >Export</v-btn>
+    </v-card-actions>
+  </v-card>
+</v-dialog>
 
     <v-footer :fixed="fixed" app>
       <span>&copy; 2018 devs101</span>
@@ -279,6 +304,7 @@
                 miniVariant: false,
                 fixed: false,
                 nodeName: "",
+                fileName:"",
                 source: null,
                 target: null,
                 select: {
@@ -311,15 +337,18 @@
                 isVisible: true,
                 dialog: false,
                 dialog2: false,
-                selectedNode: null
+                selectedNode: null,
+                fileDialog: false
 
 
             }
         },
         name: 'Trii',
         methods: {
-          exportTree: function() {
-            var cont = controller.getTreeAsJson();
+          exportTree: function(fileLabel) {
+            var json = controller.getTreeAsJson();
+            controller.saveJsonDocument(fileLabel, json);
+            this.fileName="";
           },
           onFileChange: function(e) {
               var files = e.target.files || e.dataTransfer.files;
