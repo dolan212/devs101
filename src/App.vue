@@ -33,11 +33,34 @@
       clipped-left
     >
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-btn @click.stop="undo" icon><v-icon>undo</v-icon></v-btn>
-      <v-btn @click.stop="redo" icon><v-icon>redo</v-icon></v-btn>
 
-      <v-btn fab small @click.native.stop="copy()" ><v-icon>file_copy</v-icon></v-btn>
-      <v-btn fab small @click.native.stop="paste()" ><v-icon>archive</v-icon></v-btn>
+      <v-tooltip bottom>
+        <v-btn slot="activator" @click.stop="undo" icon>
+          <v-icon>undo</v-icon>
+        </v-btn>
+        <span>Undo</span>
+      </v-tooltip>
+
+      <v-tooltip bottom>
+        <v-btn slot="activator" @click.stop="redo" icon>
+          <v-icon>redo</v-icon>
+        </v-btn>
+        <span>Redo</span>
+      </v-tooltip>
+
+      <v-tooltip bottom>
+        <v-btn slot="activator" fab small @keydown.ctrl.67="copy()" @click.native.stop="copy()" >
+          <v-icon>file_copy</v-icon>
+        </v-btn>
+        <span>Copy</span>
+      </v-tooltip>
+
+      <v-tooltip bottom>
+        <v-btn slot="activator" fab small @keydown.ctrl.86="paste()" @click.native.stop="paste()" >
+          <v-icon>archive</v-icon>
+        </v-btn>
+        <span>Paste</span>
+      </v-tooltip>
 
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
@@ -172,43 +195,64 @@
 		  <v-icon>keyboard_arrow_up</v-icon>
 		  <v-icon>close</v-icon>
 		</v-btn>
-    <v-btn
-		  fab
-		  dark
-		  small
-		  color="green"
-		  @click.native.stop="dialog = true"
-		>
-		  <v-icon>add</v-icon>
-		</v-btn>
-    <v-btn
-		  fab
-		  dark
-		  small
-		  color="yellow"
-		  @click.stop="dialog2 = true"
-      v-on:click= "getNodes()"
-		>
-		  <v-icon>call_split</v-icon>
-		</v-btn>
-		<v-btn
-		  fab
-		  dark
-		  small
-		  color="indigo"
-		  @click.native.stop="editNode()"
-		>
-		  <v-icon>edit</v-icon>
-		</v-btn>
-		<v-btn
-		  fab
-		  dark
-		  small
-		  color="red"
-		  @click.native.stop="deleteNodes()"
-		>
-		  <v-icon>delete</v-icon>
-		</v-btn>
+
+    <v-tooltip left>
+      <v-btn
+        slot="activator"
+  		  fab
+  		  dark
+  		  small
+  		  color="green"
+  		  @click.native.stop="dialog = true"
+  		>
+  		  <v-icon>add</v-icon>
+  		</v-btn>
+      <span>Add Node</span>
+    </v-tooltip>
+
+    <v-tooltip left>
+      <v-btn
+        slot="activator"
+  		  fab
+  		  dark
+  		  small
+  		  color="yellow"
+  		  @click.stop="dialog2 = true"
+        v-on:click= "getNodes()"
+  		>
+  		  <v-icon>call_split</v-icon>
+  		</v-btn>
+      <span>Add Edge</span>
+    </v-tooltip>
+
+    <v-tooltip left>
+  		<v-btn
+        slot="activator"
+  		  fab
+  		  dark
+  		  small
+  		  color="indigo"
+  		  @click.native.stop="editNode()"
+  		>
+  		  <v-icon>edit</v-icon>
+  		</v-btn>
+    <span>Edit</span>
+    </v-tooltip>
+
+    <v-tooltip left>
+  		<v-btn
+        slot="activator"
+  		  fab
+  		  dark
+  		  small
+  		  color="red"
+  		  @click.native.stop="deleteNodes()"
+  		>
+  		  <v-icon>delete</v-icon>
+  		</v-btn>
+    <span>Delete</span>
+    </v-tooltip>
+
 	      </v-speed-dial>
       </v-fab-transition>
       <v-dialog v-model="dialog" persistent max-width="500px">
