@@ -359,9 +359,8 @@
               fr = new FileReader();
 
               fr.onload = function(e){
-                results = fr.results;
+                results = e.target.result
                 console.log(typeof(results));
-                controller.buildFromJson(fr.results);
               }
 
               fr.onError = function(e){
