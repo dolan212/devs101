@@ -360,7 +360,7 @@
 
               fr.onload = function(e){
                 results = e.target.result
-                console.log(typeof(results));
+                controller.setupFromJson(results);
               }
 
               fr.onError = function(e){
