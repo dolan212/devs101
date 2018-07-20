@@ -9,7 +9,11 @@ import {
 
 export function addNode(label) {
     try {
-        store.commit('addNode', label);
+		let payload = {
+			label: label,
+			moveListener: nodeMoveHandler
+		}
+        store.commit('addNode', payload);
         //view.addNode(id, label);
         store.commit('layout'); //view.layout();
     } catch (exception) {
@@ -67,6 +71,16 @@ export function deleteSelectedNodes() {
 	}
 }
 
+function nodeMoveHandler(evt) {
+	console.log("wew");
+	let id = evt.target.id();
+	let position = evt.position;
+	store.commit('moveNode', {
+			id: id,
+			pos: position
+	});
+}
+
 export function updateDependencies(id) {
 	try {
 		store.commit('updateDependencies', id);
@@ -112,7 +126,11 @@ export function updateDisplay() {
 	}
 }
 export function setupView(container) {
-    store.commit('init', container);
+	let payload = {
+		container: container,
+		moveListener: nodeMoveHandler
+	};
+    store.commit('init', payload);
     store.commit({
         type: 'addSelectListener',
         listener: onSelect

@@ -56,7 +56,7 @@ export const store = new Vuex.Store({
     },
 
     mutations: {
-      init(state, container) {
+      init(state, payload) {
             state.tree = new Tree();
             if (state.treeNodes) state.tree.nodes = Array.from(state.treeNodes, x => {
 				let n = new Node(x._id, x._label);
@@ -65,12 +65,12 @@ export const store = new Vuex.Store({
 			});
             if (state.treeEdges) state.tree.edges = Array.from(state.treeEdges, x => new Edge(x._id, x._source, x._target));
             state.cy = cytoscape({
-                container: container,
+                container: payload.container,
                 elements: [],
                 style: [{
                         selector: 'node',
                         style: {
-                            'background-color': 'purple',
+                            'background-color': state.defaultColour,
                             'label': 'data(label)'
                         }
                     },
@@ -97,16 +97,14 @@ export const store = new Vuex.Store({
                 }
             });
             state.cy.maxZoom(2);
-            state.cy.json(state.json);
-            state.cy.$("*").on("tapend", function(evt) {
-				evt.target.data.position = evt.position;
-                state.json = state.cy.json();
-            });
+			state.cy.json(state.json);
+			state.cy.$("*").on('tapend', payload.moveListener);
         },
-        addNode(state, label) {
+        addNode(state, payload) {
             if (!state.tree) throw "Tree not initialized"; //tree hasn't been initialized yet, so we error
             if (!state.cy) throw "Cytoscape not initialized";
 			pushUndo(state);
+			let label = payload.label;
             let id = state.currentId++;
             let node = new Node(id, label, state.defaultColour);
             state.tree.addNode(node);
@@ -115,9 +113,10 @@ export const store = new Vuex.Store({
                 group: "nodes",
                 data: {
                     id: id,
-                    label: label
+                    label: label,
                 }
             });
+			added.on('tapend', payload.moveListener);
             state.json = state.cy.json();
             return id; //return id to be used for cytoscape
         },
@@ -139,6 +138,11 @@ export const store = new Vuex.Store({
 				data.label = n.label;
 				state.cy.$("#" + n.id).data(data);
 			}
+		},
+		moveNode(state, payload) {
+			console.log("hi");
+			let id = payload.id;
+			state.cy.$(`#${id}`).position(payload.pos);
 		},
         addEdge(state, pos) {
             let source = pos.source;
@@ -333,4 +337,14 @@ function pushUndo(state) {
 }
 function saveJson(state) {
 	state.json = state.cy.json();
+}
+function attachMoveListener(state) {
+	console.log("wauw");
+	state.cy.$("*").removeListener("tapend");
+	state.cy.$("*").on("tapend", function(evt) {
+		let id = evt.target.id();
+		state.cy.$(`#${id}`).position(evt.position);
+		state.json = state.cy.json();
+		console.log(state.json);
+	});
 }
