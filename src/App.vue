@@ -179,6 +179,7 @@
 										v-if="rule.type == 'skillpoint'"
 									></v-text-field>
 								</v-flex>
+								<v-btn small icon top right v-on:click="deleteRule(item.id, rule.id)"><v-icon>close</v-icon></v-btn>
 							</v-layout>
 						</v-container>
 					</v-card>
@@ -521,6 +522,9 @@
                 }
                 console.log(this.copyName);
             },
+			deleteRule(skill, rule) {
+				controller.deleteRule(skill, rule);
+			},
             paste: function(){
                 if(this.copyName.lenth == 0)
                   return;

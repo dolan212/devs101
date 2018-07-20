@@ -28,10 +28,13 @@ export const store = new Vuex.Store({
         json: "",
         globals: [],
 		defaultColour: "#E91E63",
+		firstStart: true,
 
     },
     getters: {
-
+		firstStart(state) {
+			return state.firstStart;
+		},
         getNodeLabel(state) {
             return id => state.tree.getNode(id).label;
         },
@@ -56,11 +59,15 @@ export const store = new Vuex.Store({
     },
 
     mutations: {
+		unsetFirstStart(state) {
+			state.firstStart = false;
+		},
       init(state, payload) {
             state.tree = new Tree();
             if (state.treeNodes) state.tree.nodes = Array.from(state.treeNodes, x => {
 				let n = new Node(x._id, x._label, x._colour);
-				n.rules = x.rules;
+				if(x.rules !== undefined)
+					n.rules = x.rules;
 				return n;
 			});
             if (state.treeEdges) state.tree.edges = Array.from(state.treeEdges, x => new Edge(x._id, x._source, x._target));
@@ -148,6 +155,12 @@ export const store = new Vuex.Store({
 				state.cy.$("#" + n.id).data(data);
 			}
 		},
+		deleteRule(state, payload) {
+			pushUndo(state);
+			let skill = payload.skill;
+			let rule = payload.rule;
+			state.tree.deleteRule(skill, rule);
+		},
 		moveNode(state, payload) {
 			console.log("hi");
 			let id = payload.id;
@@ -234,6 +247,8 @@ export const store = new Vuex.Store({
 				fit: true,
 				directed: true,
 				nodeDimensionsIncludeLabels: true,
+				padding: 10,
+				spacingFactor: 0.8,
 				stop: function() { saveJson(state); }
 			}).run();
         },
@@ -315,8 +330,13 @@ export const store = new Vuex.Store({
        },
        setCytoscapeJson(state, payload){
          if(payload==null) return;
-         state.json=payload;
-         state.cy.json(payload);
+         state.json=payload.json;
+         state.cy.json(payload.json);
+		 state.cy.nodes().forEach(function(ele) {
+				ele.style("background-color", ele.data('background-color'));
+			});
+			state.cy.$("*").on('position', payload.moveListener);
+			state.cy.elements().unselect();
        }
     },
     plugins: [persistentState({
@@ -330,7 +350,8 @@ export const store = new Vuex.Store({
 			json: state.cy.json(),
             treeUndoStack: state.treeUndoStack,
             treeRedoStack: state.treeRedoStack,
-            globals: state.globals
+            globals: state.globals,
+			firstStart: state.firstStart,
         }),
     })],
 });

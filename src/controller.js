@@ -40,6 +40,14 @@ export function getNodes() {
     return store.getters.getNodes;
 }
 
+export function deleteRule(skill, rule) {
+	try {
+		store.commit('deleteRule', {skill: skill, rule: rule});
+	} catch(exception) {
+		alert(exception);
+	}
+}
+
 export function addRule(skill) {
     try {
         store.commit('addRule', {skill: skill});
@@ -138,6 +146,13 @@ export function setupView(container) {
         type: 'addSelectListener',
         listener: onSelect
     });
+	let firstStart = store.getters.firstStart;
+	if(firstStart) {
+		var jsonData = require('@/assets/defaultTree.json');
+		console.log(jsonData);
+		setupFromJson(JSON.stringify(jsonData));
+		store.commit('unsetFirstStart');
+	}
     store.commit({
         type: 'addDeselectListener',
         listener: onDeselect
@@ -198,7 +213,7 @@ export function setupFromJson(jsonString){
     store.commit('setTree',t);
     console.log(tree.cytoscape);
     store.commit('setGlobals',g);
-    store.commit('setCytoscapeJson',c);
+    store.commit('setCytoscapeJson',{json: c, moveListener: nodeMoveHandler2});
   }catch(e){
     alert("The json file is not valid");
     console.log(e);

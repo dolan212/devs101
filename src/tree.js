@@ -26,6 +26,7 @@ export class Node {
         this._id = id;
         this._label = label;
 		this._colour = colour;
+		this.rules = [];
     }
     set label(label) {
         this._label = label;
@@ -50,6 +51,17 @@ export class Node {
     }
 	getRules() {
 		return this.rules;
+	}
+	deleteRule(rule_id) {
+		let index = -1;
+        for (var i = 0; i < this.rules.length; i++) {
+            if (this.rules[i].id == rule_id) index = i;
+        }
+        if (index != -1) {
+			this.rules.splice(index, 1);
+		}
+        else throw "Rule not found";
+
 	}
 }
 
@@ -83,7 +95,7 @@ export class Tree {
                 id: n.id,
                 label: n.label,
 				colour: n.colour,
-				
+				rules: n.rules,
             });
         }
         return nodesList;
@@ -106,6 +118,10 @@ export class Tree {
 		}
         else throw "Node not found";
     }
+	deleteRule(skill_id, rule) {
+		let skill = this.getNode(skill_id);
+		skill.deleteRule(rule);
+	}
 	deleteEdge(id) {
 		let index = -1;
 		for(var i = 0; i < this.edges.length; i++) {
@@ -125,7 +141,6 @@ export class Tree {
     addRule(skill, rule) {
         let node = this.getNode(skill);
         node.rules.push(rule);
-		console.log(node.rules.length);
     }
 	getRules(skill) {
 		let node = getNode(skill);
