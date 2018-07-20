@@ -49,14 +49,14 @@
       </v-tooltip>
 
       <v-tooltip bottom>
-        <v-btn slot="activator" icon small @keydown.ctrl.67="copy()" @click.native.stop="copy()" >
+        <v-btn icon slot="activator"fab small @keydown.ctrl.67="copy()" @click.native.stop="copy()" >
           <v-icon>file_copy</v-icon>
         </v-btn>
         <span>Copy</span>
       </v-tooltip>
 
       <v-tooltip bottom>
-        <v-btn icon slot="activator" small @keydown.ctrl.86="paste()" @click.native.stop="paste()" >
+        <v-btn icon slot="activator"fab small @keydown.ctrl.86="paste()" @click.native.stop="paste()" >
           <v-icon>archive</v-icon>
         </v-btn>
         <span>Paste</span>
@@ -92,13 +92,22 @@
 			</v-list>
 		</v-toolbar>
 		<v-container fluid>
-			<v-btn flat v-on:click="newTree">Clear Tree</v-btn>
-      <v-btn flat @click.native.stop="autoLayout()">Auto Layout</v-btn>
+      <v-tooltip left>
+			    <v-btn slot="activator" flat v-on:click="newTree">Clear Tree</v-btn>
+        <span>Delete all nodes</span>
+      </v-tooltip>
+      <v-tooltip left>
+        <v-btn slot="activator" flat @click.native.stop="autoLayout()">Auto Layout</v-btn>
+        <span>Automatically orders nodes</span>
+      </v-tooltip>
 		</v-container>
     <v-container fluid>
       <p>Import Skill Tree</p>
 			<input type="file" accept=".json" @change="onFileChange">
-      <v-btn flat @click.native.stop="fileDialog = true">Export Skill Tree</v-btn>
+      <v-tooltip left>
+        <v-btn slot="activator" flat @click.native.stop="fileDialog = true">Export Skill Tree</v-btn>
+        <span>Export tree as json file</span>
+      </v-tooltip>
 		</v-container>
 	</v-navigation-drawer>
 
@@ -156,7 +165,7 @@
 										item-value="id"
 									></v-select>
 									<v-text-field label="Level Requirement"
-										v-model="rule.level" 
+										v-model="rule.level"
 										v-if="rule.type == 'level'"
 									></v-text-field>
 									<v-text-field
@@ -218,7 +227,7 @@
   		</v-btn>
       <span>Add Skill</span>
     </v-tooltip>
-    
+
     <v-tooltip left>
   		<v-btn
         slot="activator"
