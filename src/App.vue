@@ -354,7 +354,7 @@
                 let n = this.nodes.filter(x => selectedNodes.includes("" + x.id));
                 for (var i = 0; i < n.length; i++) {
                     controller.updateNode(n[i].id, {
-                        label: n[i].label
+                        label: n[i].label, color: n[i].color
                     });
                 }
                 this.nodeDrawer = false;

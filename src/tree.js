@@ -22,9 +22,10 @@ export class Edge {
 }
 
 export class Node {
-    constructor(id, label) {
+    constructor(id, label, color) {
         this._id = id;
         this._label = label;
+		this._color = color;
     }
     set label(label) {
         this._label = label;
@@ -32,6 +33,12 @@ export class Node {
     get label() {
         return this._label;
     }
+	set color(color){
+		this._color = color;
+	}
+	get color(){
+		return color;
+	}
     get id() {
         return this._id;
     }
@@ -54,9 +61,10 @@ export class Tree {
         }
         throw "Node not found";
     }
-    updateNode(id, _label) {
+    updateNode(id, _label,_color) {
         var n = this.nodes.find(x => x.id == id);
         n.label = _label;
+		n.color = _color;
     }
     getNodes() {
         var nodesList = [];
@@ -64,7 +72,8 @@ export class Tree {
             var n = this.nodes[i];
             nodesList.push({
                 id: n.id,
-                label: n.label
+                label: n.label,
+				
             });
         }
         return nodesList;
@@ -107,7 +116,8 @@ export function initialize() {
 export function addNode(label) {
     if (!tree) throw "Tree not initialized"; //tree hasn't been initialized yet, so we error
     let id = currentId++;
-    let node = new Node(id, label);
+	let color = color;
+    let node = new Node(id, label,color);
     tree.addNode(node);
     return id; //return id to be used for cytoscape
 }
