@@ -49,14 +49,14 @@
       </v-tooltip>
 
       <v-tooltip bottom>
-        <v-btn slot="activator" fab small @keydown.ctrl.67="copy()" @click.native.stop="copy()" >
+        <v-btn slot="activator" icon small @keydown.ctrl.67="copy()" @click.native.stop="copy()" >
           <v-icon>file_copy</v-icon>
         </v-btn>
         <span>Copy</span>
       </v-tooltip>
 
       <v-tooltip bottom>
-        <v-btn slot="activator" fab small @keydown.ctrl.86="paste()" @click.native.stop="paste()" >
+        <v-btn icon slot="activator" small @keydown.ctrl.86="paste()" @click.native.stop="paste()" >
           <v-icon>archive</v-icon>
         </v-btn>
         <span>Paste</span>
@@ -64,9 +64,13 @@
 
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
-	  <v-btn icon @click.stop="settingsDrawer = !settingsDrawer">
-	  	<v-icon>settings</v-icon>
-	  </v-btn>
+	  <v-tooltip bottom>
+		  <v-btn slot="activator" icon small @click.stop="settingsDrawer = !settingsDrawer">
+			<v-icon>settings</v-icon>
+		  </v-btn>
+		  <span>Settings</span>
+	  </v-tooltip>
+
     </v-toolbar>
       <v-content>
         <router-view/>
@@ -89,6 +93,12 @@
 		</v-toolbar>
 		<v-container fluid>
 			<v-btn flat v-on:click="newTree">Clear Tree</v-btn>
+      <v-btn flat @click.native.stop="autoLayout()">Auto Layout</v-btn>
+		</v-container>
+    <v-container fluid>
+      <p>Import Skill Tree</p>
+			<input type="file" accept=".json" @change="onFileChange">
+      <v-btn flat @click.native.stop="fileDialog = true">Export Skill Tree</v-btn>
 		</v-container>
 	</v-navigation-drawer>
 
@@ -97,21 +107,69 @@
 	:right="true"
 	v-model="nodeDrawer"
 	app
+	temporary
 	>
 		<v-toolbar flat>
 			<v-list>
 				<v-list-tile>
 					<v-list-tile-content>
-						<v-list-tile-title>Edit Nodes</v-list-tile-title>
+						<v-list-tile-title>Edit Skills</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
 			</v-list>
 		</v-toolbar>
 		<v-divider></v-divider>
-		<v-container v-for="item in nodes" :key="item.id" v-if="item.selected" fluid>
-					<v-subheader>{{ item.label }}</v-subheader>
-					<v-text-field label="Skill Name" v-model="item.label"></v-text-field>
-					<v-divider></v-divider>
+		<v-container grid-list-md text-xs-center v-for="item in nodes" :key="item.id" v-if="item.selected">
+			<v-layout row wrap>
+				<v-flex xs12>
+					<v-subheader>Editing {{ item.label }} </v-subheader>
+					<v-card dark>
+						<v-container fill-height fluid>
+							<v-layout fill-height>
+								<v-flex xs12 align-end flexbox>
+									<v-text-field label="Skill Name" v-model="item.label"></v-text-field>
+									<v-text-field label="Skill Description" v-model="item.description"></v-text-field>
+								</v-flex>
+							</v-layout>
+						</v-container>
+					</v-card>
+				</v-flex>
+
+				<v-subheader>Skill Rules</v-subheader>
+				<v-flex xs12 v-for="rule in item.rules" :key="rule.id">
+					<v-card dark>
+						<v-container fill-height fluid>
+							<v-layout fill-height>
+								<v-flex xs12 align-end flexbox>
+									<v-select
+										v-model="rule.type"
+										:items="rule_types"
+										item-text="name"
+										item-value="value"
+									></v-select>
+									<v-select
+										v-if="rule.type == 'dependency'"
+										v-model="rule.node"
+										:items="nodes"
+										item-text="label"
+										item-value="id"
+									></v-select>
+									<v-text-field label="Level Requirement"
+										v-model="rule.level" 
+										v-if="rule.type == 'level'"
+									></v-text-field>
+									<v-text-field
+										label="Skill Points Required"
+										v-model="rule.skillpoints"
+										v-if="rule.type == 'skillpoint'"
+									></v-text-field>
+								</v-flex>
+							</v-layout>
+						</v-container>
+					</v-card>
+				</v-flex>
+				<v-btn v-on:click="addRule(item.id)">Add Rule</v-btn>
+			</v-layout>
 		</v-container>
 		<v-btn v-on:click="saveNodes()">Save</v-btn>
 	</v-navigation-drawer>
@@ -134,18 +192,17 @@
 	      fixed
 	      v-show="['skilltree'].indexOf($route.name) > -1"
 	      >
-      </v-btn>
 
-    <v-btn
-		  slot="activator"
-		  color="blue darken-2"
-		  dark
-		  fab
-		  v-model="fab"
-		  >
-		  <v-icon>keyboard_arrow_up</v-icon>
-		  <v-icon>close</v-icon>
-		</v-btn>
+			<v-btn
+			  slot="activator"
+			  color="blue darken-2"
+			  dark
+			  fab
+			  v-model="fab"
+			>
+			  <v-icon>keyboard_arrow_up</v-icon>
+			  <v-icon>close</v-icon>
+			</v-btn>
 
     <v-tooltip left>
       <v-btn
@@ -158,24 +215,9 @@
   		>
   		  <v-icon>add</v-icon>
   		</v-btn>
-      <span>Add Node</span>
+      <span>Add Skill</span>
     </v-tooltip>
-
-    <v-tooltip left>
-      <v-btn
-        slot="activator"
-  		  fab
-  		  dark
-  		  small
-  		  color="yellow"
-  		  @click.stop="dialog2 = true"
-        v-on:click= "getNodes()"
-  		>
-  		  <v-icon>call_split</v-icon>
-  		</v-btn>
-      <span>Add Edge</span>
-    </v-tooltip>
-
+    
     <v-tooltip left>
   		<v-btn
         slot="activator"
@@ -187,7 +229,7 @@
   		>
   		  <v-icon>edit</v-icon>
   		</v-btn>
-    <span>Edit</span>
+    <span>Edit Skill</span>
     </v-tooltip>
 
     <v-tooltip left>
@@ -201,25 +243,25 @@
   		>
   		  <v-icon>delete</v-icon>
   		</v-btn>
-    <span>Delete</span>
+    <span>Delete Skill</span>
     </v-tooltip>
 
 	      </v-speed-dial>
       </v-fab-transition>
       <v-dialog v-model="dialog" persistent max-width="500px">
-      <v-card>
-        <v-card-title>
-          <span class="headline" center>New Node</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container grid-list-md>
-            <v-layout wrap>
-              <v-flex xs12 sm12 md12>
-                <v-text-field label="Node name" v-model="nodeName"></v-text-field>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-card-text>
+        <v-card>
+          <v-card-title>
+            <span class="headline" center>New Node</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12 sm12 md12>
+                  <v-text-field label="Node name" v-model="nodeName"></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
@@ -229,53 +271,78 @@
     </v-dialog>
 
     <v-dialog v-model="dialog2" persistent max-width="500px">
-    <v-card>
-      <v-card-title>
-        <span class="headline" center>New Edge</span>
-      </v-card-title>
-      <v-card-text>
-        <v-container grid-list-md>
-          <v-layout wrap>
-            <v-flex xs12 sm12 md12>
-              <v-subheader>Source Node</v-subheader>
-            </v-flex>
-            <v-flex xs12 sm12 md12>
-              <v-select
-              :items="nodes"
-              v-model="source"
-              label="Select"
-              single-line
-              item-text="label"
-              item-value="id"
-              return-object
-              persistant-hint
-              ></v-select>
-            </v-flex>
-            <v-flex xs12 sm12 md12>
-              <v-subheader>Target Node</v-subheader>
-            </v-flex>
-            <v-flex xs12 sm12 md12>
-              <v-select
-              :items="nodes"
-              v-model="target"
-              label="Select"
-              single-line
-              item-text="label"
-              item-value="id"
-              return-object
-              persistant-hint
-              ></v-select>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" flat @click.native="dialog2 = false">Close</v-btn>
-        <v-btn color="blue darken-1" flat @click.native="dialog2 = false" v-on:click="addEdge(source,target)" >Add</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+      <v-card>
+        <v-card-title>
+          <span class="headline" center>New Edge</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container grid-list-md>
+            <v-layout wrap>
+              <v-flex xs12 sm12 md12>
+                <v-subheader>Source Node</v-subheader>
+              </v-flex>
+              <v-flex xs12 sm12 md12>
+                <v-select
+                :items="nodes"
+                v-model="source"
+                label="Select"
+                single-line
+                item-text="label"
+                item-value="id"
+                return-object
+                persistant-hint
+                ></v-select>
+              </v-flex>
+              <v-flex xs12 sm12 md12>
+                <v-subheader>Target Node</v-subheader>
+              </v-flex>
+              <v-flex xs12 sm12 md12>
+                <v-select
+                :items="nodes"
+                v-model="target"
+                label="Select"
+                single-line
+                item-text="label"
+                item-value="id"
+                return-object
+                persistant-hint
+                ></v-select>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" flat @click.native="dialog2 = false">Close</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="dialog2 = false" v-on:click="addEdge(source,target)" >Add</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+  <v-dialog v-model="fileDialog" persistent max-width="500px">
+  <v-card>
+    <v-card-title>
+      <span class="headline" center>File Name</span>
+    </v-card-title>
+    <v-card-text>
+      <v-container grid-list-md>
+        <v-layout wrap>
+          <v-flex xs10 sm10 md10>
+            <v-text-field label="File name" v-model="fileName"></v-text-field>
+          </v-flex>
+          <v-flex xs2 sm2 md2>
+            <br><p>.json</p>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-card-text>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn color="blue darken-1" flat @click.native="fileDialog = false; fileName=''">Close</v-btn>
+      <v-btn color="blue darken-1" flat @click.native="fileDialog = false" v-on:click="exportTree(fileName)" >Export</v-btn>
+    </v-card-actions>
+  </v-card>
+</v-dialog>
 
     <v-footer :fixed="fixed" app>
       <span>&copy; 2018 devs101</span>
@@ -319,7 +386,8 @@
                 miniVariant: false,
                 fixed: false,
                 nodeName: "",
-                copyName: [],
+				copyName: [],
+                fileName:"",
                 source: null,
                 target: null,
                 select: {
@@ -352,13 +420,43 @@
                 isVisible: true,
                 dialog: false,
                 dialog2: false,
-                selectedNode: null
+				fileDialog: false,
+                selectedNode: null,
+				rules: [],
+				rule_types: [
+					{ name: "Dependency", value: "dependency" },
+					{ name: "Level", value: "level" },
+					{ name: "Skill Point", value: "skillpoint" }
+				]
 
 
             }
         },
         name: 'Trii',
         methods: {
+          exportTree: function(fileLabel) {
+            var json = controller.getTreeAsJson();
+            controller.saveJsonDocument(fileLabel, json);
+            this.fileName="";
+          },
+          onFileChange: function(e) {
+              var files = e.target.files || e.dataTransfer.files;
+              var file, fr, results;
+              if (!files.length)
+                return;
+              file=files[0];
+              fr = new FileReader();
+
+              fr.onload = function(e){
+                results = e.target.result
+                controller.setupFromJson(results);
+              }
+
+              fr.onError = function(e){
+                console.log("An error occured");
+              }
+              fr.readAsText(file);
+            },
             addNode: function(nodeLabel) {
                 controller.addNode(nodeLabel);
                 this.nodeName = "";
@@ -424,8 +522,18 @@
                         n.selected = false;
                     }
                 }
+				if(selectedNodes.length == 1) {
+					var rules = controller.getRules(selectedNodes[0]);
+					this.rules = rules;
+				}
+				else {
+					this.rules = [];
+				}
                 this.nodeDrawer = true;
             },
+			updateDependencies(id) {
+				controller.updateDependencies(id);
+			},
             saveNodes: function() {
                 var selectedNodes = controller.getSelectedNodes();
                 let n = this.nodes.filter(x => selectedNodes.includes("" + x.id));
@@ -433,11 +541,18 @@
                     controller.updateNode(n[i].id, {
                         label: n[i].label
                     });
+					this.updateDependencies(n[i].id);
                 }
                 this.nodeDrawer = false;
             },
+			addRule: function(id) {
+				controller.addRule(id);
+			},
             editSettings: function() {
                 this.settingsDrawer = true;
+            },
+            autoLayout: function() {
+                controller.autoLayout();
             },
 			newTree: function() {
 				controller.clear();

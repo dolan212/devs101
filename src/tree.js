@@ -20,21 +20,32 @@ export class Edge {
         return this._target;
     }
 }
-
+var desc = '';
 export class Node {
-    constructor(id, label) {
+    constructor(id, label,description) {
         this._id = id;
         this._label = label;
+		this._description  = description;
+		this.rules = [];
     }
     set label(label) {
         this._label = label;
     }
+	set description(description){
+		this._description = description;
+	}
+	get description(){
+		return this._description;
+	}
     get label() {
         return this._label;
     }
     get id() {
         return this._id;
     }
+	getRules() {
+		return this.rules;
+	}
 }
 
 export class Tree {
@@ -59,24 +70,51 @@ export class Tree {
         n.label = _label;
     }
     getNodes() {
-        var nodesList = [];
-        for (var i = 0; i < this.nodes.length; i++) {
-            var n = this.nodes[i];
-            nodesList.push({
-                id: n.id,
-                label: n.label
-            });
-        }
-        return nodesList;
+		return this.nodes;
     }
     deleteNode(id) {
         let index = -1;
         for (var i = 0; i < this.nodes.length; i++) {
-            if (this.nodes[i].id === id) index = i;
+            if (this.nodes[i].id == id) index = i;
         }
-        if (index == -1) this.nodes.splice(index, 1);
+        if (index != -1) {
+			let edgesToDelete = [];
+			for(var i in this.edges) {
+				if(this.edges[i].source == id || this.edges[i].target == id)
+					edgesToDelete.push(this.edges[i].id);
+			}
+			this.nodes.splice(index, 1);
+			for(var i in edgesToDelete) {
+				this.deleteEdge(edgesToDelete[i]);
+			}
+		}
         else throw "Node not found";
     }
+	deleteEdge(id) {
+		let index = -1;
+		for(var i = 0; i < this.edges.length; i++) {
+			if(this.edges[i].id == id) index = i;
+		}
+		if(index != -1) this.edges.splice(index, 1);
+		else throw "Edge not found";
+	}
+	getConnectedEdges(id) {
+		var edges = [];
+		for(var i in this.edges) {
+			if(this.edges[i].target == id)
+				edges.push(this.edges[i]);
+		}
+		return edges;
+	}
+    addRule(skill, rule) {
+        let node = this.getNode(skill);
+        node.rules.push(rule);
+		console.log(node.rules.length);
+    }
+	getRules(skill) {
+		let node = getNode(skill);
+		return node.getRules();
+	}
     clean() {
         this.nodes.length = 0;
         this.edges.length = 0;
@@ -107,14 +145,15 @@ export function initialize() {
 export function addNode(label) {
     if (!tree) throw "Tree not initialized"; //tree hasn't been initialized yet, so we error
     let id = currentId++;
-    let node = new Node(id, label);
+	let description = desc;// description set to null on addition of a node
+    let node = new Node(id, label,description);
     tree.addNode(node);
     return id; //return id to be used for cytoscape
 }
 
 export function addEdge(source, target) {
     if (!tree) throw "Tree not initialized";
-    let id = edgeId++;
+    let id = Id++;
     let edge = new Edge(id, source, target);
     tree.addEdge(source, target);
     return id;
@@ -128,6 +167,11 @@ export function deleteNode(id) {
 export function getLabel(id) {
     let node = tree.getNode(id);
     return node.label;
+}
+
+export function getDescription(id) {
+	let node = tree.getNode(id);
+	return node.description;
 }
 
 export function clean() {
