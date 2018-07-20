@@ -138,7 +138,12 @@
 								<v-flex xs12 align-end flexbox>
 									<v-text-field label="Skill Name" v-model="item.label"></v-text-field>
 									<v-text-field label="Skill Description" v-model="item.description"></v-text-field>
-									<v-text-field label="Skill Colour" v-model="item.colour"></v-text-field>
+									<v-select
+										v-model="item.colour"
+										:items="possible_colours"
+										item-text="name"
+										item-value="value"
+									></v-select>
 								</v-flex>
 							</v-layout>
 						</v-container>
@@ -437,7 +442,19 @@
 					{ name: "Dependency", value: "dependency" },
 					{ name: "Level", value: "level" },
 					{ name: "Skill Point", value: "skillpoint" }
-				]
+				],
+				possible_colours: [
+					{ name: "Purple", value: "#9C27B0" },
+					{ name: "Red", value: "#f44336" },
+					{ name: "Blue", value: "#2196F3" },
+					{ name: "Pink", value: "#E91E63" },
+					{ name: "Cyan", value: "#00BCD4"},
+					{ name: "Green", value: "#4CAF50" },
+					{ name: "Yellow", value: "#FFEB3B" },
+					{ name: "Orange", value: "#FF5722" },
+					{ name: "Brown", value: "#795548" },
+					{ name: "Grey", value: "#616161" },
+				],
 
 
             }

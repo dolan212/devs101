@@ -27,7 +27,7 @@ export const store = new Vuex.Store({
         jsonRedoStack: [],
         json: "",
         globals: [],
-		defaultColour: "purple",
+		defaultColour: "#E91E63",
 
     },
     getters: {
@@ -126,8 +126,8 @@ export const store = new Vuex.Store({
         },
         updateNode(state, payload) {
 			pushUndo(state);
+			if(payload.colour == 'default') payload.colour = state.defaultColour;
             state.tree.updateNode(payload.id, payload.label, payload.colour);
-			console.log(payload.colour);
             state.cy.$("#" + payload.id).data({
                 label: payload.label
             });
