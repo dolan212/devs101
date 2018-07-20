@@ -224,7 +224,8 @@ function buildTreeFromJsonObject(obj){
   var tree = new Tree();
   for(var n in obj.nodes){
     if (obj.nodes.hasOwnProperty(n)) {
-      var newNode = new Node(obj.nodes[n]._id,obj.nodes[n]._label,obj.nodes[n]._description);
+      var newNode = new Node(obj.nodes[n]._id,obj.nodes[n]._label,obj.nodes[n]._colour);
+	  newNode.rules = obj.nodes[n].rules;
       tree.addNode(newNode);
     }
   }
