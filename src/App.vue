@@ -82,11 +82,12 @@
 		</v-toolbar>
 		<v-divider></v-divider>
 		<v-container v-for="item in nodes" :key="item.id" v-if="item.selected" fluid>
-					<v-subheader color="lightgray darken-1">{{ item.label }}</v-subheader>
-					<v-text-field color="lightgray darken-1" label="Skill Name" v-model="item.label"></v-text-field>
-					<v-divider></v-divider>
+					<v-subheader color="lightgray darken-1" >{{ item.label }}</v-subheader>
+					
+					<v-text-field color="blue" label="Skill Name : " v-model="item.label"></v-text-field>
+					<v-text-field color="blue" label="Skill Color : " v-model="item.color"></v-text-field>
 		</v-container>
-		<v-btn v-on:click="saveNodes()">Save</v-btn>
+		<v-btn color="blue darken-1"  v-on:click="saveNodes()">Save</v-btn>
 	</v-navigation-drawer>
 	<v-snackbar
 		:timeout="noSelectionSnack.timeout"
