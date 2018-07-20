@@ -129,6 +129,7 @@
 								<v-flex xs12 align-end flexbox>
 									<v-text-field label="Skill Name" v-model="item.label"></v-text-field>
 									<v-text-field label="Skill Description" v-model="item.description"></v-text-field>
+									<v-text-field label="Skill Colour" v-model="item.colour"></v-text-field>
 								</v-flex>
 							</v-layout>
 						</v-container>
@@ -171,7 +172,7 @@
 				<v-btn v-on:click="addRule(item.id)">Add Rule</v-btn>
 			</v-layout>
 		</v-container>
-		<v-btn v-on:click="saveNodes()">Save</v-btn>
+		<v-btn color="blue darken-1"  v-on:click="saveNodes()">Save</v-btn>
 	</v-navigation-drawer>
 	<v-snackbar
 		:timeout="noSelectionSnack.timeout"
@@ -539,7 +540,7 @@
                 let n = this.nodes.filter(x => selectedNodes.includes("" + x.id));
                 for (var i = 0; i < n.length; i++) {
                     controller.updateNode(n[i].id, {
-                        label: n[i].label
+                        label: n[i].label, colour: n[i].colour
                     });
 					this.updateDependencies(n[i].id);
                 }
