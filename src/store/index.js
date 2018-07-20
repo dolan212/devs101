@@ -59,7 +59,7 @@ export const store = new Vuex.Store({
       init(state, payload) {
             state.tree = new Tree();
             if (state.treeNodes) state.tree.nodes = Array.from(state.treeNodes, x => {
-				let n = new Node(x._id, x._label);
+				let n = new Node(x._id, x._label, x._colour);
 				n.rules = x.rules;
 				return n;
 			});
@@ -98,7 +98,11 @@ export const store = new Vuex.Store({
             });
             state.cy.maxZoom(2);
 			state.cy.json(state.json);
-			state.cy.$("*").on('tapend', payload.moveListener);
+			state.cy.elements().unselect();
+			state.cy.nodes().forEach(function(ele) {
+				ele.style("background-color", ele.data('background-color'));
+			});
+			state.cy.$("*").on('position', payload.moveListener);
         },
         addNode(state, payload) {
             if (!state.tree) throw "Tree not initialized"; //tree hasn't been initialized yet, so we error
@@ -116,7 +120,7 @@ export const store = new Vuex.Store({
                     label: label,
                 }
             });
-			added.on('tapend', payload.moveListener);
+			added.on('position', payload.moveListener);
             state.json = state.cy.json();
             return id; //return id to be used for cytoscape
         },
@@ -128,8 +132,13 @@ export const store = new Vuex.Store({
                 label: payload.label
             });
 			state.cy.$("#" + payload.id).style('background-color', payload.colour);
+			state.cy.$("#" + payload.id).data('background-color', payload.colour);
             state.json = state.cy.json();
         },
+		refreshCytoscape(state) {
+			pushUndo(state);
+			state.json = state.cy.json();
+		},
 		updateDisplay(state) {
 			let nodes = state.tree.getNodes();
 			for(var i in nodes) {

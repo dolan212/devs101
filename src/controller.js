@@ -11,7 +11,7 @@ export function addNode(label) {
     try {
 		let payload = {
 			label: label,
-			moveListener: nodeMoveHandler
+			moveListener: nodeMoveHandler2
 		}
         store.commit('addNode', payload);
         //view.addNode(id, label);
@@ -125,10 +125,13 @@ export function updateDisplay() {
 		alert(exception);
 	}
 }
+function nodeMoveHandler2(evt) {
+	store.commit('refreshCytoscape');
+}
 export function setupView(container) {
 	let payload = {
 		container: container,
-		moveListener: nodeMoveHandler
+		moveListener: nodeMoveHandler2
 	};
     store.commit('init', payload);
     store.commit({
