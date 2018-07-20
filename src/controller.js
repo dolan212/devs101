@@ -1,6 +1,11 @@
 import {
     store
 } from './store/index.js'
+import {
+    Tree,
+    Node,
+    Edge
+} from '@/tree'
 
 export function addNode(label) {
     try {
@@ -129,5 +134,69 @@ export function clear() {
 }
 
 export function autoLayout() {
-        store.commit('autoLayout');
+	store.commit('autoLayout');
+}
+
+export function buildFromJson(jsonData){
+    let val = String(jsonData);
+    console.log(jsonData);
+}
+
+export function getTreeAsJson(){
+  var tree =store.getters.getTree;
+  tree = '"tree": '+JSON.stringify(tree);
+  var globals = store.getters.getGlobals;
+  globals = '"globals": '+JSON.stringify(globals);
+  var cyt = store.getters.getCytoscapeJson;
+  cyt = '"cytoscape": '+JSON.stringify(cyt);
+
+  var finalJson = "{\n"+tree+",\n"+globals+",\n"+cyt+"\n}"
+  return finalJson;
+}
+
+export function saveJsonDocument(filename, data){
+  var blob = new Blob([data],{type: "application/json"});
+  var url  = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+
+  a.href = url;
+  a.download = filename+".json";
+  a.textContent = "Download backup.json";
+
+  a.click();
+}
+
+export function setupFromJson(jsonString){
+  try{
+    var tree = JSON.parse(jsonString);
+
+    var t = buildTreeFromJsonObject(tree.tree);
+    var g = tree.globals;
+    var c = tree.cytoscape;
+    store.commit('setTree',t);
+    console.log(tree.cytoscape);
+    store.commit('setGlobals',g);
+    store.commit('setCytoscapeJson',c);
+  }catch(e){
+    alert("The json file is not valid");
+    console.log(e);
+  }
+}
+
+function buildTreeFromJsonObject(obj){
+  var tree = new Tree();
+  for(var n in obj.nodes){
+    if (obj.nodes.hasOwnProperty(n)) {
+      var newNode = new Node(obj.nodes[n]._id,obj.nodes[n]._label,obj.nodes[n]._description);
+      tree.addNode(newNode);
+    }
+  }
+  for(var v in obj.edges){
+    if (obj.edges.hasOwnProperty(v)) {
+      var newEdge = new Edge(obj.edges[v]._id,obj.edges[v]._source,obj.edges[v]._target);
+      tree.addNode(newEdge);
+      console.log(newEdge);
+    }
+  }
+  return tree;
 }

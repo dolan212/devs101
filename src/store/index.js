@@ -45,7 +45,13 @@ export const store = new Vuex.Store({
         },
 		getRules(state) {
 			return id => state.tree.getRules(id);
-		}
+		},
+        getTree(state){
+          return state.tree;
+        },
+        getCytoscapeJson(state){
+          return state.json;
+        }
     },
 
     mutations: {
@@ -296,8 +302,21 @@ export const store = new Vuex.Store({
        deleteGlovalVar(state, globalVarName){
          if(state.globals[globalVarName]!=null) return;
          state.globals[globalVarName]=null;
+       },
+       setTree(state, payload){
+         if(payload==null) return;
+         console.log("TEST");
+         state.tree=payload;
+       },
+       setGlobals(state, payload){
+         if(payload==null) return;
+         state.globals=payload;
+       },
+       setCytoscapeJson(state, payload){
+         if(payload==null) return;
+         state.json=payload;
+         state.cy.json(payload);
        }
-
     },
     plugins: [persistentState({
         reducer: state => ({
