@@ -49,14 +49,14 @@
       </v-tooltip>
 
       <v-tooltip bottom>
-        <v-btn slot="activator" fab small @keydown.ctrl.67="copy()" @click.native.stop="copy()" >
+        <v-btn slot="activator" icon small @keydown.ctrl.67="copy()" @click.native.stop="copy()" >
           <v-icon>file_copy</v-icon>
         </v-btn>
         <span>Copy</span>
       </v-tooltip>
 
       <v-tooltip bottom>
-        <v-btn slot="activator" fab small @keydown.ctrl.86="paste()" @click.native.stop="paste()" >
+        <v-btn icon slot="activator" small @keydown.ctrl.86="paste()" @click.native.stop="paste()" >
           <v-icon>archive</v-icon>
         </v-btn>
         <span>Paste</span>
@@ -64,9 +64,13 @@
 
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
-	  <v-btn icon @click.stop="settingsDrawer = !settingsDrawer">
-	  	<v-icon>settings</v-icon>
-	  </v-btn>
+	  <v-tooltip bottom>
+		  <v-btn slot="activator" icon small @click.stop="settingsDrawer = !settingsDrawer">
+			<v-icon>settings</v-icon>
+		  </v-btn>
+		  <span>Settings</span>
+	  </v-tooltip>
+
     </v-toolbar>
       <v-content>
         <router-view/>
@@ -109,7 +113,7 @@
 			<v-list>
 				<v-list-tile>
 					<v-list-tile-content>
-						<v-list-tile-title>Edit Nodes</v-list-tile-title>
+						<v-list-tile-title>Edit Skills</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
 			</v-list>
@@ -188,18 +192,17 @@
 	      fixed
 	      v-show="['skilltree'].indexOf($route.name) > -1"
 	      >
-      </v-btn>
 
-    <v-btn
-		  slot="activator"
-		  color="blue darken-2"
-		  dark
-		  fab
-		  v-model="fab"
-		  >
-		  <v-icon>keyboard_arrow_up</v-icon>
-		  <v-icon>close</v-icon>
-		</v-btn>
+			<v-btn
+			  slot="activator"
+			  color="blue darken-2"
+			  dark
+			  fab
+			  v-model="fab"
+			>
+			  <v-icon>keyboard_arrow_up</v-icon>
+			  <v-icon>close</v-icon>
+			</v-btn>
 
     <v-tooltip left>
       <v-btn
@@ -212,7 +215,7 @@
   		>
   		  <v-icon>add</v-icon>
   		</v-btn>
-      <span>Add Node</span>
+      <span>Add Skill</span>
     </v-tooltip>
     
     <v-tooltip left>
@@ -226,7 +229,7 @@
   		>
   		  <v-icon>edit</v-icon>
   		</v-btn>
-    <span>Edit</span>
+    <span>Edit Skill</span>
     </v-tooltip>
 
     <v-tooltip left>
@@ -240,7 +243,7 @@
   		>
   		  <v-icon>delete</v-icon>
   		</v-btn>
-    <span>Delete</span>
+    <span>Delete Skill</span>
     </v-tooltip>
 
 	      </v-speed-dial>
