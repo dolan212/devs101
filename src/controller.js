@@ -56,7 +56,7 @@ export function updateNode(id, payload) {
         let p = {
             id: id,
             label: payload.label,
-			color: payload.color
+			colour: payload.colour
         }
         store.commit('updateNode', p);
     } catch (exception) {

@@ -22,10 +22,10 @@ export class Edge {
 }
 
 export class Node {
-    constructor(id, label, color) {
+    constructor(id, label, colour) {
         this._id = id;
         this._label = label;
-		this._color = color;
+		this._colour = colour;
     }
     set label(label) {
         this._label = label;
@@ -33,11 +33,11 @@ export class Node {
     get label() {
         return this._label;
     }
-	set color(color){
-		this._color = color;
+	set colour(colour){
+		this._colour = colour;
 	}
-	get color(){
-		return color;
+	get colour(){
+		return this._colour;
 	}
     get id() {
         return this._id;
@@ -61,10 +61,10 @@ export class Tree {
         }
         throw "Node not found";
     }
-    updateNode(id, _label,_color) {
+    updateNode(id, _label,_colour) {
         var n = this.nodes.find(x => x.id == id);
         n.label = _label;
-		n.color = _color;
+		n.colour = _colour;
     }
     getNodes() {
         var nodesList = [];
@@ -73,6 +73,7 @@ export class Tree {
             nodesList.push({
                 id: n.id,
                 label: n.label,
+				colour: n.colour,
 				
             });
         }

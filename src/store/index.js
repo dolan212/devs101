@@ -23,7 +23,8 @@ export const store = new Vuex.Store({
         jsonUndoStack: [],
         treeRedoStack: [],
         jsonRedoStack: [],
-        json: ""
+        json: "",
+		defaultColour: "purple",
 
     },
     getters: {
@@ -83,7 +84,7 @@ export const store = new Vuex.Store({
             if (!state.cy) throw "Cytoscape not initialized";
 			pushUndo(state);
             let id = state.currentId++;
-            let node = new Node(id, label);
+            let node = new Node(id, label, state.defaultColour);
             state.tree.addNode(node);
 
             let added = state.cy.add({
@@ -98,10 +99,12 @@ export const store = new Vuex.Store({
         },
         updateNode(state, payload) {
 			pushUndo(state);
-            state.tree.updateNode(payload.id, payload.label);
+            state.tree.updateNode(payload.id, payload.label, payload.colour);
+			console.log(payload.colour);
             state.cy.$("#" + payload.id).data({
                 label: payload.label
             });
+			state.cy.$("#" + payload.id).style('background-color', payload.colour);
             state.json = state.cy.json();
         },
         addEdge(state, pos) {

@@ -84,8 +84,8 @@
 		<v-container v-for="item in nodes" :key="item.id" v-if="item.selected" fluid>
 					<v-subheader color="lightgray darken-1" >{{ item.label }}</v-subheader>
 					
-					<v-text-field color="blue" label="Skill Name : " v-model="item.label"></v-text-field>
-					<v-text-field color="blue" label="Skill Color : " v-model="item.color"></v-text-field>
+					<v-text-field color="blue" label="Skill Name: " v-model="item.label"></v-text-field>
+					<v-text-field color="blue" label="Skill Colour: " v-model="item.colour"></v-text-field>
 		</v-container>
 		<v-btn color="blue darken-1"  v-on:click="saveNodes()">Save</v-btn>
 	</v-navigation-drawer>
@@ -354,7 +354,7 @@
                 let n = this.nodes.filter(x => selectedNodes.includes("" + x.id));
                 for (var i = 0; i < n.length; i++) {
                     controller.updateNode(n[i].id, {
-                        label: n[i].label, color: n[i].color
+                        label: n[i].label, colour: n[i].colour
                     });
                 }
                 this.nodeDrawer = false;
