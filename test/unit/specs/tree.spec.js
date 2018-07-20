@@ -22,7 +22,7 @@ describe('treeStore.js', () => {
 		for(var i = 0; i < 100; i++) {
 			let label = utils.randomString();
 			expect(() => {
-				store.commit("addNode", label)
+				store.commit("addNode", {label: label, colour: "red"})
 			}).not.toThrow();
 			expect(
 				store.getters.getNodeLabel(i)

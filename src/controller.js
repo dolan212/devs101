@@ -148,7 +148,7 @@ export function setupView(container) {
     });
 	let firstStart = store.getters.firstStart;
 	if(firstStart) {
-		var jsonData = require('@/assets/defaultTree.json');
+		var jsonData = require('@/tree/defaultTree.json');
 		console.log(jsonData);
 		setupFromJson(JSON.stringify(jsonData));
 		store.commit('unsetFirstStart');
