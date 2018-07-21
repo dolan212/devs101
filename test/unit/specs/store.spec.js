@@ -1,18 +1,29 @@
 import {store} from '@/store/index'
 import * as utils from '@/utils/utils'
 
-describe('treeStore.js', () => {
+function addNode(label, colour = "#000000") {
+	store.commit('addNode', {label: label, colour: colour});
+}
+
+describe('store/index.js', () => {
   	it('should throw an appropriate error when not initialized', () => {
 		expect(() => {
-			store.commit('addNode', "something");
+			addNode("test");
 		}).toThrow('Tree not initialized');
+		expect(() => {
+			store.commit('')
+		})
 
 	})
-	it('should add nodes without error', () => {
-		let container = document.createElement('div');
-		store.commit('init', container)
+	it('should initialize without error', () => {
 		expect(() => {
-			store.commit('addNode', 'also anything')
+			let container = document.createElement('div');
+			store.commit('init', {container: container, moveListener: null})
+		}).not.toThrow();
+	})
+	it('should add nodes without error', () => {
+		expect(() => {
+			store.commit('addNode', {label: 'also anything', colour: "#000000"})
 		}).not.toThrow();
 		store.commit('clean') //clean up
 	})
