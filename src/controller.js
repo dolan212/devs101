@@ -9,10 +9,10 @@ import {
 
 export function addNode(label) {
     try {
-		let payload = {
-			label: label,
-			moveListener: nodeMoveHandler2
-		}
+        let payload = {
+            label: label,
+            moveListener: nodeMoveHandler2
+        }
         store.commit('addNode', payload);
         //view.addNode(id, label);
         store.commit('layout'); //view.layout();
@@ -41,16 +41,21 @@ export function getNodes() {
 }
 
 export function deleteRule(skill, rule) {
-	try {
-		store.commit('deleteRule', {skill: skill, rule: rule});
-	} catch(exception) {
-		alert(exception);
-	}
+    try {
+        store.commit('deleteRule', {
+            skill: skill,
+            rule: rule
+        });
+    } catch (exception) {
+        alert(exception);
+    }
 }
 
 export function addRule(skill) {
     try {
-        store.commit('addRule', {skill: skill});
+        store.commit('addRule', {
+            skill: skill
+        });
     } catch (exception) {
         alert(exception);
     }
@@ -68,33 +73,32 @@ function onDeselect(id) {
 }
 
 export function deleteSelectedNodes() {
-	var temp = [];
-    for (var i = 0; i < selectedNodes.length; i++)
-	{
+    var temp = [];
+    for (var i = 0; i < selectedNodes.length; i++) {
         deleteNode(selectedNodes[i]);
-		temp.push(selectedNodes[i]);
-	}
-	for(var i in temp) {
-		onDeselect(temp[i]);
-	}
+        temp.push(selectedNodes[i]);
+    }
+    for (var i in temp) {
+        onDeselect(temp[i]);
+    }
 }
 
 function nodeMoveHandler(evt) {
-	console.log("wew");
-	let id = evt.target.id();
-	let position = evt.position;
-	store.commit('moveNode', {
-			id: id,
-			pos: position
-	});
+    console.log("wew");
+    let id = evt.target.id();
+    let position = evt.position;
+    store.commit('moveNode', {
+        id: id,
+        pos: position
+    });
 }
 
 export function updateDependencies(id) {
-	try {
-		store.commit('updateDependencies', id);
-	} catch(exception) {
-		alert(exception);
-	}
+    try {
+        store.commit('updateDependencies', id);
+    } catch (exception) {
+        alert(exception);
+    }
 }
 
 export function getSelectedNodes() {
@@ -102,7 +106,7 @@ export function getSelectedNodes() {
 }
 
 export function getRules(id) {
-	return store.getters.getRules;
+    return store.getters.getRules;
 }
 
 export function updateNode(id, payload) {
@@ -110,7 +114,7 @@ export function updateNode(id, payload) {
         let p = {
             id: id,
             label: payload.label,
-			colour: payload.colour
+            colour: payload.colour
         }
         store.commit('updateNode', p);
     } catch (exception) {
@@ -127,32 +131,33 @@ export function deleteNode(id) {
     }
 }
 export function updateDisplay() {
-	try {
-		store.commit('updateDisplay');
-	} catch (exception) {
-		alert(exception);
-	}
+    try {
+        store.commit('updateDisplay');
+    } catch (exception) {
+        alert(exception);
+    }
 }
+
 function nodeMoveHandler2(evt) {
-	store.commit('refreshCytoscape');
+    store.commit('refreshCytoscape');
 }
 export function setupView(container) {
-	let payload = {
-		container: container,
-		moveListener: nodeMoveHandler2
-	};
+    let payload = {
+        container: container,
+        moveListener: nodeMoveHandler2
+    };
     store.commit('init', payload);
     store.commit({
         type: 'addSelectListener',
         listener: onSelect
     });
-	let firstStart = store.getters.firstStart;
-	if(firstStart) {
-		var jsonData = require('@/tree/defaultTree.json');
-		console.log(jsonData);
-		setupFromJson(JSON.stringify(jsonData));
-		store.commit('unsetFirstStart');
-	}
+    let firstStart = store.getters.firstStart;
+    if (firstStart) {
+        var jsonData = require('@/tree/defaultTree.json');
+        console.log(jsonData);
+        setupFromJson(JSON.stringify(jsonData));
+        store.commit('unsetFirstStart');
+    }
     store.commit({
         type: 'addDeselectListener',
         listener: onDeselect
@@ -167,74 +172,79 @@ export function redo() {
 }
 
 export function clear() {
-	store.commit('clean');
+    store.commit('clean');
 }
 
 export function autoLayout() {
-	store.commit('autoLayout');
+    store.commit('autoLayout');
 }
 
-export function buildFromJson(jsonData){
+export function buildFromJson(jsonData) {
     let val = String(jsonData);
     console.log(jsonData);
 }
 
-export function getTreeAsJson(){
-  var tree =store.getters.getTree;
-  tree = '"tree": '+JSON.stringify(tree);
-  var globals = store.getters.getGlobals;
-  globals = '"globals": '+JSON.stringify(globals);
-  var cyt = store.getters.getCytoscapeJson;
-  cyt = '"cytoscape": '+JSON.stringify(cyt);
+export function getTreeAsJson() {
+    var tree = store.getters.getTree;
+    tree = '"tree": ' + JSON.stringify(tree);
+    var globals = store.getters.getGlobals;
+    globals = '"globals": ' + JSON.stringify(globals);
+    var cyt = store.getters.getCytoscapeJson;
+    cyt = '"cytoscape": ' + JSON.stringify(cyt);
 
-  var finalJson = "{\n"+tree+",\n"+globals+",\n"+cyt+"\n}"
-  return finalJson;
+    var finalJson = "{\n" + tree + ",\n" + globals + ",\n" + cyt + "\n}"
+    return finalJson;
 }
 
-export function saveJsonDocument(filename, data){
-  var blob = new Blob([data],{type: "application/json"});
-  var url  = URL.createObjectURL(blob);
-  var a = document.createElement('a');
+export function saveJsonDocument(filename, data) {
+    var blob = new Blob([data], {
+        type: "application/json"
+    });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
 
-  a.href = url;
-  a.download = filename+".json";
-  a.textContent = "Download backup.json";
+    a.href = url;
+    a.download = filename + ".json";
+    a.textContent = "Download backup.json";
 
-  a.click();
+    a.click();
 }
 
-export function setupFromJson(jsonString){
-  try{
-    var tree = JSON.parse(jsonString);
+export function setupFromJson(jsonString) {
+    try {
+        var tree = JSON.parse(jsonString);
 
-    var t = buildTreeFromJsonObject(tree.tree);
-    var g = tree.globals;
-    var c = tree.cytoscape;
-    store.commit('setTree',t);
-    console.log(tree.cytoscape);
-    store.commit('setGlobals',g);
-    store.commit('setCytoscapeJson',{json: c, moveListener: nodeMoveHandler2});
-  }catch(e){
-    alert("The json file is not valid");
-    console.log(e);
-  }
-}
-
-function buildTreeFromJsonObject(obj){
-  var tree = new Tree();
-  for(var n in obj.nodes){
-    if (obj.nodes.hasOwnProperty(n)) {
-      var newNode = new Node(obj.nodes[n]._id,obj.nodes[n]._label,obj.nodes[n]._colour);
-	  newNode.rules = obj.nodes[n].rules;
-      tree.addNode(newNode);
+        var t = buildTreeFromJsonObject(tree.tree);
+        var g = tree.globals;
+        var c = tree.cytoscape;
+        store.commit('setTree', t);
+        console.log(tree.cytoscape);
+        store.commit('setGlobals', g);
+        store.commit('setCytoscapeJson', {
+            json: c,
+            moveListener: nodeMoveHandler2
+        });
+    } catch (e) {
+        alert("The json file is not valid");
+        console.log(e);
     }
-  }
-  for(var v in obj.edges){
-    if (obj.edges.hasOwnProperty(v)) {
-      var newEdge = new Edge(obj.edges[v]._id,obj.edges[v]._source,obj.edges[v]._target);
-      tree.addNode(newEdge);
-      console.log(newEdge);
+}
+
+function buildTreeFromJsonObject(obj) {
+    var tree = new Tree();
+    for (var n in obj.nodes) {
+        if (obj.nodes.hasOwnProperty(n)) {
+            var newNode = new Node(obj.nodes[n]._id, obj.nodes[n]._label, obj.nodes[n]._colour);
+            newNode.rules = obj.nodes[n].rules;
+            tree.addNode(newNode);
+        }
     }
-  }
-  return tree;
+    for (var v in obj.edges) {
+        if (obj.edges.hasOwnProperty(v)) {
+            var newEdge = new Edge(obj.edges[v]._id, obj.edges[v]._source, obj.edges[v]._target);
+            tree.addNode(newEdge);
+            console.log(newEdge);
+        }
+    }
+    return tree;
 }

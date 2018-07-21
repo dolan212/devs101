@@ -6,16 +6,15 @@ import skilltree from '@/components/skilltree'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
-    },
-    {
-      path: '/skilltree',
-      name: 'skilltree',
-      component: skilltree
-    }
-  ]
+    routes: [{
+            path: '/',
+            name: 'HelloWorld',
+            component: HelloWorld
+        },
+        {
+            path: '/skilltree',
+            name: 'skilltree',
+            component: skilltree
+        }
+    ]
 })
