@@ -42,6 +42,7 @@ export class LevelRule extends Rule {
     }
 	clone() {
 		var newRule = new LevelRule(this.id, this.level);
+		return newRule;
 	}
 }
 
@@ -53,5 +54,6 @@ export class SkillPointRule extends Rule {
     }
 	clone() {
 		var newRule = new SkillPointRule(this.id, this.skillpoints);
+		return newRule;
 	}
 }
