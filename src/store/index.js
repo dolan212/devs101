@@ -14,6 +14,11 @@ import Global from '@/globalVars'
 
 Vue.use(Vuex);
 
+export const cytoscapeNotInitializedError = "Cytoscape not initialized";
+export const treeNotInitializedError = "Tree not initialized";
+export const globalVarNotFoundError = "Global var not found";
+export const globalVarExistsError = "Global var already exists";
+export const invalidColourError = "Invalid colour given";
 
 export const store = new Vuex.Store({
     state: {
@@ -55,7 +60,7 @@ export const store = new Vuex.Store({
         },
         getCytoscapeJson(state) {
             return state.json;
-        }
+        },
     },
 
     mutations: {
@@ -133,6 +138,7 @@ export const store = new Vuex.Store({
         updateNode(state, payload) {
             checkInitialization(state);
             pushUndo(state);
+			if(!testColour(payload.colour)) throw invalidColourError;
             if (payload.colour == 'default') payload.colour = state.defaultColour;
             state.tree.updateNode(payload.id, payload.label, payload.colour);
             state.cy.$("#" + payload.id).data({
@@ -143,6 +149,7 @@ export const store = new Vuex.Store({
             state.json = state.cy.json();
         },
         refreshCytoscape(state) {
+			if(!state.cy) throw cytoscapeNotInitializedError;
             pushUndo(state);
             state.json = state.cy.json();
         },
@@ -157,15 +164,14 @@ export const store = new Vuex.Store({
             }
         },
         deleteRule(state, payload) {
-            checkInitialization(state);
+			if(!state.tree) throw treeNotInitializedError;
             pushUndo(state);
             let skill = payload.skill;
             let rule = payload.rule;
             state.tree.deleteRule(skill, rule);
         },
         moveNode(state, payload) {
-            checkInitialization(state);
-            console.log("hi");
+			if(!state.cy) throw cytoscapeNotInitializedError;
             let id = payload.id;
             state.cy.$(`#${id}`).position(payload.pos);
         },
@@ -173,8 +179,6 @@ export const store = new Vuex.Store({
             checkInitialization(state);
             let source = pos.source;
             let target = pos.target;
-            if (!state.tree) throw "Tree not initialized";
-            if (!state.cy) throw "Cytoscape not initialized";
             pushUndo(state);
             let id = pos.source + "-" + pos.target;
             let edge = new Edge(id, source, target);
@@ -191,10 +195,8 @@ export const store = new Vuex.Store({
             state.json = state.cy.json();
             return id;
         },
-
         deleteNode(state, id) {
             checkInitialization(state);
-            if (!state.tree) throw "Tree not initialized";
             pushUndo(state);
             state.tree.deleteNode(id);
             let removed = state.cy.remove("#" + id);
@@ -236,21 +238,20 @@ export const store = new Vuex.Store({
                 }
             }
         },
-        layout(state) {
-            if (!state.cy) throw "Cytoscape not initalized!";
+        layout(state, payload) {
+            if (!state.cy) throw cytoscapeNotInitializedError;
             state.cy.layout({
                 name: 'preset',
-                animate: true
+                animate: payload.animate
             }).run();
             state.json = state.cy.json();
         },
-
-        autoLayout(state) {
-            if (!state.cy) throw "Cytoscape not initalized!";
+        autoLayout(state, payload) {
+            if (!state.cy) throw cytoscapeNotInitializedError;
             pushUndo(state);
             state.cy.layout({
                 name: 'breadthfirst',
-                animate: true,
+                animate: payload.animate,
                 fit: true,
                 directed: true,
                 nodeDimensionsIncludeLabels: true,
@@ -261,17 +262,15 @@ export const store = new Vuex.Store({
                 }
             }).run();
         },
-
         addSelectListener(state, payload) {
-            if (!state.cy) throw "Cytoscape not initalized!";
+            if (!state.cy) throw cytoscapeNotInitializedError;
             let listener = payload.listener;
             state.cy.on('select', 'node', (evt) => {
                 listener(evt.target.id());
             });
         },
-
         addDeselectListener(state, payload) {
-            if (!state.cy) throw "Cytoscape not initalized";
+            if (!state.cy) throw cytoscapeNotInitializedError;
             let listener = payload.listener;
             state.cy.on('unselect', 'node', (evt) => {
                 listener(evt.target.id());
@@ -287,6 +286,7 @@ export const store = new Vuex.Store({
         },
         clean(state) {
             checkInitialization(state);
+			pushUndo(state);
             state.tree.clean();
             state.cy.elements().remove();
             state.json = "";
@@ -296,12 +296,12 @@ export const store = new Vuex.Store({
             state.jsonUndoStack.length = 0;
             state.jsonRedoStack.length = 0;
         },
-
         undo(state) {
             checkInitialization(state);
             if (state.jsonUndoStack.length == 0) return;
             let json = state.jsonUndoStack.pop();
             state.jsonRedoStack.push(state.cy.json());
+			state.cy.elements().remove();
             state.cy.json(json);
             state.json = state.cy.json();
             if (state.treeUndoStack.length == 0) return;
@@ -309,7 +309,6 @@ export const store = new Vuex.Store({
             state.treeRedoStack.push(state.tree.clone());
             state.tree = tree;
         },
-
         redo(state) {
             checkInitialization(state);
             if (state.jsonRedoStack.length == 0) return;
@@ -322,18 +321,16 @@ export const store = new Vuex.Store({
             state.treeUndoStack.push(state.tree.clone());
             state.tree = tree;
         },
-
         addGlobalVar(state, globalVar) {
-            if (state.globals[globalVar.name()] !== null) return;
-            state.globals[globalVar.name()] = globalVar;
+			if (state.globals[globalVar.name] !== null && state.globals[globalVar.name] !== undefined) throw globalVarExistsError;
+            state.globals[globalVar.name] = globalVar;
         },
 
         deleteGlovalVar(state, globalVarName) {
-            if (state.globals[globalVarName] !== null) return;
+            if (state.globals[globalVarName] === null || state.globals[globalVarName === undefined]) throw globalVarNotFoundError;
             state.globals[globalVarName] = null;
         },
         setTree(state, payload) {
-            checkInitialization(state);
             if (payload == null) return;
             state.tree = payload;
         },
@@ -342,7 +339,7 @@ export const store = new Vuex.Store({
             state.globals = payload;
         },
         setCytoscapeJson(state, payload) {
-            if (!state.cy) throw "Cytoscape not initialized";
+            if (!state.cy) throw cytoscapeNotInitializedError;
             if (payload == null) return;
             state.json = payload.json;
             state.cy.json(payload.json);
@@ -383,19 +380,15 @@ function pushUndo(state) {
 function saveJson(state) {
     state.json = state.cy.json();
 }
-
-function attachMoveListener(state) {
-    console.log("wauw");
-    state.cy.$("*").removeListener("tapend");
-    state.cy.$("*").on("tapend", function(evt) {
-        let id = evt.target.id();
-        state.cy.$(`#${id}`).position(evt.position);
-        state.json = state.cy.json();
-        console.log(state.json);
-    });
-}
-
 function checkInitialization(state) {
-    if (!state.tree) throw "Tree not initialized"; //tree hasn't been initialized yet, so we error
-    if (!state.cy) throw "Cytoscape not initialized";
+    if (!state.tree) throw treeNotInitializedError; //tree hasn't been initialized yet, so we error
+    if (!state.cy) throw cytoscapeNotInitializedError;
+}
+function testColour(colour) {
+	var div = document.createElement('div');
+	div.style.borderColor = "";
+	div.style.borderColor = colour;
+	var col2 = div.style.borderColor;
+	if(col2.length == 0) return false;
+	else return true;
 }

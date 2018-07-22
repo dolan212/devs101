@@ -7,6 +7,19 @@ export class Rule {
         this.id = id;
         this.type = "null";
     }
+	compareTo(other) {
+		if(this.type !== other.type) return false;
+		switch(this.type) {
+			case 'skillpoint':
+				return this.node === other.node;
+			case 'level':
+				return this.level === other.level;
+			case 'skillpoint':
+				return this.skillpoints === other.skillpoints;
+			default:
+				return true;
+		}
+	}
 }
 
 export class DependencyRule extends Rule {
@@ -15,6 +28,10 @@ export class DependencyRule extends Rule {
         this.node = node;
         this.type = "dependency";
     }
+	clone() {
+		var newRule = new DependencyRule(this.id, this.node);
+		return newRule;
+	}
 }
 
 export class LevelRule extends Rule {
@@ -23,6 +40,9 @@ export class LevelRule extends Rule {
         this.level = level;
         this.type = "level";
     }
+	clone() {
+		var newRule = new LevelRule(this.id, this.level);
+	}
 }
 
 export class SkillPointRule extends Rule {
@@ -31,4 +51,7 @@ export class SkillPointRule extends Rule {
         this.skillpoints = skillpoints;
         this.type = "skillpoint";
     }
+	clone() {
+		var newRule = new SkillPointRule(this.id, this.skillpoints);
+	}
 }

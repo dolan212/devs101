@@ -19,6 +19,17 @@ export class Edge {
     get target() {
         return this._target;
     }
+	compareTo(other) {
+		return (
+			this.id === other.id &&
+			this.source === other.source &&
+			this.target === other.target
+		);
+	}
+	clone() {
+		var newEdge = new Edge(this.id, this.source, this.target);
+		return newEdge;
+	}
 }
 var desc = '';
 export class Node {
@@ -49,8 +60,11 @@ export class Node {
     get id() {
         return this._id;
     }
+	addRule(rule) {
+		this.rules.push(rule);
+	}
     getRules() {
-        return this.rules;
+		return this.rules;
     }
     deleteRule(rule_id) {
         let index = -1;
@@ -62,6 +76,24 @@ export class Node {
         } else throw "Rule not found";
 
     }
+	clone() {
+		var newNode = new Node(this.id, this.label, this.colour);
+		for(var i = 0; i < this.rules.length; i++) {
+			newNode.addRule(this.rules[i].clone());
+		}
+		return newNode;
+	}
+	compareTo(other) {
+		if(this.rules.length !== other.rules.length) return false;
+		for(var i in this.rules) {
+			if(!this.rules[i].compareTo(other.rules[i])) return false;
+		}
+		return (
+			this.id === other.id &&
+			this.label === other.label &&
+			this.colour === other.colour
+		);
+	}
 }
 
 export class Tree {
@@ -151,14 +183,29 @@ export class Tree {
     clone() {
         let newTree = new Tree();
         for (var i = 0; i < this.nodes.length; i++) {
-            newTree.addNode(this.nodes[i]);
+			newTree.addNode(this.nodes[i].clone());
         }
         for (var i = 0; i < this.edges.length; i++) {
-            newTree.addEdge(this.edges[i]);
+			newTree.addEdge(this.edges[i].clone());
         }
 
         return newTree;
     }
+	compareTo(other) {
+		if(this.nodes.length !== other.nodes.length) return false;
+		if(this.edges.length !== other.edges.length) return false;
+		for(var i in this.nodes) {
+			let t = this.nodes[i];
+			let o = other.nodes[i];
+			if(!t.compareTo(o)) return false;
+		}
+		for(var i in this.edges) {
+			let t = this.edges[i];
+			let o = other.edges[i];
+			if(!t.compareTo(o)) return false;
+		}
+		return true;
+	}
 }
 
 var currentId;

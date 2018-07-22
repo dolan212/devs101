@@ -15,7 +15,7 @@ export function addNode(label) {
         }
         store.commit('addNode', payload);
         //view.addNode(id, label);
-        store.commit('layout'); //view.layout();
+        store.commit('layout', {animate: true}); //view.layout();
     } catch (exception) {
         alert(exception);
     }
@@ -30,7 +30,7 @@ export function addEdge(source, target) {
             target: target
         };
         store.commit('addEdge', pos);
-        store.commit('layout');
+        store.commit('layout', {animate: true});
     } catch (exception) {
         alert(exception);
     }
@@ -176,7 +176,7 @@ export function clear() {
 }
 
 export function autoLayout() {
-    store.commit('autoLayout');
+    store.commit('autoLayout', {animate: true});
 }
 
 export function buildFromJson(jsonData) {
