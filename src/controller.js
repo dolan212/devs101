@@ -11,7 +11,7 @@ export function addNode(label) {
     try {
         let payload = {
             label: label,
-            moveListener: nodeMoveHandler2
+            moveListener: nodeMoveHandler
         }
         store.commit('addNode', payload);
         //view.addNode(id, label);
@@ -83,16 +83,6 @@ export function deleteSelectedNodes() {
     }
 }
 
-function nodeMoveHandler(evt) {
-    console.log("wew");
-    let id = evt.target.id();
-    let position = evt.position;
-    store.commit('moveNode', {
-        id: id,
-        pos: position
-    });
-}
-
 export function updateDependencies(id) {
     try {
         store.commit('updateDependencies', id);
@@ -138,13 +128,13 @@ export function updateDisplay() {
     }
 }
 
-function nodeMoveHandler2(evt) {
+function nodeMoveHandler(evt) {
     store.commit('refreshCytoscape');
 }
 export function setupView(container) {
     let payload = {
         container: container,
-        moveListener: nodeMoveHandler2
+        moveListener: nodeMoveHandler
     };
     store.commit('init', payload);
     store.commit({
@@ -185,7 +175,7 @@ export function buildFromJson(jsonData) {
 }
 
 export function getTreeAsJson() {
-    var tree = store.getters.getTree;
+    /*var tree = store.getters.getTree;
     tree = '"tree": ' + JSON.stringify(tree);
     var globals = store.getters.getGlobals;
     globals = '"globals": ' + JSON.stringify(globals);
@@ -193,7 +183,8 @@ export function getTreeAsJson() {
     cyt = '"cytoscape": ' + JSON.stringify(cyt);
 
     var finalJson = "{\n" + tree + ",\n" + globals + ",\n" + cyt + "\n}"
-    return finalJson;
+    return finalJson;*/
+	return JSON.stringify(store.getters.getJson);
 }
 
 export function saveJsonDocument(filename, data) {
@@ -222,7 +213,7 @@ export function setupFromJson(jsonString) {
         store.commit('setGlobals', g);
         store.commit('setCytoscapeJson', {
             json: c,
-            moveListener: nodeMoveHandler2
+            moveListener: nodeMoveHandler
         });
     } catch (e) {
         alert("The json file is not valid");

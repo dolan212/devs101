@@ -61,6 +61,14 @@ export const store = new Vuex.Store({
         getCytoscapeJson(state) {
             return state.json;
         },
+		getJson(state) {
+			var json = {
+				cytoscape: state.cy.json(),
+				tree: state.tree,
+				globals: state.globals,
+			};
+			return json;
+		},
     },
 
     mutations: {

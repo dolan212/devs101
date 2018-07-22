@@ -52,9 +52,7 @@ function mockMoveListener(evt) {
 	//do nothing (for now at least)
 }
 
-
-
-var colourConfig = require('./store.spec.json');
+var colourConfig = require('./testData/colours.json');
 
 function initialize() {
 	let container = document.createElement('div');
@@ -81,7 +79,7 @@ describe('store/index.js', () => {
             let container = document.createElement('div');
             store.commit('init', {
                 container: container,
-                moveListener: null
+                moveListener: mockMoveListener
             })
         }).not.toThrow();
     })
@@ -176,6 +174,8 @@ describe('store/index.js', () => {
 		['deleteNode', 0],
 		['autoLayout', {animate: false}],
 	]
+	let redoStack = [];
+	let undoStack = [];
 	it('should undo correctly', () => {
 		//setup initial environment
 		store.commit('clean');
@@ -185,18 +185,21 @@ describe('store/index.js', () => {
 		addNode(utils.randomString(10));
 
 		//apply changes, and save to stack
-		let stateStack = [];
 		for(var i in undoableOperations) {
 			let op = undoableOperations[i];
-			stateStack.push({
+			undoStack.push({
 					tree: store.getters.getTree.clone(),
 					cytoscape: store.getters.getCytoscapeJson,
 			});
 			store.commit(...op);
 		}
 		//test undoing of operations
-		while(stateStack.length > 0) {
-			let oldState = stateStack.pop();
+		while(undoStack.length > 0) {
+			redoStack.push({
+					tree: store.getters.getTree.clone(),
+					cytoscape: store.getters.getCytoscapeJson,
+			});
+			let oldState = undoStack.pop();
 			store.commit('undo');
 			let newState = {
 				tree: store.getters.getTree,
@@ -222,6 +225,35 @@ describe('store/index.js', () => {
 			).toEqual(oldState.cytoscape);
 		}
 
+	})
+	it('should redo correctly', () => {
+		while(redoStack.length > 0) {
+			let oldState = redoStack.pop();
+			store.commit('redo');
+			let newState = {
+				tree: store.getters.getTree.clone(),
+				cytoscape: store.getters.getCytoscapeJson,
+			};
+
+			//sort arrays as order gets changed
+			let elements = [oldState.cytoscape.elements, newState.cytoscape.elements];
+			for(var i in elements) {
+				if(elements[i].nodes)
+					elements[i].nodes.sort((a, b) => {
+						return a.data.id < b.data.id;
+					});
+				if(elements[i].edges)
+					elements[i].edges.sort((a, b) => {
+						return a.data.id < b.data.id;
+					});
+			}
+			expect(
+				newState.tree.compareTo(oldState.tree)
+			).toBe(true);
+			expect(
+				newState.cytoscape
+			).toEqual(oldState.cytoscape);
+		}
 	})
 	it('should accept any valid colour', () => {
 		//any valid html colour name

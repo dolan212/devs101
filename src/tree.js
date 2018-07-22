@@ -94,6 +94,20 @@ export class Node {
 			this.colour === other.colour
 		);
 	}
+	compareToJson(json) {
+		if(json.rules.length !== this.rules.length) return false;
+		let comp = (a, b) => { return a.id < b.id; };
+		json.rules.sort(comp);
+		this.rules.sort(comp);
+		for(var i in this.rules) {
+			if(!this.rules[i].compareTo(json.rules[i])) return false;
+		}
+		return (
+			json._id == this.id &&
+			json._label == this.label &&
+			json._colour == this.colour
+		);
+	}
 }
 
 export class Tree {
