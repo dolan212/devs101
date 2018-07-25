@@ -207,12 +207,7 @@ export class Tree {
         else throw edgeNotFoundError;
     }
     getConnectedEdges(id) {
-        var edges = [];
-        for (var i in this.edges) {
-            if (this.edges[i].target == id || this.edges[i].source == id)
-                edges.push(this.edges[i]);
-        }
-        return edges;
+		return this.edges.filter(edge => edge.target == id || edge.source == id);
     }
     addRule(skill, rule) {
         let node = this.getNode(skill);

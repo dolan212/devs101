@@ -6,6 +6,11 @@ import {
     Node,
     Edge
 } from '@/tree'
+import {
+	DependencyRule,
+	SkillPointRule,
+	LevelRule,
+} from '@/rules'
 
 export function addNode(label) {
     try {
@@ -226,15 +231,23 @@ function buildTreeFromJsonObject(obj) {
     for (var n in obj.nodes) {
         if (obj.nodes.hasOwnProperty(n)) {
             var newNode = new Node(obj.nodes[n]._id, obj.nodes[n]._label, obj.nodes[n]._colour);
-            newNode.rules = obj.nodes[n].rules;
+			newNode.rules = Array.from(obj.nodes[n].rules, r => {
+					switch(r.type) {
+						case 'dependency':
+							return new DependencyRule(r.id, r.node);
+						case 'level':
+							return new LevelRule(r.id, r.level);
+						case 'skillpoint':
+							return new SkillPointRule(r.id, r.skillpoints);
+					}
+			});
             tree.addNode(newNode);
         }
     }
     for (var v in obj.edges) {
         if (obj.edges.hasOwnProperty(v)) {
             var newEdge = new Edge(obj.edges[v]._id, obj.edges[v]._source, obj.edges[v]._target);
-            tree.addNode(newEdge);
-            console.log(newEdge);
+            tree.addEdge(newEdge);
         }
     }
     return tree;

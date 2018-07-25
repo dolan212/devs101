@@ -123,7 +123,7 @@
                             <v-layout fill-height>
                                 <v-flex xs12 align-end flexbox>
                                     <v-select v-model="rule.type" :items="rule_types" item-text="name" item-value="value"></v-select>
-									<v-select v-if="rule.type == 'dependency'" v-model="rule.node" :items="otherNodes(item.id)" item-text="label" item-value="id"></v-select>
+                                    <v-select v-if="rule.type == 'dependency'" v-model="rule.node" :items="otherNodes(item.id)" item-text="label" item-value="id"></v-select>
                                     <v-text-field label="Level Requirement" v-model="rule.level" v-if="rule.type == 'level'"></v-text-field>
                                     <v-text-field label="Skill Points Required" v-model="rule.skillpoints" v-if="rule.type == 'skillpoint'"></v-text-field>
                                 </v-flex>
@@ -434,9 +434,9 @@ export default {
         undo: function () {
             controller.undo();
         },
-		otherNodes: function(id) {
-			return this.nodes.filter(n => n.id != id);
-		},
+        otherNodes: function (id) {
+            return this.nodes.filter(n => n.id != id);
+        },
         redo: function () {
             controller.redo();
         },
