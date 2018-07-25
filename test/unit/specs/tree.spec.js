@@ -121,6 +121,7 @@ describe('tree.js', () => {
 			var clone = node.clone();
 			expect(node.compareTo(clone)).toBe(true);
 			expect(node).not.toBe(clone);
+			expect(node.rules).not.toBe(clone.rules);
 		}
 	})
 	it('should clone an edge correctly', () => {
@@ -299,11 +300,27 @@ describe('tree.js', () => {
 			}).toThrow(nodeNotFoundError);
 		})
 	})
-	it('should throw an appropriate error when trying to delete a nonexistent edge', () => {
+	it('should throw an appropriate error when trying to delete a nonexistent node', () => {
 		nodesToDelete.forEach((item) => {
 			expect(() => {
 				tree.deleteNode(item);
 			}).toThrow(nodeNotFoundError);
+		})
+	})
+	it('should add rules to a node correctly', () => {
+		nodes.forEach(item => {
+				let rule = generateRandomRule();
+				if(nodesToDelete.indexOf(item.id) == -1) {
+					expect(() => {
+						tree.addRule(item.id, rule);
+					}).not.toThrow()
+					expect(tree.getNode(item.id).rules).toContain(rule)
+				}
+				else {
+					expect(() => {
+						tree.addRule(item.id, rule);
+					}).toThrow(nodeNotFoundError);
+				}
 		})
 	})
 	it('should compare trees correctly', () => {
@@ -313,6 +330,8 @@ describe('tree.js', () => {
 		var clone = tree.clone();
 		expect(tree.compareTo(clone)).toBe(true);
 		expect(tree).not.toBe(clone)
+		expect(tree.edges).not.toBe(clone.edges);
+		expect(tree.nodes).not.toBe(clone.nodes);
 	})
 	it('should clean the tree correctly', () => {
 		expect(() => {
@@ -351,6 +370,14 @@ describe('tree.js', () => {
 			tree2.getConnectedEdges(1);
 		}).not.toThrow();
 		expect(tree2.getConnectedEdges(1)).toEqual(edges2);
+	})
+	it('should get the edges pointing to a node correctly', () => {
+		expect(() => {
+			tree2.getEdgesPointingTo(1);
+		}).not.toThrow();
+		expect(tree2.getEdgesPointingTo(1)).toEqual(
+			edges2.filter(edge => edge.target == 1)
+		)
 	})
 	it('should delete connected edges when a node is deleted', () => {
 		tree2.deleteNode(1);

@@ -234,7 +234,7 @@ export const store = new Vuex.Store({
         },
         updateDependencies(state, id) {
             checkInitialization(state);
-            let edges = state.tree.getConnectedEdges(id);
+            let edges = state.tree.getEdgesPointingTo(id);
             for (var i in edges) {
                 state.tree.deleteEdge(edges[i].id);
                 state.cy.remove("#" + edges[i].id);

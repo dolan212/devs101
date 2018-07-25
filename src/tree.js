@@ -198,6 +198,9 @@ export class Tree {
         let skill = this.getNode(skill_id);
         skill.deleteRule(rule);
     }
+	printNumNodes() {
+		console.log(this.nodes.length);
+	}
     deleteEdge(id) {
         let index = -1;
         for (var i = 0; i < this.edges.length; i++) {
@@ -209,12 +212,15 @@ export class Tree {
     getConnectedEdges(id) {
 		return this.edges.filter(edge => edge.target == id || edge.source == id);
     }
+	getEdgesPointingTo(id) {
+		return this.edges.filter(edge => edge.target == id);
+	}
     addRule(skill, rule) {
-        let node = this.getNode(skill);
-        node.rules.push(rule);
+		let node = this.getNode(skill);
+		node.addRule(rule);
     }
     getRules(skill) {
-        let node = getNode(skill);
+        let node = this.getNode(skill);
         return node.getRules();
     }
     clean() {
