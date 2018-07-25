@@ -2,6 +2,7 @@ const path = require('path')
 
 module.exports = {
   rootDir: path.resolve(__dirname, '../../'),
+  roots: ['<rootDir>/src', '<rootDir>/test/unit'],
   moduleFileExtensions: [
     'js',
     'json',
