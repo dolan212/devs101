@@ -178,10 +178,10 @@ export function addGlobalVar(globalVar)
   }
 }
 
-export function deleteGlovalVar(globalVar)
+export function deleteGlobalVar(globalVar)
 {
   try {
-    store.commit('deleteGlovalVar', globalVar.name);
+    store.commit('deleteGlobalVar', globalVar.name);
   } catch (exception) {
     alert(exception);
   }

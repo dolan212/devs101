@@ -334,7 +334,7 @@ export const store = new Vuex.Store({
             state.globals[globalVar.name] = globalVar;
         },
 
-        deleteGlovalVar(state, globalVarName) {
+        deleteGlobalVar(state, globalVarName) {
             if (state.globals[globalVarName] === null || state.globals[globalVarName === undefined]) throw globalVarNotFoundError;
             state.globals[globalVarName] = null;
         },
