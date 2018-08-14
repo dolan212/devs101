@@ -187,15 +187,15 @@ export function deleteGlovalVar(globalVar)
   }
 }
 
-/*export function setGlobals(globalVars)
-{
+export function setGlobals(globalVars)
+{ // Already used in setupFromJson
   try {
    // let payload = globalVars;
     store.commit('setGlobals', globalVars);
   } catch (exception) {
     alert(exception);
   }
-}*/
+}
 
 export function buildFromJson(jsonData) {
     let val = String(jsonData);
