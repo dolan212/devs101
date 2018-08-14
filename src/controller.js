@@ -169,6 +169,34 @@ export function autoLayout() {
     store.commit('autoLayout', {animate: true});
 }
 
+export function addGlobalVar(globalVar)
+{
+  try {
+    store.commit('addGlobalVar', globalVar);
+  } catch (exception) {
+    alert(exception);
+  }
+}
+
+export function deleteGlovalVar(globalVar)
+{
+  try {
+    store.commit('deleteGlovalVar', globalVar.name);
+  } catch (exception) {
+    alert(exception);
+  }
+}
+
+/*export function setGlobals(globalVars)
+{
+  try {
+   // let payload = globalVars;
+    store.commit('setGlobals', globalVars);
+  } catch (exception) {
+    alert(exception);
+  }
+}*/
+
 export function buildFromJson(jsonData) {
     let val = String(jsonData);
     console.log(jsonData);
