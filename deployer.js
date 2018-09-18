@@ -1,3 +1,56 @@
+//store
+var tree;
+var rules[];
+var cytoscape;
+
+function init(div, json)
+{
+    try {
+      JSON.parse(json);
+      var vals=setupFromJson(json);
+
+      tree = vals[0];
+      g = vals[1];
+      var cytJson = vals[2];
+    } catch (e) {
+
+    } finally {
+
+    }
+}
+
+export function setupFromJson(jsonString) {
+    try {
+        var tree = JSON.parse(jsonString);
+
+        var t = buildTreeFromJsonObject(tree.tree);
+        var g = tree.globals;
+        var c = tree.cytoscape;
+        return [t,g,c];
+    } catch (e) {
+        alert("The json file is not valid");
+        console.log(e);
+    }
+}
+
+function buildTreeFromJsonObject(obj) {
+    var tree = new Tree();
+    for (var n in obj.nodes) {
+        if (obj.nodes.hasOwnProperty(n)) {
+            var newNode = new Node(obj.nodes[n]._id, obj.nodes[n]._label, obj.nodes[n]._colour);
+            newNode.rules = obj.nodes[n].rules;
+            tree.addNode(newNode);
+        }
+    }
+    for (var v in obj.edges) {
+        if (obj.edges.hasOwnProperty(v)) {
+            var newEdge = new Edge(obj.edges[v]._id, obj.edges[v]._source, obj.edges[v]._target);
+            tree.addNode(newEdge);
+            console.log(newEdge);
+        }
+    }
+    return tree;
+}
 
 //classes
 const ruleNotFoundError = "Rule not found";
