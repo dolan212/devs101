@@ -16,28 +16,28 @@
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
 
         <v-tooltip bottom>
-            <v-btn slot="activator" @click.stop="undo" icon>
+            <v-btn slot="activator" id="btn_undo" @click.stop="undo" icon>
                 <v-icon>undo</v-icon>
             </v-btn>
             <span>Undo</span>
         </v-tooltip>
 
         <v-tooltip bottom>
-            <v-btn slot="activator" @click.stop="redo" icon>
+            <v-btn slot="activator" id="btn_redo" @click.stop="redo" icon>
                 <v-icon>redo</v-icon>
             </v-btn>
             <span>Redo</span>
         </v-tooltip>
 
         <v-tooltip bottom>
-            <v-btn icon slot="activator" fab small @keydown.ctrl.67="copy()" @click.native.stop="copy()">
+            <v-btn icon slot="activator" id="btn_copy" fab small @keydown.ctrl.67="copy()" @click.native.stop="copy()">
                 <v-icon>file_copy</v-icon>
             </v-btn>
             <span>Copy</span>
         </v-tooltip>
 
         <v-tooltip bottom>
-            <v-btn icon slot="activator" fab small @keydown.ctrl.86="paste()" @click.native.stop="paste()">
+            <v-btn icon slot="activator" id="btn_paste" fab small @keydown.ctrl.86="paste()" @click.native.stop="paste()">
                 <v-icon>archive</v-icon>
             </v-btn>
             <span>Paste</span>
@@ -46,7 +46,7 @@
         <v-toolbar-title v-text="title"></v-toolbar-title>
         <v-spacer></v-spacer>
         <v-tooltip bottom>
-            <v-btn slot="activator" icon small @click.stop="settingsDrawer = !settingsDrawer">
+            <v-btn slot="activator" id="btn_settings" icon small @click.stop="settingsDrawer = !settingsDrawer">
                 <v-icon>settings</v-icon>
             </v-btn>
             <span>Settings</span>
@@ -57,7 +57,7 @@
         <router-view/>
     </v-content>
     <!-- Global settings drawer -->
-    <v-navigation-drawer temporary :right="true" v-model="settingsDrawer" app>
+    <v-navigation-drawer id="settings_drawer" temporary :right="true" v-model="settingsDrawer" app>
         <v-toolbar flat>
             <v-list>
                 <v-list-tile>
@@ -69,11 +69,11 @@
         </v-toolbar>
         <v-container fluid>
             <v-tooltip left>
-                <v-btn slot="activator" flat v-on:click="newTree">Clear Tree</v-btn>
+                <v-btn slot="activator" flat id="btn_clear" v-on:click="newTree">Clear Tree</v-btn>
                 <span>Delete all nodes</span>
             </v-tooltip>
             <v-tooltip left>
-                <v-btn slot="activator" flat @click.native.stop="autoLayout()">Auto Layout</v-btn>
+                <v-btn slot="activator" flat id="btn_layout" @click.native.stop="autoLayout()">Auto Layout</v-btn>
                 <span>Automatically orders nodes</span>
             </v-tooltip>
         </v-container>
@@ -81,10 +81,12 @@
             <p>Import Skill Tree</p>
             <input type="file" accept=".json" @change="onFileChange">
             <v-tooltip left>
-                <v-btn slot="activator" flat @click.native.stop="fileDialog = true">Export Skill Tree</v-btn>
+                <v-btn slot="activator" id="btn_export" flat @click.native.stop="fileDialog = true">Export Skill Tree</v-btn>
                 <span>Export tree as json file</span>
             </v-tooltip>
         </v-container>
+        <v-spacer></v-spacer>
+        <v-btn flat id="btn_close_settings" @click="settingsDrawer = !settingsDrawer">Close</v-btn>
     </v-navigation-drawer>
 
     <!-- Node settings drawer -->
@@ -139,7 +141,7 @@
         </v-container>
         <v-btn color="blue darken-1" v-on:click="saveNodes()">Save</v-btn>
     </v-navigation-drawer>
-    <v-snackbar :timeout="noSelectionSnack.timeout" top v-model="noSelectionSnack.enabled">
+    <v-snackbar id="snackbar" :timeout="noSelectionSnack.timeout" top v-model="noSelectionSnack.enabled">
         {{ noSelectionSnack.text }}
         <v-btn flat color="pink" @click.native="noSelectionSnack.enabled = false">Close</v-btn>
     </v-snackbar>
@@ -147,27 +149,27 @@
     <v-fab-transition>
         <v-speed-dial v-model="fab" :direction="editDirection" :open-on-hover="hov" bottom right fixed v-show="['skilltree'].indexOf($route.name) > -1">
 
-            <v-btn slot="activator" color="blue darken-2" dark fab v-model="fab">
+            <v-btn slot="activator" id="btn_activator" color="blue darken-2" dark fab v-model="fab">
                 <v-icon>keyboard_arrow_up</v-icon>
                 <v-icon>close</v-icon>
             </v-btn>
 
             <v-tooltip left>
-                <v-btn slot="activator" fab dark small color="green" @click.native.stop="dialog = true">
+                <v-btn slot="activator" id="btn_add" fab dark small color="green" @click.native.stop="dialog = true">
                     <v-icon>add</v-icon>
                 </v-btn>
                 <span>Add Skill</span>
             </v-tooltip>
 
             <v-tooltip left>
-                <v-btn slot="activator" fab dark small color="indigo" @click.native.stop="editNode()">
+                <v-btn slot="activator" id="btn_edit" fab dark small color="indigo" @click.native.stop="editNode()">
                     <v-icon>edit</v-icon>
                 </v-btn>
                 <span>Edit Skill</span>
             </v-tooltip>
 
             <v-tooltip left>
-                <v-btn slot="activator" fab dark small color="red" @click.native.stop="deleteNodes()">
+                <v-btn slot="activator" id="btn_delete" fab dark small color="red" @click.native.stop="deleteNodes()">
                     <v-icon>delete</v-icon>
                 </v-btn>
                 <span>Delete Skill</span>
@@ -176,23 +178,23 @@
         </v-speed-dial>
     </v-fab-transition>
     <v-dialog v-model="dialog" persistent max-width="500px">
-        <v-card>
+        <v-card id="skill_dialog">
             <v-card-title>
-                <span class="headline" center>New Node</span>
+                <span class="headline" center>New Skill</span>
             </v-card-title>
             <v-card-text>
                 <v-container grid-list-md>
                     <v-layout wrap>
                         <v-flex xs12 sm12 md12>
-                            <v-text-field label="Node name" v-model="nodeName"></v-text-field>
+                            <v-text-field id="skill_name" label="Skill Name" v-model="nodeName"></v-text-field>
                         </v-flex>
                     </v-layout>
                 </v-container>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
-                <v-btn color="blue darken-1" flat @click.native="dialog = false" v-on:click="addNode(nodeName)">Add</v-btn>
+                <v-btn id="btn_close_skill_dialog" color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
+                <v-btn id="btn_add_skill" color="blue darken-1" flat @click.native="dialog = false" v-on:click="addNode(nodeName)">Add</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -428,7 +430,12 @@ export default {
         getNodes: function () {
             this.nodes = controller.getNodes();
         },
-        deleteNodes: () => {
+        deleteNodes: function() {
+            var nodes = controller.getSelectedNodes();
+            if(nodes.length == 0) {
+                this.noSelectionSnack.enabled = true;
+                return;
+            }
             controller.deleteSelectedNodes();
         },
         undo: function () {

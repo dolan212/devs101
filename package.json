@@ -12,7 +12,7 @@
     "test": "./node_modules/.bin/jest --config test/unit/jest.conf.js",
     "cy:run": "cypress run --record",
     "cy:open": "cypress open",
-	"integration-test": "start-server-and-test start http-get://localhost:8080 cy:run"
+    "integration-test": "start-server-and-test start http-get://localhost:8080 cy:run"
   },
   "dependencies": {
     "cytoscape": "^3.2.9",
