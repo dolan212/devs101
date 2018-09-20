@@ -57,3 +57,15 @@ export class SkillPointRule extends Rule {
 		return newRule;
 	}
 }
+
+export class FunctionRule extends Rule {
+  constructor(id,func) {
+    super(id);
+    this.func=func;
+    this.type="function";
+  }
+  clone() {
+    var newRule = new FunctionRule(this.id,this.function);
+    return newRule;
+  }
+}
