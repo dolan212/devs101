@@ -1,7 +1,7 @@
 //store
 var tree;
 var rules[];
-var cytoscape;
+var cy;
 
 function init(div, json)
 {
@@ -12,6 +12,7 @@ function init(div, json)
       tree = vals[0];
       g = vals[1];
       var cytJson = vals[2];
+      document.getElementById(div).innerHTML = "<div id='globals'></div><div id='cytoscape'></div>"
     } catch (e) {
 
     } finally {
@@ -19,7 +20,7 @@ function init(div, json)
     }
 }
 
-export function setupFromJson(jsonString) {
+function setupFromJson(jsonString) {
     try {
         var tree = JSON.parse(jsonString);
 
