@@ -14,3 +14,8 @@ yarn-error.log*
 *.sln
 *.tern-project
 *.swp
+# LaTeX intermediary files
+*.aux
+*.log
+*.out
+*.toc
