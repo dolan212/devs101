@@ -1,144 +1,114 @@
 \documentclass[12pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[x11names]{xcolor}
-\usepackage{mathptmx}
-\usepackage{mathptmx}
-\usepackage{anyfontsize}
-\usepackage{t1enc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[latin1]{inputenc}
+
+
+
 \begin{document}
 
-
-
-
-\noindent\textcolor {PaleVioletRed3} {\rule{\paperwidth}{0.9pt}}\newline \newline \newline
-
-\textsc{\fontsize{10}{20}\selectfont \centerline{\hspace{3cm}DEVS101}}\newline \newline \newline
- {\textsc{\fontsize{10}{20}\selectfont \centerline {\hspace{4cm}CODING STANDARDS DOCUMENT}}}\newline \newline \newline 
-\textsc{\fontsize{20}{30}\selectfont \centerline {\hspace{4cm}SKILL TREE MAKER}}\newline \newline \newline 
-\noindent\textcolor {PaleVioletRed3} {\rule{\paperwidth}{0.9pt}}
-
-\newpage
-
-
-
-\newpage
- \section{\bfseries\selectfont{Naming Conventions}}
- \subsection{Class Names}
- \begin{itemize}
-	 \item eg {\it ClassName} -Class names should begin with a capital letter 	and each new word within the name should begin with a capital letter.
- \end{itemize}
- 
- \subsection{Exception Classes}
- \begin{itemize}
-	 \item {\it ClassNameException}  - Exception classess should follow the same 	rules as normal classes but in addition to that, the name should always end with the word Exception.
-	\end{itemize} 
-	 
- \subsection{Constants}
-  \begin{itemize}
-	 \item  These public static variable should always be written using upper-case letters and sometimes an underscore to make the name more clearer and readable.
- \end{itemize}
- 
- \subsection{Methods or Functions}
-  \begin{itemize}
- 	\item Methods should be given a descriptive name of what exactly they do and the name should begin with a lower-case letter and any new name 	within the name should begin with a Capital letter.
- 	\end{itemize} 
- 	
- \subsection{Variables and Attributes} 
-  \begin{itemize}
- 	\item variableName - variables and attributes should always start with a lowercase letter and each new word within the same name should begin with a Capital letter, meaning to say they have to be exactly the same 	as the methods.
- 	\end{itemize} 
- 	
-  \subsection{Accessors}
+{\centering
+	\includegraphics[width=5cm, height=1cm]{cos301logofinal.jpg}\\ 
+	\textbf{Coding Standards Document}
+	
+	\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}\\ 
+	\vspace*{100px}
+	\textbf{Team Name : devs101} \\
+	\textbf{Client Name : Mark-Anthony Fouché}\\
+		\vspace*{10px}
+	\textbf{Team Members}\\
+		\vspace*{3px}
+		\begin{center}
+      	\begin{itemize}
+      	
+      	\item Brendan Bath
+      	\item Dylan Draper
+      	\item Charles Claassen
+      		\item Dail Nathan Jonker
+      	\item Njaravani Christopher
+        \end{itemize}
+     \end{center}
+     
+     }
+     \newpage
+      \section{UML DIAGRAM }
+     \section{Coding Conventions}
+     \subsection{Naming Conventions}
+     
+     \subsubsection{Folder Names}
+     \begin{itemize}
+      	\item All folder names does start with a small letter and the name is descriptive enough to provide infromation on what exaclty they contain eg components, contains all components files
+      	\end{itemize}
+     \subsubsection{Class Names}
+      	\begin{itemize}
+      	\item All class names had to begin with capital letters and new name within the class name had to begin with capital letters aswell.
+      	\end{itemize}
+      	
+    	  \subsubsection{Variables and Attributes} 
+      \begin{itemize}
+     	\item variableName - variables and attributes had to start with a lowercase letter and each new word within the same name had to begin with a Capital letter, meaning to say they have to be exactly the same 	as the methods.
+     	\end{itemize}
+     	\subsubsection{Accessors}
    \begin{itemize} 
- 	 \item {\it eg getAttribute()} - they should follow the same rules as the methods and should always be named after the variable which they intent to access.
+ 	 \item {\it eg getAttribute()} - had to follow the same rules as the methods and had to always be named after the variable which they intent to access.
  	 \end{itemize} 
  	 
-  \subsection{Mutators}
+  \subsubsection{Mutators}
    \begin{itemize} 
- 	 \item eg setVariable(.....) - they should follow the same naming conventions as methods i.e they start with a lowercase and any new name within the name should begin with a capital letter.
+ 	 \item eg setVariable(.....) - had to  follow the same naming conventions as methods i.e they had to start with a lowercase and any new name within the name should begin with a capital letter.
  	  \end{itemize} 
- 	 
-  \subsection{Packages} 
+ 	    \subsubsection{Packages} 
    \begin{itemize}
- 	 \item eg display.package -  names of the packages should always be in lower-case letters and no upper-case.
+ 	 \item eg display.package -  names of the packages had to  always be in lower-case letters and no 			upper-case.
  	 \end{itemize} 
  	 
-   \subsection{File names}
+   \subsubsection{File names}
     \begin{itemize} 
-  		\item Area.java - file names should be descriptive enough to tell what they contain inside and name should always 	begin with a capital letter.
-	\end{itemize} 
-	
- \section{\bfseries\selectfont{Exceptions}}	
+  		\item Vuetify.js - file names had to be descriptive enough to tell what they contain inside and name had to always 	begin with a small letter except only App.vue which loads initially which is like the main.eg rules.js shows that it contains rules, store.js thats the store file which stores files
+	\end{itemize}
+	\subsubsection{Exceptions}
  	\begin{itemize} 
- 		\item Exceptions should be applied and used wherever necessary and these should always be checked.
- 		\item Exception classes should be avoided at all costs and more meaningful classes with meaningful names should be used.No more functionality should be in these classes except only catch 	statements.
- 		\item Appropriate catch statements should be used which allows the program to continue if need be rather than crashing.
-	\end{itemize} 
+ 		\item Exceptions had to be applied and used wherever necessary and these should the following had to always be checked.
+ 		\item Exception classes had to be avoided if neccessary and more meaningful classes with meaningful names had to be used.No more functionality had to be in these classes except only catch 	statements so that they clearly show what exactly have happened without any confusion.
+ 		\item Appropriate catch statements had to be used which had to allow the program to continue if need be rather than crashing.
+	\end{itemize}
 	
-	\section{\bfseries\selectfont{Bracketing}}
+	\subsubsection{Methods or Functions}
+  \begin{itemize}
+ 	\item Methods had to be given a descriptive name of what exactly they do and the name had to begin with a lower-case letter and any new name 	within the name had to begin with a Capital letter for easier readability.
+ 	\end{itemize}  
+ 	
+ 	\subsection{Layout Rules}
+ 	\subsubsection{Indentation and Line spaces}
 	\begin{itemize}
-		\item Curly brackets should always be used for while, do-while, if, for statements even if they are not really needed 	sometimes for example when a body contains only one statement.
-		\item An opening curly bracket that follows a class header should be indented indented by one space but those that follows after should not be indented by any space.
-		\item Closing curly brackets should always be on their own line i.e the line after the last statement and on the same indentetion as the header on which the block begins.
+		\item Lines had to be kept of very small length so as to ensure readability.
+		\item Once a line had reached  a certain length(mostly 8 words), it had to be broken 	and 				indented further than the previous line for readability.
+		\item Indentation had  4 spaces for each level, blank lines to seperate methods and also to 				emphasize or make it clearer where each method ends.
 		
-		
-	\end{itemize}
-	\section{\bfseries\selectfont{Identifiers}}
-	\begin{itemize}
-	\item Identifiers should be descriptive and of a reasonable length. For example a variable name should have a single use and its name should be related to its use or what it does.Strictly the variable 		name should not be used for multiple purposes as this would create 		confusion amongst the variables.
-	\item The convention is that variable names, methods,attributes they should begin with a small letter and then a capital letter wherever there is a new name within that name.
-	\item Class names should begin with a capital letter and then 	everytime a new word is encountered it becomes a capital letter.
-	\\\\
-	eg of Variable is {\it myVariable}, of class attribute is aClassAttribute, class name is ClassName. \\\\
-	\item accessors and mutators should have names related to attributes they access or provide access to. They should begin with the prefix {\it get} for those getting values and {\it set} for those setting values.\\\\
-	for example {\it setItem() and getItem()}.
-	\item Variable names with a  single character should be avoided for example int x.They can only be declared with a single character if its in a loop otherwise, its strictly forbidden.
+		\item attributes had to be be defined mostly after the methods in a class.
+		\item public final variables being the exception which had to be defined first.
 	\end{itemize}
 	
-	\section{\bfseries\selectfont{Final Variables}}
-	\begin{itemize}
-		\item Magic numbers should be avoided within the code.Incase the program needs to be altered it becomes very difficult to know what to change and know what not to change.
-		\item Instead final variables should be defined within the code.\\
-		for example \\
-		{\it private final int A  = 2.}
-		{\it private final int b  = 20.}\\
-		\item The only time when they can be used is when used as variable initialiser only.
-		\item In the case that final variables are needed by more than one class then it means they should be declared with the word public so they can be accessed anywhere  in any class.
-		\item Final variables should be defined with uppercase letters hence easily distinguishable from other class attributes.
-		\item the word final clearly indicates that they cannot be changed.
-	\end{itemize}
-	
-	\section{\bfseries\selectfont{Indentation and Layout}}
-	\begin{itemize}
-		\item Lines should be kept of very small length so that they can be readable and easier to understand.
-		\item Once a line reaches a certain length, it has to be broken 	and indented further than the previous line.
-		\item Indentation should be 4 spaces for each level, blank lines to seperate methods and also to emphasize or make it clearer where each method ends.
-		\item Methods should be defined firstly in  class,  in 	order of visibility – public methods first, private ones after
-		\item attributes should be defined mostly after the methods in a class.
-		\item public final variables being the exception which should be defined first.
-	\end{itemize}
-	
-	\section{\bfseries\selectfont{Imports}}
-	\begin{itemize}
-		\item The use if the * form of{\it import} should be avoided. Each class should be specifically imported as required, and any unused imports should be removed since they are not needed.
-		
-	\end{itemize}
-	
-	\section{\bfseries\selectfont{General Commenting}}
-	\begin{itemize}
-		\item Its a mandatory to add comments so that the code becomes very easy to read and understand
-		\item Its advisable to add comments in blocks and not in lines as it might cause some confusion and the code wont be clean.
-		\item For line comments use {\it // and multiline use /* ..*/}\\\\
+ 	\subsection{Commenting Practises}
+ 		\begin{itemize}
+		\item It was a mandatory to comments so that the code becomes very easy to read and understand
+		\item Comments were added in blocks and not in lines as it might cause some confusion 						and the code wont be clean hence no readability.
+		\item For line comments we used {\it // and multiline use /* ..*/}\\\\
 		{\it for example int index  = 1; // index of starting point.}\\\\
 		
+		\end{itemize}
+	\section{File Structure}
+	\includegraphics[width=15cm, height=10cm]{filestructure.jpg}\\ 
+	
+	\section{Code Review Process}
+	\subsection{Pair Programming}
+	\begin{itemize}
+	\item Any 2 group volunteers will work in groups of two, code together, one coding while the other is 		reviewing the other's code.That follow up check made it sure that all coding standards rules are 			followed eg Variable naming conventions, bracketing and indentation
 	\end{itemize}
 	
-	\section{\bfseries\selectfont{Github File Structure}}
+	\subsection{Peer reviews}
 	\begin{itemize}
-	\item All files and documents are sorted in their respective folders.
-	\item Documentation will be seperate in it's own folder "Documents".
-	\item All source code and packages will be sorted in the folder "src".
-	\item All build files will be located in the "build" folder.
+	\item Any group member who get the chance can get to look at someone's code once the member is done.After each assignment of work, issues are created and before an issue is closed, that person's code shou
 	\end{itemize}
-		
 \end{document}
