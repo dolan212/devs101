@@ -11,6 +11,11 @@ import * as controller from '@/controller'
 import cytoscape from 'cytoscape'
 import undoredo from 'cytoscape-undo-redo'
 import Global from '@/globalVars'
+import {
+	DependencyRule,
+	LevelRule,
+	SkillPointRule,
+} from '@/rules'
 
 Vue.use(Vuex);
 
@@ -79,8 +84,18 @@ export const store = new Vuex.Store({
             state.tree = new Tree();
             if (state.treeNodes) state.tree.nodes = Array.from(state.treeNodes, x => {
                 let n = new Node(x._id, x._label, x._colour);
-                if (x.rules !== undefined)
-                    n.rules = x.rules;
+                if (x.rules !== undefined) {
+					n.rules = Array.from(x.rules, r => {
+							switch(r.type) {
+								case 'dependency':
+									return new DependencyRule(r.id, r.node);
+								case 'level':
+									return new LevelRule(r.id, r.level);
+								case 'skillpoint':
+									return new SkillPointRule(r.id, r.skillpoints);
+							}
+					});
+				}
                 return n;
             });
             if (state.treeEdges) state.tree.edges = Array.from(state.treeEdges, x => new Edge(x._id, x._source, x._target));
@@ -219,7 +234,7 @@ export const store = new Vuex.Store({
         },
         updateDependencies(state, id) {
             checkInitialization(state);
-            let edges = state.tree.getConnectedEdges(id);
+            let edges = state.tree.getEdgesPointingTo(id);
             for (var i in edges) {
                 state.tree.deleteEdge(edges[i].id);
                 state.cy.remove("#" + edges[i].id);

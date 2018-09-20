@@ -255,7 +255,7 @@ describe('store/index.js', () => {
 			).toEqual(oldState.cytoscape);
 		}
 	})
-	it('should accept any valid colour', () => {
+	it('should accept any valid colour when updating a node', () => {
 		//any valid html colour name
 		for(var i in colourConfig.validColourNames) {
 			let c = colourConfig.validColourNames[i];

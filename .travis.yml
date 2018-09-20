@@ -7,6 +7,7 @@ before_install:
 script: 
         - npm run lint
         - npm run test
+        - npm run integration-test
 branches:
         only:
                 - master
@@ -14,6 +15,8 @@ branches:
 cache:
   directories:
     - node_modules
+    - ~/.npm
+    - ~/.cache
 notifications:
   slack: 'cos301yearproject:sVv90CaLw6ivwPmx8Iukn90E'
 env:
