@@ -1,0 +1,19 @@
+\BOOKMARK [1][-]{section.1}{UML DIAGRAM }{}% 1
+\BOOKMARK [1][-]{section.2}{Coding Conventions}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Naming Conventions}{section.2}% 3
+\BOOKMARK [3][-]{subsubsection.2.1.1}{Folder Names}{subsection.2.1}% 4
+\BOOKMARK [3][-]{subsubsection.2.1.2}{Class Names}{subsection.2.1}% 5
+\BOOKMARK [3][-]{subsubsection.2.1.3}{Variables and Attributes}{subsection.2.1}% 6
+\BOOKMARK [3][-]{subsubsection.2.1.4}{Accessors}{subsection.2.1}% 7
+\BOOKMARK [3][-]{subsubsection.2.1.5}{Mutators}{subsection.2.1}% 8
+\BOOKMARK [3][-]{subsubsection.2.1.6}{Packages}{subsection.2.1}% 9
+\BOOKMARK [3][-]{subsubsection.2.1.7}{File names}{subsection.2.1}% 10
+\BOOKMARK [3][-]{subsubsection.2.1.8}{Exceptions}{subsection.2.1}% 11
+\BOOKMARK [3][-]{subsubsection.2.1.9}{Methods or Functions}{subsection.2.1}% 12
+\BOOKMARK [2][-]{subsection.2.2}{Layout Rules}{section.2}% 13
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Indentation and Line spaces}{subsection.2.2}% 14
+\BOOKMARK [2][-]{subsection.2.3}{Commenting Practises}{section.2}% 15
+\BOOKMARK [1][-]{section.3}{File Structure}{}% 16
+\BOOKMARK [1][-]{section.4}{Code Review Process}{}% 17
+\BOOKMARK [2][-]{subsection.4.1}{Pair Programming}{section.4}% 18
+\BOOKMARK [2][-]{subsection.4.2}{Peer reviews}{section.4}% 19
