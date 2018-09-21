@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Demo of deployment</title>
+    <script src="cytoscape.js"></script>
+    <script type="text/javascript" src="deployer.js"></script>
+    <script type="text/javascript" src="test.json"></script>
+</head>
+
+<body>
+  <div id="deploy" style="height:100%; width:100%"></div>
+  <script>
+    init("deploy",'{"cytoscape":{"elements":{},"style":[{"selector":"node","style":{"background-color":"#E91E63","label":"data(label)"}},{"selector":"node:selected","style":{"border-color":"yellow","border-width":"3px","border-opacity":"1"}},{"selector":"edge","style":{"width":"3px","line-color":"#ccc","curve-style":"bezier","target-arrow-shape":"triangle"}}],"zoomingEnabled":true,"userZoomingEnabled":true,"zoom":2,"minZoom":1e-50,"maxZoom":2,"panningEnabled":true,"userPanningEnabled":true,"pan":{"x":482.5,"y":365},"boxSelectionEnabled":true,"renderer":{"name":"canvas"}},"tree":{"nodes":[],"edges":[]},"globals":[]}');
+  </script>
+</body>
+
+</html>
