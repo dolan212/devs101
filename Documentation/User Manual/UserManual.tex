@@ -1,15 +1,36 @@
 \documentclass[12pt]{article}
+\usepackage{float}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
 \usepackage{hyperref}
 \usepackage[latin1]{inputenc}
+\usepackage{geometry}
+\geometry{
+	a4paper,
+	total={170mm,257mm},
+	left=20mm,
+	top=20mm,
+}
 
 \title{Trii User Manual}
-\author{A project by Devs101}
+\author{A project by Devs101\\ \\
+Client: Mark-Anthony Fouché\\ \\
+Dylan Draper\\
+Brendan Bath\\
+Christopher Njaravani\\
+Charles Claassen\\
+Dail Nathan Jonker\\
+}
 \date{21/09/2018}
 
 \begin{document}
 \maketitle
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/logo.jpg}
+	\label{fig:logo}
+\end{figure}
 \newpage
 \pagenumbering{arabic}
 
@@ -24,8 +45,8 @@
 \subsection{System Configuration}
 \paragraph{Trii is simple to access and does not require extensive hardware to be able to use it. The only requirement is that the user has Google Chrome and Internet access for the initial loading of Trii. Trii itself is hosted on a GitHub server and users that connect to it will then automatically allow Trii to be saved locally and can then be used offline if needed.}
 
-\begin{figure}
-  \includegraphics[width=\linewidth]{deployment.jpg}
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{images/deployment.jpg}
   \caption{The Deployment diagram.}
   \label{fig:deployment}
 \end{figure}
@@ -33,17 +54,24 @@
 \newpage
 \subsection{Installation}
 \begin{enumerate}
-	\item Google Chrome can be downloaded from www.google.com/chrome/
+	\item Google Chrome can be downloaded from \url{http://www.google.com/chrome/} 
 	\begin{enumerate}
     	\item Once the site has loaded press download chrome.
       \item Chrome will then be downloaded, once it is done click on the downloaded file.
       \item Follow the prompts, Google Chrome will then download the remaining files.
       \item After the installation Chrome can be accessed via the desktop, Start menu or Installed location. (Mobile users will either have it default on their phone or will be able to get it via the app store.)
     \end{enumerate}
-	\item The software(Trie) can be accessed at https://dolan212.github.io.
+	\item The software(Trie) can be accessed at \url{https://dolan212.github.io.}
 	\item After the initial access Trii will be saved on the user's local storage allowing for quick access on and offline.
-	\item On mobile versions Trii will create a shortcut automatically, this can be found in the user's app list.
+	\item On mobile versions Trii has the option to set a app-like shortcut in your app list for ease of access.
 	\item Trii is then ready for use.
+	
+	\begin{figure}[H]
+		\includegraphics[width=.4\linewidth]{images/homescreen.jpg}
+		\caption{Creating an app shortcut on the mobile version.}
+		\label{fig:homescreen}
+	\end{figure}
+
 \end{enumerate}
 
 \newpage
@@ -53,20 +81,20 @@
   \item Launch Google Chrome.
   \item Once Google Chrome has opened type https://dolan212.github.io in the navigation bar located at the top and press enter.
   \item When the site has loaded the following image below is what should be displayed. Press "GET STARTED" to access Trii.
-  \item To close Trii the user can close Google Chrome, as displayed in the second image below.
+  \item To close Trii the user can close Google Chrome.
 \end{enumerate}
 
 
-\begin{figure}
-  \includegraphics[width=\linewidth]{homepage.jpg}
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{images/homepage.jpg}
   \caption{The Home Page of Trii.}
   \label{fig:homepage}
 \end{figure}
 
-\begin{figure}
-  \includegraphics[width=\linewidth]{startclose.jpg}
-  \caption{Get started and how to close.}
-  \label{fig:startclose}
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{images/start.jpg}
+  \caption{Get started, main view of Trii.}
+  \label{fig:start}
 \end{figure}
 
 \newpage
@@ -77,51 +105,74 @@
 \begin{enumerate}
 	\item Action bar
 	\begin{enumerate}
-    	\item Add Skill
-      	\item Edit Skill
-      	\item Delete Skill
+    	\item Add Skill, add a new node/skill.
+      \item Edit Skill, edit a node/skill.
+      \item Delete Skill, delete a node/skill.
  	\end{enumerate}
   
-  \begin{figure}
-    \includegraphics[width=\linewidth]{actionbar.jpg}
+  \begin{figure}[H]
+    \includegraphics[width=\linewidth]{images/actionbar.jpg}
     \caption{The Action Bar.}
     \label{fig:actionbar}
   \end{figure}
 
-  
   \item Toolbar
   \begin{enumerate}
-    	\item Undo
-      \item Redo
-      \item Copy
-      \item Paste
+    	\item Undo, undo progress.
+      \item Redo, redo progress.
+      \item Copy, copy selected nodes/skills.
+      \item Paste, paste copied nodes/skills.
   \end{enumerate}
   
-  \begin{figure}
-    \includegraphics[width=\linewidth]{toolbar.jpg}
-    \caption{The Toolbar}
+  \begin{figure}[H]
+    \includegraphics[width=\linewidth]{images/toolbar.jpg}
+    \caption{The Toolbar.}
     \label{fig:toolbar}
   \end{figure}
   
   \item Settings
   \begin{enumerate}
-    	\item Clear Tree
-      \item Auto Layout
-      \item Import Skill Tree
-      \item Export Skill Tree
+    	\item Clear Tree, delete the entire tree.
+      \item Auto Layout, restructures the tree.
+      \item Import Skill Tree, import a skill tree.
+      \item Export Skill Tree, export a skill tree.
   \end{enumerate}
   
-  \begin{figure}
-    \includegraphics[width=\linewidth]{settings.jpg}
+  \begin{figure}[H]
+    \includegraphics[width=\linewidth]{images/settings.jpg}
     \caption{Settings for Trii.}
     \label{fig:settings}
+  \end{figure}
+
+  \begin{figure}[H]
+	  \begin{subfigure}{.5\textwidth}
+	  	\centering
+		\includegraphics[width=.4\linewidth]{images/mobileactionbar.jpg}
+		\caption{The mobile Action Bar.}
+		\label{fig:mobileactionbar}
+	  \end{subfigure}
+	
+	  \begin{subfigure}{.5\textwidth}
+	  	\centering
+		\includegraphics[width=.4\linewidth]{images/mobiletoolbar.jpg}
+		\caption{The mobile Toolbar.}
+		\label{fig:mobiletoolbar}
+	  \end{subfigure}
+	
+	  \begin{subfigure}{.5\textwidth}
+	  	\centering
+		\includegraphics[width=.4\linewidth]{images/mobilesettings.jpg}
+		\caption{Mobile Settings for Trii.}
+		\label{fig:mobilesettings}
+	  \end{subfigure}
+  \caption{The basics on the mobile version.}
   \end{figure}
   
 \end{enumerate}
 
 \newpage
 \subsection{Creating a Tree}
-\paragraph{Creating a Tree will involve adding Nodes and Edges}
+\paragraph{Creating a Tree will involve adding Nodes and Edges. A node will be displayed as a circle that is colored in. The node will have a name to aid in distinguishing between other nodes. An edge will be displayed as an arrow pointing from one node to another. The nodes are like the leaves and the edges the branches of the tree. What follows are some helpful tools to aid you in creating your own skill tree.}
 
 \paragraph{Adding a Node:}
 
@@ -131,6 +182,19 @@
 	\item If you do not wish to add a skill simply press the close button.
 	\item A new node will appear on the screen.
 \end{enumerate}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/addnode.jpg}
+	\caption{Adding a new Node.}
+	\label{fig:addnode}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/newnode.jpg}
+	\caption{A new Node.}
+	\label{fig:newnode}
+\end{figure}
+
 
 \paragraph{Adding an Edge:}
 
@@ -145,12 +209,31 @@
 	\item Press save, a new edge will be created between the 2 nodes.
 \end{enumerate}
 
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/addrule.jpg}
+	\caption{Adding a new rule.}
+	\label{fig:addrule}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/addedge.jpg}
+	\caption{Adding a new edge.}
+	\label{fig:addedge}
+\end{figure}
+
 \paragraph{Editing the Node/Skill name:}
 \begin{enumerate}
 	\item Select a Node.
 	\item Press the Edit Skill button in the Action bar.
 	\item Edit the name under the Skill Name edit bar.
 \end{enumerate}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/name.jpg}
+	\caption{Editing the skill's description.}
+	\label{fig:name}
+\end{figure}
+
 
 \paragraph{Adding a description to the Skill/Node:}
 \begin{enumerate}
@@ -159,12 +242,24 @@
 	\item Add your description in the Description edit bar and press save.
 \end{enumerate}
 
-\paragraph{Editing the Node/Skill name:}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/description.jpg}
+	\caption{Editing the skill's description.}
+	\label{fig:description}
+\end{figure}
+
+\paragraph{Editing the Node/Skill color:}
 \begin{enumerate}
 	\item Select a Node.
 	\item Press the Edit Skill button in the Action bar.
-	\item Select a color from the dropdownlist.
+	\item Select a color from the drop-down list.
 \end{enumerate}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/color.jpg}
+	\caption{Change the color of the selected node.}
+	\label{fig:color}
+\end{figure}
 
 \paragraph{Setting the required Level:}
 \begin{enumerate}
@@ -176,6 +271,13 @@
 	\item Press Save.
 \end{enumerate}
 
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/level.jpg}
+	\caption{Setting the required Level.}
+	\label{fig:level}
+\end{figure}
+
+
 \paragraph{Setting the required Skill Points:}
 \begin{enumerate}
 	\item Select a Node.
@@ -186,6 +288,12 @@
 	\item Press Save.
 \end{enumerate}
 
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/skillpoints.jpg}
+	\caption{Setting the required Skill Points.}
+	\label{fig:skillpoints}
+\end{figure}
+
 \paragraph{Deleting a Node/Skill:}
 \begin{enumerate}
 	\item Select a Node.
@@ -193,6 +301,12 @@
 	\item The node/skill will be deleted.
 	\item Multiple nodes can be deleted at once if more than one node is selected.
 \end{enumerate}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/delete.jpg}
+	\caption{Delete the selected nodes.}
+	\label{fig:delete}
+\end{figure}
 
 \paragraph{Deleting an Edge:}
 \begin{enumerate}
@@ -203,17 +317,19 @@
 	\item Press save, the edge will be removed.
 \end{enumerate}
 
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/deleteedge.jpg}
+	\caption{Delete the edge of the selected node.}
+	\label{fig:deleteedge}
+\end{figure}
+
+\newpage
 \subsection{Using the Toolbar}
 \paragraph{The toolbar has a few helpful buttons to help during the creation of the tree.}
 
 \paragraph{Undo:}
 \begin{enumerate}
-	\item Press the undo button to roll back to a previous version of the tree.
-\end{enumerate}
-
-\paragraph{Undo:}
-\begin{enumerate}
-	\item Press the redo button to get back what was lost from undo.
+	\item Press the redo button to get back progress made.
 \end{enumerate}
 
 \paragraph{Redo:}
@@ -228,12 +344,25 @@
 	\item Multiple nodes/skills can be copied.
 \end{enumerate}
 
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/copy.jpg}
+	\caption{Copy the selected nodes.}
+	\label{fig:copy}
+\end{figure}
+
 \paragraph{Paste:}
 \begin{enumerate}
 	\item Press the Paste button.
 	\item All nodes/skills that have been coppied will be pasted on the screen.
 \end{enumerate}
 
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/paste.jpg}
+	\caption{Paste the selected nodes.}
+	\label{fig:paste}
+\end{figure}
+
+\newpage
 \subsection{Settings}
 \paragraph{The Settings bar allow for some more options regarding the tree as a whole. Import and export functionality for the tree itself, it will be in a JSON format. Clear Tree to clear everything. Auto Layout to reorganize the Tree.}
 
@@ -243,11 +372,29 @@
 	\item All nodes/skills and edges will be deleted.
 \end{enumerate}
 
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/clear.jpg}
+	\caption{Delete the whole tree.}
+	\label{fig:clear}
+\end{figure}
+
 \paragraph{Auto Layout:}
 \begin{enumerate}
 	\item Press the Auto Layout button.
 	\item The tree will reorganize itself to make it easier to view, The nodes and skills will move apart a certain distance and take form of a tree structure.
 \end{enumerate}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/unordered.jpg}
+	\caption{Example of a roughly ordered tree.}
+	\label{fig:unordered}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/ordered.jpg}
+	\caption{After the auto layout is applied.}
+	\label{fig:ordered}
+\end{figure}
 
 \paragraph{Import:}
 \begin{enumerate}
@@ -256,6 +403,13 @@
 	\item The file will be read in and the Skill Tree will be displayed.
 \end{enumerate}
 
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/import.jpg}
+	\caption{Import a tree from a selected JSON file.}
+	\label{fig:import}
+\end{figure}
+
+
 \paragraph{Export:}
 \begin{enumerate}
 	\item Press the Export button.
@@ -263,13 +417,20 @@
 	\item Enter a name for the file.
 	\item Press Export or Close if you don't want to download the file.
 	\item The file will then be downloaded via the chrome browser and can be located in the downloads folder (Same location for mobile users).
+	\item An example JSON file will be shown in the image labled "JSON".
 \end{enumerate}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/export.jpg}
+	\caption{Export the tree as a JSON file.}
+	\label{fig:export}
+\end{figure}
 
 \newpage
 \section{Troubleshooting}
 \subsection{Accessing Trii}
     \begin{enumerate}
-    	\item Make sure you have internet access.
+    	\item Make sure you have Internet access. Trii requires Internet access for the initial download to local storage.
       \item Make sure you entered the correct address in the top bar of Google Chrome
       \item Refresh the page if it did not load correctly.
     \end{enumerate}
