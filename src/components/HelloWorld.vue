@@ -1,7 +1,20 @@
 <template>
 <v-container grid-list-md text-xs-center fill-height>
     <v-layout row wrap fill-height>
-        <v-flex m3 xs0>
+        <v-flex m2 xs0>
+            <v-img
+                :src="logo"
+                alt="Trii Logo"
+            >
+                <v-layout slot="placeholder"
+                    fill-height
+                    align-center
+                    justify-center
+                    ma-0
+                >
+                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                </v-layout>
+            </v-img>
         </v-flex>
         <v-flex xs12 m6>
             <h3 class="display-3" id="welcome_title" v-text="welcomeMsg"></h3>
@@ -37,23 +50,13 @@
     }
 </style>
 <script>
-    export default {
-        data() {
-            return {
-                welcomeMsg: 'Welcome to Trii',
-                welcomeSubtitle: 'A project by devs101'
-            }
-        }
-    }
-</script>
-undefined
-
-<script>
+import logo from '@/assets/logo.png'
 export default {
     data() {
         return {
             welcomeMsg: 'Welcome to Trii',
-            welcomeSubtitle: 'A project by devs101'
+            welcomeSubtitle: 'A project by devs101',
+            logo: logo
         }
     }
 }

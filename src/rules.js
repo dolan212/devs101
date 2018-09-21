@@ -65,7 +65,7 @@ export class FunctionRule extends Rule {
     this.type="function";
   }
   clone() {
-    var newRule = new FunctionRule(this.id,this.function);
+    var newRule = new FunctionRule(this.id,this.func);
     return newRule;
   }
 }

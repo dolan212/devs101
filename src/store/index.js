@@ -15,6 +15,7 @@ import {
 	DependencyRule,
 	LevelRule,
 	SkillPointRule,
+    FunctionRule,
 } from '@/rules'
 
 Vue.use(Vuex);
@@ -71,6 +72,8 @@ export const store = new Vuex.Store({
 				cytoscape: state.cy.json(),
 				tree: state.tree,
 				globals: state.globals,
+                currentNodeId: state.currentId,
+                currentRuleId: state.currentRuleId,
 			};
 			return json;
 		},
@@ -79,6 +82,12 @@ export const store = new Vuex.Store({
     mutations: {
         unsetFirstStart(state) {
             state.firstStart = false;
+        },
+        setCurrentNodeId(state, id) {
+            state.currentId = id;
+        },
+        setCurrentRuleId(state, id) {
+            state.currentRuleId = id;
         },
         init(state, payload) {
             state.tree = new Tree();
@@ -93,6 +102,10 @@ export const store = new Vuex.Store({
 									return new LevelRule(r.id, r.level);
 								case 'skillpoint':
 									return new SkillPointRule(r.id, r.skillpoints);
+                                case 'function':
+                                    let funcRule = new FunctionRule(r.id, r.func);
+                                    if(r.actual_func) funcRule.actual_func = r.actual_func;
+                                    return funcRule;
 							}
 					});
 				}

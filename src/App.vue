@@ -90,7 +90,7 @@
     </v-navigation-drawer>
 
     <!-- Node settings drawer -->
-    <v-navigation-drawer :right="true" v-model="nodeDrawer" app temporary>
+    <v-navigation-drawer :right="true" v-model="nodeDrawer" app>
         <v-toolbar flat>
             <v-list>
                 <v-list-tile>
@@ -128,6 +128,9 @@
                                     <v-select v-if="rule.type == 'dependency'" v-model="rule.node" :items="otherNodes(item.id)" item-text="label" item-value="id"></v-select>
                                     <v-text-field label="Level Requirement" v-model="rule.level" v-if="rule.type == 'level'"></v-text-field>
                                     <v-text-field label="Skill Points Required" v-model="rule.skillpoints" v-if="rule.type == 'skillpoint'"></v-text-field>
+                                    <v-textarea label="Function" v-model="rule.func" v-if="rule.type == 'function'"></v-textarea>
+                                    <span style="color:green" v-if="rule.type == 'function' && rule.actual_func">Compiled successfully!</span>
+                                    <span style="color:red" v-if="rule.type == 'function' && !rule.actual_func">Not compiled</span>
                                 </v-flex>
                                 <v-btn small icon top right v-on:click="deleteRule(item.id, rule.id)">
                                     <v-icon>close</v-icon>
@@ -140,10 +143,15 @@
             </v-layout>
         </v-container>
         <v-btn color="blue darken-1" v-on:click="saveNodes()">Save</v-btn>
+        <v-btn v-on:click="nodeDrawer = !nodeDrawer">Cancel</v-btn>
     </v-navigation-drawer>
     <v-snackbar id="snackbar" :timeout="noSelectionSnack.timeout" top v-model="noSelectionSnack.enabled">
         {{ noSelectionSnack.text }}
         <v-btn flat color="pink" @click.native="noSelectionSnack.enabled = false">Close</v-btn>
+    </v-snackbar>
+    <v-snackbar id="invalid_func_snack" :timeout="invalidFunctionSnack.timeout" top v-model="invalidFunctionSnack.enabled">
+        {{ invalidFunctionSnack.text }}
+        <v-btn flat color="pink" @click.native="invalidFunctionSnack.enabled = false">Close</v-btn>
     </v-snackbar>
 
     <v-fab-transition>
@@ -325,6 +333,11 @@ export default {
                 timeout: 6000,
                 enabled: false
             },
+            invalidFunctionSnack: {
+                text: "Error, invalid function",
+                timeout: 2000,
+                enabled: false,
+            },
             title: 'Trii',
             hov: false,
             fab: false,
@@ -338,15 +351,19 @@ export default {
             rule_types: [{
                     name: "Dependency",
                     value: "dependency"
-                    },
+                },
                 {
                     name: "Level",
                     value: "level"
-                    },
+                },
                 {
                     name: "Skill Point",
                     value: "skillpoint"
-                    }
+                },
+                {
+                    name: "Function",
+                    value: "function",
+                },
                 ],
             possible_colours: [{
                     name: "Purple",
@@ -505,6 +522,7 @@ export default {
         },
         saveNodes: function () {
             var selectedNodes = controller.getSelectedNodes();
+            var error = false;
             let n = this.nodes.filter(x => selectedNodes.includes("" + x.id));
             for (var i = 0; i < n.length; i++) {
                 controller.updateNode(n[i].id, {
@@ -512,8 +530,20 @@ export default {
                     colour: n[i].colour
                 });
                 this.updateDependencies(n[i].id);
+                n[i].rules.forEach(item => {
+                        if(item.type == 'function') {
+                            try {
+                                item.actual_func = new Function("globals", item.func);
+                            }
+                            catch(e) {
+                                this.invalidFunctionSnack.enabled = true;
+                                item.actual_func = undefined;
+                                error = true;
+                            }
+                        }
+                })
             }
-            this.nodeDrawer = false;
+            if(!error) this.nodeDrawer = false;
         },
         addRule: function (id) {
             controller.addRule(id);

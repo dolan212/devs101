@@ -10,6 +10,7 @@ import {
 	DependencyRule,
 	SkillPointRule,
 	LevelRule,
+    FunctionRule,
 } from '@/rules'
 
 export function addNode(label) {
@@ -220,6 +221,8 @@ export function setupFromJson(jsonString) {
             json: c,
             moveListener: nodeMoveHandler
         });
+        store.commit('setCurrentNodeId', tree.currentNodeId);
+        store.commit('setCurrentRuleId', tree.currentRuleId);
     } catch (e) {
         alert("The json file is not valid");
         console.log(e);
@@ -239,6 +242,10 @@ function buildTreeFromJsonObject(obj) {
 							return new LevelRule(r.id, r.level);
 						case 'skillpoint':
 							return new SkillPointRule(r.id, r.skillpoints);
+                        case 'function':
+                            var funcRule = new FunctionRule(r.id, r.func);
+                            if(r.actual_func) funcRule.actual_func = r.actual_func;
+                            return funcRule;
 					}
 			});
             tree.addNode(newNode);
