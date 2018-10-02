@@ -1,4 +1,4 @@
-class Global {
+export class Global {
 
     constructor(name, type, defaultVal, req) {
         this._name = name;
@@ -26,7 +26,7 @@ class Global {
     get type() {
         return this._type;
     }
-    get value() {
+    get values() {
         return this._value;
     }
     get required() {
@@ -36,7 +36,7 @@ class Global {
 }
 
 
-class GlobalString extends Global {
+export class GlobalString extends Global {
 
     constructor(name, type, defaultVal, req) {
         //this._name = name;
@@ -65,7 +65,7 @@ class GlobalString extends Global {
 
 }
 
-class GlobalNumber extends Global {
+export class GlobalNumber extends Global {
 
     constructor(name, type, defaultVal, req) {
         //this._name = name;
@@ -96,7 +96,7 @@ class GlobalNumber extends Global {
 
 }
 
-class GlobalMultiSelect extends Global {
+export class GlobalMultiSelect extends Global {
 
     constructor(name, type, defaultVal, req, vals) {
         //this._name = name;

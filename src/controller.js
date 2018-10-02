@@ -13,6 +13,12 @@ import {
     FunctionRule,
 } from '@/rules'
 
+import {
+	GlobalString,
+	GlobalNumber,
+	GlobalMultiSelect,
+} from '@/globalVars'
+
 export function addNode(label) {
     try {
         let payload = {
@@ -229,6 +235,13 @@ export function setupFromJson(jsonString) {
     }
 }
 
+function createGlobalVar() {
+    var data = {name:"TestVar", type:"String", defVal:"Testing", req:"false"};
+    var globalVar = new GlobalString(data.name, data.type, data.defVal, data.req);
+    console.log("Global var name: " + globalVar.name + " type: " + globalVar.type + " value: " + globalVar.values + " req: " + globalVar.required );
+
+}
+
 function buildTreeFromJsonObject(obj) {
     var tree = new Tree();
     for (var n in obj.nodes) {
@@ -247,7 +260,8 @@ function buildTreeFromJsonObject(obj) {
                             if(r.actual_func) funcRule.actual_func = r.actual_func;
                             return funcRule;
 					}
-			});
+            });
+            createGlobalVar();
             tree.addNode(newNode);
         }
     }
