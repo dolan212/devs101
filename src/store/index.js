@@ -31,6 +31,7 @@ export const store = new Vuex.Store({
         tree: null,
         currentId: 0,
         currentRuleId: 0,
+        currentRuleType: "",
         cy: null,
         treeUndoStack: [],
         jsonUndoStack: [],
@@ -74,6 +75,8 @@ export const store = new Vuex.Store({
 				globals: state.globals,
                 currentNodeId: state.currentId,
                 currentRuleId: state.currentRuleId,
+                currentRuleType: state.currentRuleType,
+
 			};
 			return json;
 		},

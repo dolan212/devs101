@@ -78,6 +78,13 @@ export class Node {
     getRules() {
 		return this.rules;
     }
+    getRuleType(id) {
+        this.rules.forEach(el => {
+            if(el.id == id) {
+                return el.type;
+            }
+        });
+    }
     deleteRule(rule_id) {
         let index = -1;
         for (var i = 0; i < this.rules.length; i++) {
@@ -222,6 +229,10 @@ export class Tree {
     getRules(skill) {
         let node = this.getNode(skill);
         return node.getRules();
+    }
+    getRuleType(skill, id) {
+        let node = this.getNode(skill);
+        return node.getRuleType; 
     }
     clean() {
         this.nodes.length = 0;
