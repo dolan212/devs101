@@ -344,6 +344,9 @@ export const store = new Vuex.Store({
             let tree = state.treeUndoStack.pop();
             state.treeRedoStack.push(state.tree.clone());
             state.tree = tree;
+            state.cy.nodes().forEach((ele) => {
+                ele.style('background-color', ele.data('background-color'))
+            })
         },
         redo(state) {
             checkInitialization(state);
@@ -356,6 +359,9 @@ export const store = new Vuex.Store({
             let tree = state.treeRedoStack.pop();
             state.treeUndoStack.push(state.tree.clone());
             state.tree = tree;
+            state.cy.nodes().forEach((ele) => {
+                ele.style('background-color', ele.data('background-color'))
+            })
         },
         addGlobalVar(state, globalVar) {
 			if (state.globals[globalVar.name] !== null && state.globals[globalVar.name] !== undefined) throw globalVarExistsError;
