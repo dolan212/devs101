@@ -62,6 +62,13 @@ export const store = new Vuex.Store({
         getRules(state) {
             return id => state.tree.getRules(id);
         },
+        getRulesTypes(state) {
+            var arr = [];
+            state.tree.getRules(id).forEach(el => {
+                    arr.push(el.type);
+            });
+            return arr;
+        },
         getTree(state) {
             return state.tree;
         },

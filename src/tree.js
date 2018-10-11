@@ -232,7 +232,7 @@ export class Tree {
     }
     getRuleType(skill, id) {
         let node = this.getNode(skill);
-        return node.getRuleType; 
+        return node.getRuleType(id); 
     }
     clean() {
         this.nodes.length = 0;
