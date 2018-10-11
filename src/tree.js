@@ -49,6 +49,7 @@ export class Node {
         this._label = label;
         this._colour = colour;
         this.rules = [];
+        this.max_times = 1;
     }
     set label(label) {
         this._label = label;
@@ -157,10 +158,12 @@ export class Tree {
         }
         throw nodeNotFoundError;
     }
-    updateNode(id, _label, _colour) {
+    updateNode(id, _label, _colour, _description, max_times) {
         var n = this.nodes.find(x => x.id == id);
         n.label = _label;
         n.colour = _colour;
+        n.description = _description;
+        n.max_times = max_times;
     }
     getNodes() {
         var nodesList = [];
@@ -170,7 +173,9 @@ export class Tree {
                 id: n.id,
                 label: n.label,
                 colour: n.colour,
+                description: n.description,
                 rules: n.rules,
+                max_times: n.max_times
             });
         }
         return nodesList;

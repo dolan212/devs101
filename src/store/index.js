@@ -93,6 +93,8 @@ export const store = new Vuex.Store({
             state.tree = new Tree();
             if (state.treeNodes) state.tree.nodes = Array.from(state.treeNodes, x => {
                 let n = new Node(x._id, x._label, x._colour);
+                n.description = x._description;
+                n.max_times = x.max_times;
                 if (x.rules !== undefined) {
 					n.rules = Array.from(x.rules, r => {
 							switch(r.type) {
@@ -145,6 +147,7 @@ export const store = new Vuex.Store({
                 }
             });
             state.cy.maxZoom(2);
+            state.cy.fit();
             state.cy.json(state.json);
             state.cy.elements().unselect();
             state.cy.nodes().forEach(function(ele) {
@@ -176,7 +179,7 @@ export const store = new Vuex.Store({
             pushUndo(state);
 			if(!testColour(payload.colour)) throw invalidColourError;
             if (payload.colour == 'default') payload.colour = state.defaultColour;
-            state.tree.updateNode(payload.id, payload.label, payload.colour);
+            state.tree.updateNode(payload.id, payload.label, payload.colour, payload.description, payload.max_times);
             state.cy.$("#" + payload.id).data({
                 label: payload.label
             });
@@ -344,6 +347,9 @@ export const store = new Vuex.Store({
             let tree = state.treeUndoStack.pop();
             state.treeRedoStack.push(state.tree.clone());
             state.tree = tree;
+            state.cy.nodes().forEach((ele) => {
+                ele.style('background-color', ele.data('background-color'))
+            })
         },
         redo(state) {
             checkInitialization(state);
@@ -356,6 +362,9 @@ export const store = new Vuex.Store({
             let tree = state.treeRedoStack.pop();
             state.treeUndoStack.push(state.tree.clone());
             state.tree = tree;
+            state.cy.nodes().forEach((ele) => {
+                ele.style('background-color', ele.data('background-color'))
+            })
         },
         addGlobalVar(state, globalVar) {
 			if (state.globals[globalVar.name] !== null && state.globals[globalVar.name] !== undefined) throw globalVarExistsError;

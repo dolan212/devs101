@@ -110,7 +110,9 @@ export function updateNode(id, payload) {
         let p = {
             id: id,
             label: payload.label,
-            colour: payload.colour
+            colour: payload.colour,
+            description: payload.description,
+            max_times: payload.max_times
         }
         store.commit('updateNode', p);
     } catch (exception) {
@@ -234,6 +236,8 @@ function buildTreeFromJsonObject(obj) {
     for (var n in obj.nodes) {
         if (obj.nodes.hasOwnProperty(n)) {
             var newNode = new Node(obj.nodes[n]._id, obj.nodes[n]._label, obj.nodes[n]._colour);
+            newNode.description = obj.nodes[n]._description;
+            newNode.max_times = obj.nodes[n].max_times;
 			newNode.rules = Array.from(obj.nodes[n].rules, r => {
 					switch(r.type) {
 						case 'dependency':
