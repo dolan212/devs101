@@ -5,7 +5,13 @@
         <script type="text/javascript" src="static/trii-widget.js"></script>
         <script type="text/javascript">
             window.onload = function() {
-                trii_init("thisDiv", "./src/tree/defaultTree.json");
+                trii_init("thisDiv", "./src/tree/defaultTree.json", function(data) {
+                    data.set_times_bought(0, 1);
+                    data.set_times_bought(1, 1);
+                }, true, {
+                    skillpoints: 30,
+                    class: 'Rogue'
+                });
             };
         </script>
     </head>
