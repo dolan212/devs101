@@ -111,6 +111,7 @@
                                 <v-flex xs12 align-end flexbox>
                                     <v-text-field label="Skill Name" v-model="item.label"></v-text-field>
                                     <v-text-field label="Skill Description" v-model="item.description"></v-text-field>
+                                    <v-text-field label="Times Skill Can Be Bought" v-model="item.max_times" mask="#"></v-text-field>
                                     <v-select v-model="item.colour" :items="possible_colours" item-text="name" item-value="value"></v-select>
                                 </v-flex>
                             </v-layout>
@@ -528,7 +529,8 @@ export default {
                 controller.updateNode(n[i].id, {
                     label: n[i].label,
                     colour: n[i].colour,
-                    description: n[i].description
+                    description: n[i].description,
+                    max_times: n[i].max_times,
                 });
                 this.updateDependencies(n[i].id);
                 n[i].rules.forEach(item => {
