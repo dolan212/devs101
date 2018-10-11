@@ -7,21 +7,38 @@ function trii_init(div_id, tree_json, globals) {
     div.style.padding = 0;
     var cy_div = document.createElement("div");
     var info_div = document.createElement("div");
+    var global_div = document.createElement("div");
     cy_div.style.display = "inline-block";
     cy_div.style.margin = 0;
-    info_div.style.display = "inline-block";
+    info_div.style.display = "block";
     info_div.style.margin = 0;
+    global_div.style.display = "block";
+    global_div.style.margin = 0;
 
     cy_div.style.width = "70%";
     cy_div.style.height = "100%";
     cy_div.style.borderRight = "1px solid black";
+    
+    var right_hand_div = document.createElement('div');
 
-    info_div.style.width = "30%";
-    info_div.style.height = "100%";
-    info_div.style.padding = "5px";
+    right_hand_div.style.width = "30%";
+    right_hand_div.style.height = "100%";
+
+    global_div.style.width = "100%";
+    global_div.style.height = "50%";
+    //global_div.style.padding = "5px";
+    global_div.style.borderBottom = "1px solid black";
+    global_div.innerHTML = '<h3>Global Variables</h3>';
+
+    info_div.style.width = "100%";
+    info_div.style.height = "50%";
+    //info_div.style.padding = "5px";
+
+    right_hand_div.appendChild(global_div);
+    right_hand_div.appendChild(info_div);
 
     div.appendChild(cy_div);
-    div.appendChild(info_div);
+    div.appendChild(right_hand_div);
     widget_data.info_div = info_div;
 
     widget_data.cy = cytoscape({
@@ -37,17 +54,24 @@ function trii_init(div_id, tree_json, globals) {
             });
             widget_data.tree = json.tree;
             widget_data.globals = json.globals;
-            console.log(json.tree);
         });
     }
     if(globals) {
         for(var glob in globals) {
             if(globals.hasOwnProperty(glob)) {
-                if(widget_data.globals[glob] !== undefined) {
+                if(widget_data.globals[glob]) {
                     widget_data.globals[glob] = globals[glob];
                 }
             }
         }
+    }
+
+    if(widget_data.globals) {
+        Object.keys(widget_data.globals).forEach(function(key, index) {
+            var p = document.createElement('p');
+            p.innerHTML = `<b>${key}:</b> ${widget_data.globals[key]}`;
+            global_div.appendChild(p);
+        });
     }
     widget_data.times_bought;
 
