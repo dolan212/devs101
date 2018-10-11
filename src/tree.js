@@ -157,10 +157,11 @@ export class Tree {
         }
         throw nodeNotFoundError;
     }
-    updateNode(id, _label, _colour) {
+    updateNode(id, _label, _colour, _description) {
         var n = this.nodes.find(x => x.id == id);
         n.label = _label;
         n.colour = _colour;
+        n.description = _description;
     }
     getNodes() {
         var nodesList = [];
@@ -170,6 +171,7 @@ export class Tree {
                 id: n.id,
                 label: n.label,
                 colour: n.colour,
+                description: n.description,
                 rules: n.rules,
             });
         }

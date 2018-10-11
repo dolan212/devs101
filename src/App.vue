@@ -527,7 +527,8 @@ export default {
             for (var i = 0; i < n.length; i++) {
                 controller.updateNode(n[i].id, {
                     label: n[i].label,
-                    colour: n[i].colour
+                    colour: n[i].colour,
+                    description: n[i].description
                 });
                 this.updateDependencies(n[i].id);
                 n[i].rules.forEach(item => {

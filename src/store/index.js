@@ -93,6 +93,7 @@ export const store = new Vuex.Store({
             state.tree = new Tree();
             if (state.treeNodes) state.tree.nodes = Array.from(state.treeNodes, x => {
                 let n = new Node(x._id, x._label, x._colour);
+                n.description = x._description;
                 if (x.rules !== undefined) {
 					n.rules = Array.from(x.rules, r => {
 							switch(r.type) {
@@ -176,7 +177,7 @@ export const store = new Vuex.Store({
             pushUndo(state);
 			if(!testColour(payload.colour)) throw invalidColourError;
             if (payload.colour == 'default') payload.colour = state.defaultColour;
-            state.tree.updateNode(payload.id, payload.label, payload.colour);
+            state.tree.updateNode(payload.id, payload.label, payload.colour, payload.description);
             state.cy.$("#" + payload.id).data({
                 label: payload.label
             });
