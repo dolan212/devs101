@@ -12,6 +12,61 @@ import {
 	LevelRule,
     FunctionRule,
 } from '@/rules'
+import {
+    Global,
+    GlobalString,
+    GlobalNumber,
+    GlobalMultiSelect
+} from '@/globalVars'
+
+export function addStringGlobal(var_name, var_type, var_value, var_required)
+{
+  try {
+    let glob = {
+      var_name : var_name,
+      var_type : var_type,
+      var_value : var_value,
+      var_required : var_required
+    }
+    alert(var_name);
+    store.commit('addStringGlobal', glob);
+  }
+  catch(exception) {
+    alert(exception);
+  }
+}
+
+export function addNumberGlobal(var_name, var_type, var_value, var_required)
+{
+  try {
+    let glob = {
+      var_name : var_name,
+      var_type : var_type,
+      var_value : var_value,
+      var_required : var_required
+    }
+    store.commit('addNumberGlobal', glob);
+  }
+  catch(exception) {
+    alert(exception);
+  }
+}
+
+export function addMultiGlobal(var_name, var_type, var_value, var_required)
+{
+  try {
+    let glob = {
+      var_name : var_name,
+      var_type : var_type,
+      var_value : var_value,
+      var_required : var_required
+    }
+    store.commit('addMultiGlobal', glob);
+  }
+  catch(exception) {
+    alert(exception);
+  }
+}
 
 export function addNode(label) {
     try {

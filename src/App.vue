@@ -76,6 +76,10 @@
                 <v-btn slot="activator" flat id="btn_layout" @click.native.stop="autoLayout()">Auto Layout</v-btn>
                 <span>Automatically orders nodes</span>
             </v-tooltip>
+            <v-tooltip left>
+                <v-btn slot="activator" flat id="btn_layout" @click.native.stop="dialog2 = true">Global Variables</v-btn>
+                <span>Add Global variables to the tree</span>
+            </v-tooltip>
         </v-container>
         <v-container fluid>
             <p>Import Skill Tree</p>
@@ -211,22 +215,19 @@
     <v-dialog v-model="dialog2" persistent max-width="500px">
         <v-card>
             <v-card-title>
-                <span class="headline" center>New Edge</span>
+                <span class="headline" center>Global Variables</span>
             </v-card-title>
             <v-card-text>
                 <v-container grid-list-md>
                     <v-layout wrap>
                         <v-flex xs12 sm12 md12>
-                            <v-subheader>Source Node</v-subheader>
+                            <v-btn color="blue darken-1" flat @click.native="dialog2 = false" v-on:click="dialog3 = true">String Global Variable</v-btn>
                         </v-flex>
                         <v-flex xs12 sm12 md12>
-                            <v-select :items="nodes" v-model="source" label="Select" single-line item-text="label" item-value="id" return-object persistant-hint></v-select>
+                            <v-btn color="blue darken-1" flat @click.native="dialog2 = false" v-on:click="dialog4 = true">Number Global Variable</v-btn>
                         </v-flex>
                         <v-flex xs12 sm12 md12>
-                            <v-subheader>Target Node</v-subheader>
-                        </v-flex>
-                        <v-flex xs12 sm12 md12>
-                            <v-select :items="nodes" v-model="target" label="Select" single-line item-text="label" item-value="id" return-object persistant-hint></v-select>
+                            <v-btn color="blue darken-1" flat @click.native="dialog2 = false" v-on:click="dialog5 = true">Multivalued Global Variable</v-btn>
                         </v-flex>
                     </v-layout>
                 </v-container>
@@ -234,7 +235,100 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" flat @click.native="dialog2 = false">Close</v-btn>
-                <v-btn color="blue darken-1" flat @click.native="dialog2 = false" v-on:click="addEdge(source,target)">Add</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="dialog3" persistent max-width="500px">
+        <v-card>
+            <v-card-title>
+                <span class="headline" center>String/Word Global Variable</span>
+            </v-card-title>
+            <v-card-text>
+                <v-container grid-list-md fluid>
+                    <v-layout wrap>
+                      <v-flex xs12 sm12 md12>
+                          <v-text-field id="var_name" label="Variable Name" v-model="var_name"></v-text-field>
+                      </v-flex>
+                      <v-flex xs12 sm12 md12>
+                          <v-text-field id="var_type" label="Type" v-model="var_type"></v-text-field>
+                      </v-flex>
+                      <v-flex xs12 sm12 md12>
+                          <v-text-field id="var_value" label="Value" v-model="var_value"></v-text-field>
+                      </v-flex>
+                      <v-flex xs12 sm12 md12>
+                          <v-checkbox id="var_required" label="Required" v-model="var_required"></v-checkbox>
+                      </v-flex>
+                    </v-layout>
+                </v-container>
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" flat @click.native="dialog3 = false" v-on:click="addStringGlobal(var_name,var_type,var_value,var_required)">Add</v-btn>
+                <v-btn color="blue darken-1" flat @click.native="dialog3 = false">Close</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="dialog4" persistent max-width="500px">
+        <v-card>
+            <v-card-title>
+                <span class="headline" center>Number Global Variable</span>
+            </v-card-title>
+            <v-card-text>
+                <v-container grid-list-md>
+                    <v-layout wrap>
+                      <v-flex xs12 sm12 md12>
+                          <v-text-field id="var_name" label="Variable Name" v-model="var_name"></v-text-field>
+                      </v-flex>
+                      <v-flex xs12 sm12 md12>
+                          <v-text-field id="var_type" label="Type" v-model="var_type"></v-text-field>
+                      </v-flex>
+                      <v-flex xs12 sm12 md12>
+                          <v-text-field id="var_value" label="Value" v-model="var_value"></v-text-field>
+                      </v-flex>
+                      <v-flex xs12 sm12 md12>
+                          <v-checkbox id="var_required" label="Required" v-model="var_required"></v-checkbox>
+                      </v-flex>
+                    </v-layout>
+                </v-container>
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" flat @click.native="dialog4 = false" v-on:click="addNumberGlobal(var_name,var_type,var_value,var_required)">Add</v-btn>
+                <v-btn color="blue darken-1" flat @click.native="dialog4 = false">Close</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="dialog5" persistent max-width="500px">
+        <v-card>
+            <v-card-title>
+                <span class="headline" center>Multivalued Global Variable</span>
+            </v-card-title>
+            <v-card-text>
+                <v-container grid-list-md>
+                    <v-layout wrap>
+                      <v-flex xs12 sm12 md12>
+                          <v-text-field id="var_name" label="Variable Name" v-model="var_name"></v-text-field>
+                      </v-flex>
+                      <v-flex xs12 sm12 md12>
+                          <v-text-field id="var_type" label="Type" v-model="var_type"></v-text-field>
+                      </v-flex>
+                      <v-flex xs12 sm12 md12>
+                          <v-text-field id="var_value" label="Value" v-model="var_values"></v-text-field>
+                          <v-btn color="blue darken-1" flat v-on:click="addMultiValue(var_values)" >Add value</v-btn>
+                      </v-flex>
+                      <v-flex xs12 sm12 md12>
+                          <v-checkbox id="var_required" label="Required" v-model="var_required"></v-checkbox>
+                      </v-flex>
+                    </v-layout>
+                </v-container>
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" flat @click.native="dialog5 = false" v-on:click="addMultiGlobal(var_name,var_type,var_values,var_required)">Add</v-btn>
+                <v-btn color="blue darken-1" flat @click.native="dialog5 = false">Close</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -300,6 +394,7 @@ export default {
     },
     data() {
         return {
+            checkbox: true,
             clipped: true,
             drawer: false,
             nodeDrawer: false,
@@ -329,6 +424,7 @@ export default {
                     }
                 ],
             nodes: [],
+            multiValues: [],
             noSelectionSnack: {
                 text: "Please select a skill first",
                 timeout: 6000,
@@ -346,6 +442,9 @@ export default {
             isVisible: true,
             dialog: false,
             dialog2: false,
+            dialog3: false,
+            dialog4: false,
+            dialog5: false,
             fileDialog: false,
             selectedNode: null,
             rules: [],
@@ -435,6 +534,39 @@ export default {
                 console.log("An error occured");
             }
             fr.readAsText(file);
+        },
+        addStringGlobal: function(var_name, var_type, var_value, var_required)
+        {
+          controller.addStringGlobal(var_name, var_type, var_value, var_required);
+          var_name ="";
+          var_type ="";
+          var_value = "";
+          var_required = false;
+        },
+        addNumberGlobal: function(var_name, var_type, var_value, var_required)
+        {
+          controller.addStringGlobal(var_name, var_type, var_value, var_required);
+          var_name ="";
+          var_type ="";
+          var_value = "";
+          var_required = false;
+        },
+        addMultiValue: function(var_values)
+        {
+          this.multiValues.push(var_values);
+          this.var_values = '';
+        },
+        addMultiGlobal: function(var_name, var_type, var_values, var_required)
+        {
+          controller.addMultiGlobal(var_name, var_type, this.multiValues, var_required);
+          var_name ="";
+          var_type ="";
+          var_values = "";
+          var_required = false;
+          whlie(this.multiValues.length > 0)
+          {
+            this.multiValues.pop();
+          }
         },
         addNode: function (nodeLabel) {
             controller.addNode(nodeLabel);
