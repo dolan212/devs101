@@ -147,6 +147,7 @@ export const store = new Vuex.Store({
                 }
             });
             state.cy.maxZoom(2);
+            state.cy.fit();
             state.cy.json(state.json);
             state.cy.elements().unselect();
             state.cy.nodes().forEach(function(ele) {
