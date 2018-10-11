@@ -229,6 +229,9 @@
                         <v-flex xs12 sm12 md12>
                             <v-btn color="blue darken-1" flat @click.native="dialog2 = false" v-on:click="dialog5 = true">Multivalued Global Variable</v-btn>
                         </v-flex>
+                        <v-flex xs12 sm12 md12>
+                            <v-btn color="blue darken-1" flat @click.native="dialog2 = false" v-on:click="dialog6 = true">Delete Global Variable</v-btn>
+                        </v-flex>
                     </v-layout>
                 </v-container>
             </v-card-text>
@@ -329,6 +332,28 @@
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" flat @click.native="dialog5 = false" v-on:click="addMultiGlobal(var_name,var_type,var_values,var_required)">Add</v-btn>
                 <v-btn color="blue darken-1" flat @click.native="dialog5 = false">Close</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="dialog6" persistent max-width="500px">
+        <v-card>
+            <v-card-title>
+                <span class="headline" center>Delete a Global Variable</span>
+            </v-card-title>
+            <v-card-text>
+                <v-container grid-list-md>
+                    <v-layout wrap>
+                      <v-flex xs12 sm12 md12>
+                          <v-text-field id="var_name" label="Variable Name to be deleted" v-model="var_name"></v-text-field>
+                      </v-flex>
+                    </v-layout>
+                </v-container>
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" flat @click.native="dialog6 = false" v-on:click="deleteGlobal(var_name)">Delete</v-btn>
+                <v-btn color="blue darken-1" flat @click.native="dialog6 = false">Close</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -445,6 +470,7 @@ export default {
             dialog3: false,
             dialog4: false,
             dialog5: false,
+            dialog6: false,
             fileDialog: false,
             selectedNode: null,
             rules: [],
@@ -567,6 +593,12 @@ export default {
           {
             this.multiValues.pop();
           }
+        },
+        deleteGlobal: function(var_name)
+        {
+          console.log(var_name);
+          controller.deleteGlobal(var_name);
+          var_name ="";
         },
         addNode: function (nodeLabel) {
             controller.addNode(nodeLabel);

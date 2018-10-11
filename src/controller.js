@@ -68,6 +68,11 @@ export function addMultiGlobal(var_name, var_type, var_value, var_required)
   }
 }
 
+export function deleteGlobal(var_name)
+{
+  store.commit('deleteGlobal', var_name)
+}
+
 export function addNode(label) {
     try {
         let payload = {
