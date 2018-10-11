@@ -268,6 +268,7 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" flat @click.native="dialog3 = false" v-on:click="addStringGlobal(var_name,var_type,var_value,var_required)">Add</v-btn>
+                <v-btn color="blue darken-1" flat @click.native="dialog3 = false" v-on:click="updateStringGlobal(var_name,var_type,var_value,var_required)">Update</v-btn>
                 <v-btn color="blue darken-1" flat @click.native="dialog3 = false">Close</v-btn>
             </v-card-actions>
         </v-card>
@@ -299,6 +300,7 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" flat @click.native="dialog4 = false" v-on:click="addNumberGlobal(var_name,var_type,var_value,var_required)">Add</v-btn>
+                <v-btn color="blue darken-1" flat @click.native="dialog4 = false" v-on:click="updateNumberGlobal(var_name,var_type,var_value,var_required)">Update</v-btn>
                 <v-btn color="blue darken-1" flat @click.native="dialog4 = false">Close</v-btn>
             </v-card-actions>
         </v-card>
@@ -331,6 +333,7 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" flat @click.native="dialog5 = false" v-on:click="addMultiGlobal(var_name,var_type,var_values,var_required)">Add</v-btn>
+                <v-btn color="blue darken-1" flat @click.native="dialog5 = false" v-on:click="updateMultiGlobal(var_name,var_type,var_values,var_required)">Update</v-btn>
                 <v-btn color="blue darken-1" flat @click.native="dialog5 = false">Close</v-btn>
             </v-card-actions>
         </v-card>
@@ -569,9 +572,25 @@ export default {
           var_value = "";
           var_required = false;
         },
+        updateStringGlobal: function(var_name, var_type, var_value, var_required)
+        {
+          controller.updateStringGlobal(var_name, var_type, var_value, var_required);
+          var_name ="";
+          var_type ="";
+          var_value = "";
+          var_required = false;
+        },
         addNumberGlobal: function(var_name, var_type, var_value, var_required)
         {
           controller.addStringGlobal(var_name, var_type, var_value, var_required);
+          var_name ="";
+          var_type ="";
+          var_value = "";
+          var_required = false;
+        },
+        updateNumberGlobal: function(var_name, var_type, var_value, var_required)
+        {
+          controller.updateStringGlobal(var_name, var_type, var_value, var_required);
           var_name ="";
           var_type ="";
           var_value = "";
@@ -585,6 +604,18 @@ export default {
         addMultiGlobal: function(var_name, var_type, var_values, var_required)
         {
           controller.addMultiGlobal(var_name, var_type, this.multiValues, var_required);
+          var_name ="";
+          var_type ="";
+          var_values = "";
+          var_required = false;
+          whlie(this.multiValues.length > 0)
+          {
+            this.multiValues.pop();
+          }
+        },
+        updateMultiGlobal: function(var_name, var_type, var_values, var_required)
+        {
+          controller.updateMultiGlobal(var_name, var_type, this.multiValues, var_required);
           var_name ="";
           var_type ="";
           var_values = "";

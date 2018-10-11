@@ -19,58 +19,107 @@ import {
     GlobalMultiSelect
 } from '@/globalVars'
 
-export function addStringGlobal(var_name, var_type, var_value, var_required)
+export function addStringGlobal(name, type, value, required)
 {
   try {
-    let glob = {
-      var_name : var_name,
-      var_type : var_type,
-      var_value : var_value,
-      var_required : var_required
+    let globalVar = {
+      name : name,
+      type : type,
+      value : value,
+      required : required
     }
     alert(var_name);
-    store.commit('addStringGlobal', glob);
+    store.commit('addGlobalVar', globalVar);
   }
   catch(exception) {
     alert(exception);
   }
 }
 
-export function addNumberGlobal(var_name, var_type, var_value, var_required)
+export function updateStringGlobal(name, type, value, required)
 {
   try {
-    let glob = {
-      var_name : var_name,
-      var_type : var_type,
-      var_value : var_value,
-      var_required : var_required
+    let globalVar = {
+      name : name,
+      type : type,
+      value : value,
+      required : required
     }
-    store.commit('addNumberGlobal', glob);
+    alert(var_name);
+    store.commit('setGlobals', payload);
   }
   catch(exception) {
     alert(exception);
   }
 }
 
-export function addMultiGlobal(var_name, var_type, var_value, var_required)
+export function addNumberGlobal(name, type, value, required)
 {
   try {
-    let glob = {
-      var_name : var_name,
-      var_type : var_type,
-      var_value : var_value,
-      var_required : var_required
+    let globalVar = {
+      name : name,
+      type : type,
+      value : value,
+      required : required
     }
-    store.commit('addMultiGlobal', glob);
+    store.commit('addGlobalVar', globalVar);
   }
   catch(exception) {
     alert(exception);
   }
 }
 
-export function deleteGlobal(var_name)
+export function updateNumberGlobal(name, type, value, required)
 {
-  store.commit('deleteGlobal', var_name)
+  try {
+    let globalVar = {
+      name : name,
+      type : type,
+      value : value,
+      required : required
+    }
+    store.commit('setGlobals', payload);
+  }
+  catch(exception) {
+    alert(exception);
+  }
+}
+
+export function addMultiGlobal(name, type, value, required)
+{
+  try {
+    let globalVar = {
+      name : name,
+      type : type,
+      value : value,
+      required : required
+    }
+    store.commit('addGlobalVar', globalVar);
+  }
+  catch(exception) {
+    alert(exception);
+  }
+}
+
+export function updateMultiGlobal(name, type, value, required)
+{
+  try {
+    let globalVar = {
+      name : name,
+      type : type,
+      value : value,
+      required : required
+    }
+    store.commit('setGlobals', payload);
+  }
+  catch(exception) {
+    alert(exception);
+  }
+}
+
+export function deleteGlobal(globalVarName)
+{
+  store.commit('deleteGlovalVar', globalVarName)
 }
 
 export function addNode(label) {
