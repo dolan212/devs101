@@ -8,13 +8,16 @@ function trii_init(div_id, tree_json, callback, editable, globals) {
      * with the object passed to the callback
      */
     function refresh_globals() {
-        widget_data.global_div.innerHTML = '<h3>Global Variables</h3>';
+        widget_data.global_div.innerHTML = '<h3 style="text-align:center;">Global Variables</h3>';
         if(widget_data.globals !== undefined) {
+            var details_div = document.createElement("div");
+            details_div.style.padding = "5px";
             Object.keys(widget_data.globals).forEach(function(key, index) {
                 var p = document.createElement('p');
                 p.innerHTML = `<b>${key}:</b> ${widget_data.globals[key]}`;
-                widget_data.global_div.appendChild(p);
+                details_div.appendChild(p);
             });
+            widget_data.global_div.appendChild(details_div);
         }
     }
     function node_select_handler(evt) {
@@ -22,12 +25,10 @@ function trii_init(div_id, tree_json, callback, editable, globals) {
         var node = findNode(evt.target.id());
         displayNodeDetails(node);
     }
-
     function node_deselect_handler(evt) {
         while(widget_data.info_div.firstChild)
             widget_data.info_div.removeChild(widget_data.info_div.firstChild);
     }
-
     function findNode(id) {
         var node = null;
         widget_data.tree.nodes.forEach(function(item) {
@@ -37,7 +38,6 @@ function trii_init(div_id, tree_json, callback, editable, globals) {
         });
         return node;
     }
-
     function loadJSON(json, callback) {
         var xobj = new XMLHttpRequest();
         xobj.overrideMimeType("application/json");
@@ -49,14 +49,16 @@ function trii_init(div_id, tree_json, callback, editable, globals) {
         };
         xobj.send(null);
     }
-
     function displayNodeDetails(node) {
+        widget_data.info_div.innerHTML = `<h3 style="text-align:center;">Skill ${node._id}</h3>`;
+        var details_div = document.createElement("div");
+        details_div.style.padding = "5px";
         var name = document.createElement("p");
-        name.innerHTML = `<b>Skill:</b> ${node._label}`;
+        name.innerHTML = `<b>Name:</b> ${node._label}`;
         var desc = document.createElement("p");
         desc.innerHTML = `<b>Description:</b> ${node._description}`;
-        widget_data.info_div.appendChild(name);
-        widget_data.info_div.appendChild(desc);
+        details_div.appendChild(name);
+        details_div.appendChild(desc);
         var skillpoints;
         node.rules.forEach(function(item) {
             if(item.type == "skillpoint") {
@@ -65,7 +67,8 @@ function trii_init(div_id, tree_json, callback, editable, globals) {
                 node.skillpoints = parseInt(item.skillpoints);
             }
         });
-        if(skillpoints) widget_data.info_div.appendChild(skillpoints);
+        if(skillpoints) details_div.appendChild(skillpoints);
+        widget_data.info_div.appendChild(details_div);
         var buy_div = document.createElement("div");
         buy_div.style.width = "100%";
         buy_div.style.position = "relative";
@@ -141,7 +144,6 @@ function trii_init(div_id, tree_json, callback, editable, globals) {
             }
         }
     }
-
     function buy_skill(node) {
         if(!editable) throw "Tree is not editable";
         var dep = check_dependencies(node);
@@ -169,7 +171,6 @@ function trii_init(div_id, tree_json, callback, editable, globals) {
         }
         return widget_data.times_bought[node._id];
     }
-
     function sell_skill(node) {
         if(!editable) throw "Tree is not editable";
         if(!widget_data.times_bought) throw "You have not purchased this skill";
@@ -178,7 +179,6 @@ function trii_init(div_id, tree_json, callback, editable, globals) {
         widget_data.globals['skillpoints'] += node.skillpoints;
         return widget_data.times_bought[node._id];
     }
-
     function check_dependencies(node) {
         var valid = true;
         node.rules.forEach(function(item) {
@@ -188,11 +188,9 @@ function trii_init(div_id, tree_json, callback, editable, globals) {
         });
         return valid;
     }
-
     function get_times_bought() {
         return widget_data.times_bought;
     }
-
     function refresh_label(node) {
         var cy_node = widget_data.cy.$(`#${node._id}`);
         var times_bought = widget_data.times_bought[node._id] ? widget_data.times_bought[node._id] : 0;
@@ -218,7 +216,6 @@ function trii_init(div_id, tree_json, callback, editable, globals) {
                 })
             }
     }
-
     function set_times_bought(id, times_bought) {
         var node = findNode(id);
         var dep = check_dependencies(node);
@@ -238,10 +235,21 @@ function trii_init(div_id, tree_json, callback, editable, globals) {
             throw error;
         }
     }
-
+    function set_global_value(global, value) {
+        if(widget_data.globals[global]) {
+            widget_data.globals[global] = value;
+            refresh_globals();
+        }
+        else {
+            var error = `Error: global ${global} does not exist`;
+            console.log(error);
+            throw error;
+        }
+    }
     /*
      * END FUNCTION DEFINITIONS
      */
+    //setup divs
     var div = document.getElementById(div_id);
     div.style.display = "flex";
     div.style.border = "1px solid black";
@@ -284,9 +292,11 @@ function trii_init(div_id, tree_json, callback, editable, globals) {
 
     div.appendChild(cy_div);
     div.appendChild(right_hand_div);
+
     widget_data.info_div = info_div;
     widget_data.global_div = global_div;
 
+    //setup cytoscape
     widget_data.cy = cytoscape({
         container: cy_div
     });
@@ -315,6 +325,8 @@ function trii_init(div_id, tree_json, callback, editable, globals) {
             }
             refresh_globals();
             public_data.set_times_bought = set_times_bought;
+            public_data.set_global_value = set_global_value;
+            public_data.get_times_bought = get_times_bought;
             if(callback) callback(public_data);
         });
     }
