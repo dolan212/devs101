@@ -37,7 +37,7 @@ export const store = new Vuex.Store({
         treeRedoStack: [],
         jsonRedoStack: [],
         json: "",
-        globals: [],
+        globals: {},
         defaultColour: "#E91E63",
         firstStart: true,
 
