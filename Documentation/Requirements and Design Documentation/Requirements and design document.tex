@@ -1,11 +1,39 @@
-\documentclass{article}
+\documentclass[12pt]{article}
+\usepackage{float}
+\usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage[latin1]{inputenc}
+\usepackage{geometry}
+\geometry{
+  a4paper,
+  total={170mm,257mm},
+  left=20mm,
+  top=20mm,
+}
 
 \title{Requirements and Design Document}
-\author{devs101}
+\author{A project by Devs101\\ \\
+Client: Mark-Anthony Fouch�\\ \\
+Dylan Draper\\
+Brendan Bath\\
+Christopher Njaravani\\
+Charles Claassen\\
+Dail Nathan Jonker\\
+}
+\date{14/10/2018}
 
 \begin{document}
 \maketitle
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/logo.jpg}
+	\label{fig:logo}
+\end{figure}
+\newpage
+\pagenumbering{arabic}
+
 \tableofcontents
 \newpage
 
@@ -28,7 +56,12 @@
   API - Application programming interface.\newline
   MVC - Model–view–controller.\newline
   \subsection{UML Domain model}
-  \includegraphics{TriiDomainModel}
+  
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{images/TriiDomainModel.png}
+  \caption{The Domain model}
+  \label{fig:Domainmodel}
+\end{figure}
   
 \section{Functional Requirements}
   \subsection{Users}
@@ -56,11 +89,15 @@
   Cytoscape Structure:\newline 
   This subsystem holds other important information regarding the framework we use as well as all the functions, variables, classes and other important information needed by the Simulator in order to run. This is the most important subsystem, because without it the system as a whole would not function.\newline \newline 
   Component UML Diagram:
-  \includegraphics{TriiUMLComponentDiagram}
+
+  \begin{figure}[H]
+    \includegraphics[width=\linewidth]{TriiUMLComponentDiagram}
+    \caption{The UML Component Diagram}
+    \label{fig:componentdiagram}
+  \end{figure}
 
 
   \subsection{Specific requirements}
-  \renewcommand{\labelenumii}{\Roman{enumii}}
   \begin{enumerate}
   \item Viewer:
     \begin{enumerate}
@@ -129,7 +166,12 @@
   \end{enumerate}
   \newline \newline 
   Use Case Diagram:
-  \includegraphics{TriiUseCaseDiagram}
+  
+  \begin{figure}[H]
+    \includegraphics[width=\linewidth]{TriiUseCaseDiagram}
+    \caption{Use Case Diagram}
+    \label{fig:usecasediagram}
+  \end{figure}
 
 \section{Non-functional Requirements}
   The non-functional requirements we focus on is as follow:\newline\newline  
@@ -171,6 +213,11 @@
   \subsection{System Configuration} 
     The system run on a Github server. It can be accessed through and computer or mobile device that can use a web browser. The web browser communicates with the website through a HTTPS protocol connection. The offline version of the system is downloaded onto the computer or mobile device and is then run using a browser in local host, so no internet connection is needed. The online system can update the offline system if the users allow the offline system to update, this will need an internet connection.\newline \newline 
     Deployment Diagram:
-    \includegraphics{TriiDeploymentDiagram}
+    
+    \begin{figure}[H]
+      \includegraphics[width=\linewidth]{TriiDeploymentDiagram}
+      \caption{The Deployment Diagram}
+      \label{fig:deploymentdiagram}
+    \end{figure}
 
 \end{document}
