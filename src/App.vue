@@ -1,19 +1,12 @@
 <template>
 <v-app>
-    <v-navigation-drawer persistent v-model="drawer" enable-resize-watcher clipped app>
-        <v-list>
-            <v-list-tile value="false" v-for="(item, i) in items" :key="i">
-                <v-list-tile-action>
-                    <v-icon v-html="item.icon"></v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title v-text="item.title"></v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-        </v-list>
-    </v-navigation-drawer>
     <v-toolbar app clipped-left>
-        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-tooltip bottom>
+          <v-btn slot="activator" id="btn_help" icon href="https://github.com/dolan212/devs101/blob/master/Documentation/User%20Manual/UserManual.pdf" target="_blank">
+              <v-icon>help</v-icon>
+          </v-btn>
+          <span>User Manual</span>
+      </v-tooltip>
 
         <v-tooltip bottom>
             <v-btn slot="activator" id="btn_undo" @click.stop="undo" icon>
@@ -413,19 +406,6 @@ export default {
                 id: '-1',
                 label: 'node'
             },
-            items: [{
-                    icon: 'add',
-                    title: 'New Tree',
-                    },
-                {
-                    icon: 'import_export',
-                    title: 'Import Tree'
-                    },
-                {
-                    icon: 'info',
-                    title: 'About'
-                    }
-                ],
             nodes: [],
             noSelectionSnack: {
                 text: "Please select a skill first",
