@@ -16,9 +16,7 @@
 
 \title{Requirements and Design Document}
 \author{A project by Devs101\\ \\
-Client: Mark-Anthony Fouché\\ \\
-Dylan Draper\\
-Brendan Bath\\
+Client: Mark-Anthony Fouche\\ \\
 Christopher Njaravani\\
 Charles Claassen\\
 Dail Nathan Jonker\\
@@ -54,7 +52,7 @@ Dail Nathan Jonker\\
   Node is a point in a tree that can be interacted with and that represents a skill.\newline
   UI - User Interface, which is the components of the system the user will interact with.\newline
   API - Application programming interface.\newline
-  MVC - Model–view–controller.\newline
+  MVC - Model-View-Controller. \newline
   \subsection{UML Domain model}
   
 \begin{figure}[H]
@@ -77,7 +75,8 @@ Dail Nathan Jonker\\
   Viewer:\newline
   This subsystem handles the display of the system (what the users will see). It will communicate with all the other subsystems to display their information in the proper format. The viewer will display the UI as well as the tree structure and update the view of the tree structure when it changes. Everything the user sees and interacts with is done through the viewer.\newline\newline
   Controller:\newline
-  This subsystem manages the interaction of all the subsystems by sending and calculating information. The controller manages the UI and sends the information retrieved to the appropriate subsystem to handle the information. The controller also manages event handling and it is also responsible for updating the viewer on any changes made. The controller also initiates the Editor based on a UI instruction to edit a selected node’s settings. The Controller is the heart of the system.\newline\newline
+  This subsystem manages the interaction of all the subsystems by sending and calculating information. The controller manages the UI and sends the information retrieved to the appropriate subsystem to handle the information. The controller also manages event handling and it is also responsible for updating the viewer on any changes made. The controller also initiates the Editor based on a UI instruction to edit a selected node's settings. The Controller is the heart of the system.
+  \newline\newline
   Editor:\newline
   This subsystem manages the skill nodes. It handles creation, deletion and modification of the nodes. It communicates this information with the controller which then updates the viewer. The editor also stores the node data in the store and updates the Store when a nodes has been changed or deleted. It also allows functionality to select and modify multiple nodes at once. It also allows copies of nodes to be made.\newline\newline
   Simulator:\newline
@@ -91,7 +90,7 @@ Dail Nathan Jonker\\
   Component UML Diagram:
 
   \begin{figure}[H]
-    \includegraphics[width=\linewidth]{TriiUMLComponentDiagram}
+    \includegraphics[width=\linewidth]{images/TriiUMLComponentDiagram}
     \caption{The UML Component Diagram}
     \label{fig:componentdiagram}
   \end{figure}
@@ -164,11 +163,11 @@ Dail Nathan Jonker\\
       \item Allow stored data to be updated or removed
     \end{enumerate}
   \end{enumerate}
-  \newline \newline 
+
   Use Case Diagram:
   
   \begin{figure}[H]
-    \includegraphics[width=\linewidth]{TriiUseCaseDiagram}
+    \includegraphics[width=\linewidth]{images/TriiUseCaseDiagram}
     \caption{Use Case Diagram}
     \label{fig:usecasediagram}
   \end{figure}
@@ -191,15 +190,15 @@ Dail Nathan Jonker\\
       The user interfaces of the system consist of:
       \begin{itemize}
       \item The tree viewer. The user will be able to directly interact with the tree to shape it into the form they want to have.
-      \item The top bar menu. This provides the user with a fixed bar of buttons that provide the core and most simple functionality of the system. Buttons such as “undo”, “Redo”, “Copy”, “Paste” and settings as well as a hamburger menu that provides additional options such as creating a new tree or importing an existing one and more.
+      \item The top bar menu. This provides the user with a fixed bar of buttons that provide the core and most simple functionality of the system. Buttons such as Undo, Redo, Copy, Paste and settings as well as a hamburger menu that provides additional options such as creating a new tree or importing an existing one and more.
       \item The floating buttons that provide more buttons like, add node, delete node, edit node etc. This allows for a more compact interface and provide each access to more functionality.
       \end{itemize}
 
     \subsubsection{Hardware interfaces:}
-      Since our system is a web based system it does not interact with any hardware, it only interacts with the device’s browser, so the browser manages the ports and sockets. The system uses an HTTPS protocol to connect with the device. The offline mode also uses the browser the run the system in a local host.
+      Since our system is a web based system it does not interact with any hardware, it only interacts with the device's browser, so the browser manages the ports and sockets. The system uses an HTTPS protocol to connect with the device. The offline mode also uses the browser the run the system in a local host.
 
     \subsubsection{Software interfaces:}
-      Our system uses the Vue framework and all of its required APIs. It is used for our system’s structure and layout. We use the Cytoscape framework for creating, displaying and modifying our tree data structure. We use the Cypress framework and the Jest JavaScript library for testing our system. We also use Node.js and vuetify.js for creating our interface.
+      Our system uses the Vue framework and all of its required APIs. It is used for our system's structure and layout. We use the Cytoscape framework for creating, displaying and modifying our tree data structure. We use the Cypress framework and the Jest JavaScript library for testing our system. We also use Node.js and vuetify.js for creating our interface.
 
   \subsection{Architectural Styles} 
     The system as a whole uses the Client- Server architectural style, because the system is web based it is hosted on a server that clients can directly connect to and request the service from the server. The system also uses the MVC architectural pattern where the Viewer subsystem is the view that displays the information to the user such as the tree and all the nodes, as well as the UI. The Controller subsystem is of course the controller which take the input from the viewer and converts it to instructions for the model. It also manages the interaction between the subsystems. The model is the Store and the Editor subsystems. The Editor creates and modifies data and stores in in the Store where all the data is kept and organized. The Store subsystem also provides functionality for the data to be queried and requested.\newline\newline 
@@ -208,14 +207,14 @@ Dail Nathan Jonker\\
     Controller: It also only makes use of the MVC architectural pattern as described above.\newline \newline 
     Store: It makes use of the MVC architectural pattern as described above and also the Persistence framework architectural style for storing objects to a database and retrieving the objects per request of another subsystem. It has two different databases, which each function as their own sub system. There is a main database manager for the store and each database subsystem have their own database manager. The main database manager handles all incoming instructions and requests and then assigns them to the  database manager of the appropriate subsystem database.\newline \newline 
     Editor: It uses an Service-oriented architecture where the Editor provides a service to the Controller. The Controller receives instruction to create, delete or modify a node, then the Controller requests the services to perform this instruction from the Editor. In other words the Controller delegates all node related instructions to the Editor to perform.\newline \newline 
-    Simulator: It also uses the Service-oriented architecture where it provides a service to the Controller. The service being to simulate and test the tree structure to make sure everything works as it should. The Simulator also makes use of the Event-driven architecture for the simulation of the tree. It takes the current state of the tree and simulates what would happen if certain events takes place, such as nodes changing, global variables (That define how the tree should function) are added or changed and the state of the tree resets and many more. Each event that takes place tests the tree to see if it responds appropriately or not and reports the results to the Controller.
+    Simulator: It also uses the Service-oriented architecture where it provides a service to the Controller. The service being to simulate and test the tree structure to make sure everything works as it should. The Simulator also makes use of the Event-driven architecture for the simulation of the tree. It takes the current state of the tree and simulates what would happen if certain events takes place, such as nodes changing, global variables (That define how the tree should funcion) are added or changed and the state of the tree resets and many more. Each event that takes place tests the tree to see if it responds appropriately or not and reports the results to the Controller.
 
   \subsection{System Configuration} 
     The system run on a Github server. It can be accessed through and computer or mobile device that can use a web browser. The web browser communicates with the website through a HTTPS protocol connection. The offline version of the system is downloaded onto the computer or mobile device and is then run using a browser in local host, so no internet connection is needed. The online system can update the offline system if the users allow the offline system to update, this will need an internet connection.\newline \newline 
     Deployment Diagram:
     
     \begin{figure}[H]
-      \includegraphics[width=\linewidth]{TriiDeploymentDiagram}
+      \includegraphics[width=\linewidth]{images/TriiDeploymentDiagram}
       \caption{The Deployment Diagram}
       \label{fig:deploymentdiagram}
     \end{figure}
