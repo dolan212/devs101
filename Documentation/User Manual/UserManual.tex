@@ -17,13 +17,14 @@
 \title{Trii User Manual}
 \author{A project by Devs101\\ \\
 Client: Mark-Anthony Fouché\\ \\
-Dylan Draper\\
-Brendan Bath\\
 Christopher Njaravani\\
 Charles Claassen\\
 Dail Nathan Jonker\\
+\\Contributions from:\\
+Dylan Draper\\
+Brendan Bath\\
 }
-\date{21/09/2018}
+\date{18/10/2018}
 
 \begin{document}
 \maketitle
@@ -40,7 +41,7 @@ Dail Nathan Jonker\\
 \section{General information}
 
 \subsection{System Overview}
-\paragraph{A skill tree is an aspect of some role-playing games, that allow custom configurations of a character's abilities. A skill tree starts with one or several base skills for either a certain class of character. After base skills, the skills branch out into either more specialized skills or just higher level skills. Trii gives the user the tools to create such a skill tree. It allows the user to create, edit, save/upload their own skill tree. This in turn can then be tested, to see how a user would progress through the skill tree.}
+\paragraph{Trii is a skill tree editor, where a user can create, customize, test, import and export skill trees. A skill tree is a type of graph that represents certain, user defined, skills that have or can be acquired. These skills can be anything from learning how to walk or learning how to fly. A skill tree can be used for many purposes, such as managing character skills in games, visually represent the collection of skills of the employees of a company for management purposes or it can be used by anyone that wants a visual way of keeping track of all the skills they have acquired.}
 
 \subsection{System Configuration}
 \paragraph{Trii is simple to access and does not require extensive hardware to be able to use it. The only requirement is that the user has Google Chrome and Internet access for the initial loading of Trii. Trii itself is hosted on a GitHub server and users that connect to it will then automatically allow Trii to be saved locally and can then be used offline if needed.}
@@ -97,7 +98,6 @@ Dail Nathan Jonker\\
   \label{fig:start}
 \end{figure}
 
-\newpage
 \section{Using the system}
 \subsection{The Basics}
 \paragraph{In this section the basic layout will be discussed. This is just to help the user familiarize themselves with the layout with Trii. The following list will be accompanied by a few images to help with a visual guide.}
@@ -174,7 +174,7 @@ Dail Nathan Jonker\\
 \subsection{Creating a Tree}
 \paragraph{Creating a Tree will involve adding Nodes and Edges. A node will be displayed as a circle that is colored in. The node will have a name to aid in distinguishing between other nodes. An edge will be displayed as an arrow pointing from one node to another. The nodes are like the leaves and the edges the branches of the tree. What follows are some helpful tools to aid you in creating your own skill tree.}
 
-\paragraph{Adding a Node:}
+\subsubsection{Adding a Node:}
 
 \begin{enumerate}
 	\item To add a Node press the Add Skill button.
@@ -196,7 +196,7 @@ Dail Nathan Jonker\\
 \end{figure}
 
 
-\paragraph{Adding an Edge:}
+\subsubsection{Adding an Edge:}
 
 \begin{enumerate}
 	\item To add an Edge you require at least 2 Nodes/Skills.
@@ -221,7 +221,7 @@ Dail Nathan Jonker\\
 	\label{fig:addedge}
 \end{figure}
 
-\paragraph{Editing the Node/Skill name:}
+\subsubsection{Editing the Node/Skill name:}
 \begin{enumerate}
 	\item Select a Node.
 	\item Press the Edit Skill button in the Action bar.
@@ -235,7 +235,7 @@ Dail Nathan Jonker\\
 \end{figure}
 
 
-\paragraph{Adding a description to the Skill/Node:}
+\subsubsection{Adding a description to the Skill/Node:}
 \begin{enumerate}
 	\item Select a Node.
 	\item Press the Edit Skill button in the Action bar.
@@ -248,7 +248,7 @@ Dail Nathan Jonker\\
 	\label{fig:description}
 \end{figure}
 
-\paragraph{Editing the Node/Skill color:}
+\subsubsection{Editing the Node/Skill color:}
 \begin{enumerate}
 	\item Select a Node.
 	\item Press the Edit Skill button in the Action bar.
@@ -261,7 +261,7 @@ Dail Nathan Jonker\\
 	\label{fig:color}
 \end{figure}
 
-\paragraph{Setting the required Level:}
+\subsubsection{Setting the required Level:}
 \begin{enumerate}
 	\item Select a Node.
 	\item Press the Edit Skill button in the Action bar.
@@ -278,7 +278,7 @@ Dail Nathan Jonker\\
 \end{figure}
 
 
-\paragraph{Setting the required Skill Points:}
+\subsubsection{Setting the required Skill Points:}
 \begin{enumerate}
 	\item Select a Node.
 	\item Press the Edit Skill button in the Action bar.
@@ -294,7 +294,7 @@ Dail Nathan Jonker\\
 	\label{fig:skillpoints}
 \end{figure}
 
-\paragraph{Deleting a Node/Skill:}
+\subsubsection{Deleting a Node/Skill:}
 \begin{enumerate}
 	\item Select a Node.
 	\item Press the Delete Skill button in the Action bar.
@@ -308,7 +308,7 @@ Dail Nathan Jonker\\
 	\label{fig:delete}
 \end{figure}
 
-\paragraph{Deleting an Edge:}
+\subsubsection{Deleting an Edge:}
 \begin{enumerate}
 	\item Select a Node.
 	\item Press the Edit Skill button in the Action bar.
@@ -327,17 +327,22 @@ Dail Nathan Jonker\\
 \subsection{Using the Toolbar}
 \paragraph{The toolbar has a few helpful buttons to help during the creation of the tree.}
 
-\paragraph{Undo:}
+\subsubsection{Help:}
 \begin{enumerate}
-	\item Press the redo button to get back progress made.
+	\item Press the help if you ever need to view the user manual again for future reference.
 \end{enumerate}
 
-\paragraph{Redo:}
+\subsubsection{Undo:}
+\begin{enumerate}
+	\item Press the undo button to revert to a previous action.
+\end{enumerate}
+
+\subsubsection{Redo:}
 \begin{enumerate}
 	\item Press the redo button to get back what was lost from undo.
 \end{enumerate}
 
-\paragraph{Copy:}
+\subsubsection{Copy:}
 \begin{enumerate}
 	\item Select a Node/Skill.
 	\item Press the Copy button.
@@ -350,7 +355,7 @@ Dail Nathan Jonker\\
 	\label{fig:copy}
 \end{figure}
 
-\paragraph{Paste:}
+\subsubsection{Paste:}
 \begin{enumerate}
 	\item Press the Paste button.
 	\item All nodes/skills that have been coppied will be pasted on the screen.
@@ -364,9 +369,9 @@ Dail Nathan Jonker\\
 
 \newpage
 \subsection{Settings}
-\paragraph{The Settings bar allow for some more options regarding the tree as a whole. Import and export functionality for the tree itself, it will be in a JSON format. Clear Tree to clear everything. Auto Layout to reorganize the Tree.}
+\paragraph{The Settings bar allow for some more options regarding the tree as a whole. Import and export functionality for the tree itself, it will be in a JSON format. Clear Tree to clear everything. Auto Layout to reorganize the Tree. Global variables that get linked to the tree.}
 
-\paragraph{Clear Tree:}
+\subsubsection{Clear Tree:}
 \begin{enumerate}
 	\item Press the Clear Tree button.
 	\item All nodes/skills and edges will be deleted.
@@ -378,7 +383,7 @@ Dail Nathan Jonker\\
 	\label{fig:clear}
 \end{figure}
 
-\paragraph{Auto Layout:}
+\subsubsection{Auto Layout:}
 \begin{enumerate}
 	\item Press the Auto Layout button.
 	\item The tree will reorganize itself to make it easier to view, The nodes and skills will move apart a certain distance and take form of a tree structure.
@@ -396,7 +401,70 @@ Dail Nathan Jonker\\
 	\label{fig:ordered}
 \end{figure}
 
-\paragraph{Import:}
+\subsubsection{Global Variables:}
+\begin{enumerate}
+	\item Press the Global Variables button.
+	\item A new form will pop up with 3 options:
+	\begin{enumerate}
+		\item String Global Variable
+		\begin{enumerate}
+			\item A new form will open with 4 inputs and  Add, Update and Close buttons.
+			\item The first field is just a name for the variable eg. "varGender".
+			\item The second field is the type of variable eg. "Gender".
+			\item The third field is the actual value eg. "Female".
+			\item The final field is a checkbox to state if the variable is required or not.
+			\item Fill in these fields and press the Add button to add a new Global variable.
+			\item If that variable already exists you will then be notified.
+			\item If you wish to update the variable you can add the variable name in the field that says "Variable name" and update the info of that variable. Press the update button to do so. 
+			\item If  you do not wish to use any of the selections simply press the close button.
+		\end{enumerate}
+		\item Number Global Variable
+		\begin{enumerate}
+			\item A new form will open with 4 inputs and  Add, Update and Close buttons.
+			\item The first field is just a name for the variable eg. "varLevel".
+			\item The second field is the type of variable eg. "Level".
+			\item The third field is the actual value eg. "11".
+			\item The final field is a checkbox to state if the variable is required or not.
+			\item Fill in these fields and press the Add button to add a new Global variable.
+			\item If that variable already exists you will then be notified.
+			\item If you wish to update the variable you can add the variable name in the field that says "Variable name" and update the info of that variable. Press the update button to do so. 
+			\item If  you do not wish to use any of the selections simply press the close button.
+		\end{enumerate}
+		\item Delete Global Variable
+		\begin{enumerate}
+			\item A new form will open with 4 inputs and  Add, Update and Close buttons.
+			\item The first field is the name of the variable you wish to delete"
+			\item Enter the name of the variable you wish to delete and press the "Delete" button.
+			\item If the variable exists it will then be deleted. 
+			\item If  you do not wish to use any of the selections simply press the close button.
+		\end{enumerate} 
+	\end{enumerate}
+	\item If  you do not wish to use any of the selections simply press the close button.
+\end{enumerate}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/globals.jpg}
+	\caption{Global Variable menu.}
+	\label{fig:unordered}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/globalstring.jpg}
+	\caption{Adding a Global Variable of type String.}
+	\label{fig:unordered}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/globalnum.jpg}
+	\caption{Adding a Global Variable of type Number.}
+	\label{fig:unordered}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{images/globaldelete.jpg}
+	\caption{Delete a global variable.}
+	\label{fig:unordered}
+\end{figure}
+
+\newpage
+\subsubsection{Import:}
 \begin{enumerate}
 	\item Press the Import button.
 	\item A file browser will pop up, navigate to the .json file you wish to import. Select the file.
@@ -410,7 +478,7 @@ Dail Nathan Jonker\\
 \end{figure}
 
 
-\paragraph{Export:}
+\subsubsection{Export:}
 \begin{enumerate}
 	\item Press the Export button.
 	\item A window will pop up with a prompt for the file name.
