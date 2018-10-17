@@ -2,7 +2,7 @@
 <v-container grid-list-md text-xs-center fill-height>
     <v-layout row wrap fill-height>
         <v-flex m2 xs0>
-            <v-img :src="logo" alt="Trii Logo" contain aspect-ratio="2.8">
+            <v-img :src="logo" alt="Trii Logo" contain aspect-ratio="4.4">
                 <v-layout slot="placeholder" fill-height align-center justify-center ma-0>
                     <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                 </v-layout>
