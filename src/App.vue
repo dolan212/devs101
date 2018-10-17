@@ -89,7 +89,7 @@
 
     <!-- Node settings drawer -->
 
-    <v-navigation-drawer :right="true" v-model="nodeDrawer" app>
+    <v-navigation-drawer :right="true" temporary v-model="nodeDrawer" app>
         <v-toolbar flat>
             <v-list>
                 <v-list-tile>
