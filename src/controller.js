@@ -28,7 +28,6 @@ export function addStringGlobal(name, type, value, required)
       value : value,
       required : required
     }
-    alert(var_name);
     store.commit('addGlobalVar', globalVar);
   }
   catch(exception) {
@@ -45,8 +44,7 @@ export function updateStringGlobal(name, type, value, required)
       value : value,
       required : required
     }
-    alert(var_name);
-    store.commit('setGlobals', payload);
+    store.commit('setGlobals', globalVar);
   }
   catch(exception) {
     alert(exception);
@@ -78,39 +76,7 @@ export function updateNumberGlobal(name, type, value, required)
       value : value,
       required : required
     }
-    store.commit('setGlobals', payload);
-  }
-  catch(exception) {
-    alert(exception);
-  }
-}
-
-export function addMultiGlobal(name, type, value, required)
-{
-  try {
-    let globalVar = {
-      name : name,
-      type : type,
-      value : value,
-      required : required
-    }
-    store.commit('addGlobalVar', globalVar);
-  }
-  catch(exception) {
-    alert(exception);
-  }
-}
-
-export function updateMultiGlobal(name, type, value, required)
-{
-  try {
-    let globalVar = {
-      name : name,
-      type : type,
-      value : value,
-      required : required
-    }
-    store.commit('setGlobals', payload);
+    store.commit('setGlobals', globalVar);
   }
   catch(exception) {
     alert(exception);

@@ -69,31 +69,33 @@
         </v-toolbar>
         <v-container fluid>
             <v-tooltip left>
-                <v-btn slot="activator" flat id="btn_clear" v-on:click="newTree">Clear Tree</v-btn>
+                <v-btn color="info" block slot="activator"  id="btn_clear" v-on:click="newTree">Clear Tree</v-btn>
                 <span>Delete all nodes</span>
             </v-tooltip>
             <v-tooltip left>
-                <v-btn slot="activator" flat id="btn_layout" @click.native.stop="autoLayout()">Auto Layout</v-btn>
+                <v-btn color="info" block slot="activator"  id="btn_layout" @click.native.stop="autoLayout()">Auto Layout</v-btn>
                 <span>Automatically orders nodes</span>
             </v-tooltip>
             <v-tooltip left>
-                <v-btn slot="activator" flat id="btn_layout" @click.native.stop="dialog2 = true">Global Variables</v-btn>
+                <v-btn color="info" block slot="activator"  id="btn_layout" @click.native.stop="dialog2 = true">Global Variables</v-btn>
                 <span>Add Global variables to the tree</span>
             </v-tooltip>
         </v-container>
         <v-container fluid>
+          <h2>Import and Export</h2>
             <p>Import Skill Tree</p>
             <input type="file" accept=".json" @change="onFileChange">
             <v-tooltip left>
-                <v-btn slot="activator" id="btn_export" flat @click.native.stop="fileDialog = true">Export Skill Tree</v-btn>
+                <v-btn color="info" block slot="activator" id="btn_export"  @click.native.stop="fileDialog = true">Export Skill Tree</v-btn>
                 <span>Export tree as json file</span>
             </v-tooltip>
         </v-container>
         <v-spacer></v-spacer>
-        <v-btn flat id="btn_close_settings" @click="settingsDrawer = !settingsDrawer">Close</v-btn>
+        <v-btn color="error" id="btn_close_settings" @click="settingsDrawer = !settingsDrawer">Close</v-btn>
     </v-navigation-drawer>
 
     <!-- Node settings drawer -->
+    
     <v-navigation-drawer :right="true" v-model="nodeDrawer" app>
         <v-toolbar flat>
             <v-list>
@@ -148,7 +150,7 @@
             </v-layout>
         </v-container>
         <v-btn color="blue darken-1" v-on:click="saveNodes()">Save</v-btn>
-        <v-btn v-on:click="nodeDrawer = !nodeDrawer">Cancel</v-btn>
+        <v-btn color="error" v-on:click="nodeDrawer = !nodeDrawer">Cancel</v-btn>
     </v-navigation-drawer>
     <v-snackbar id="snackbar" :timeout="noSelectionSnack.timeout" top v-model="noSelectionSnack.enabled">
         {{ noSelectionSnack.text }}
@@ -206,8 +208,8 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn id="btn_close_skill_dialog" color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
-                <v-btn id="btn_add_skill" color="blue darken-1" flat @click.native="dialog = false" v-on:click="addNode(nodeName)">Add</v-btn>
+                <v-btn id="btn_add_skill" color="blue darken-1" @click.native="dialog = false" v-on:click="addNode(nodeName)">Add</v-btn>
+                <v-btn id="btn_close_skill_dialog" color="error" @click.native="dialog = false">Close</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -221,23 +223,20 @@
                 <v-container grid-list-md>
                     <v-layout wrap>
                         <v-flex xs12 sm12 md12>
-                            <v-btn color="blue darken-1" flat @click.native="dialog2 = false" v-on:click="dialog3 = true">String Global Variable</v-btn>
+                            <v-btn color="blue darken-1"  @click.native="dialog2 = false" v-on:click="dialog3 = true">String Global Variable</v-btn>
                         </v-flex>
                         <v-flex xs12 sm12 md12>
-                            <v-btn color="blue darken-1" flat @click.native="dialog2 = false" v-on:click="dialog4 = true">Number Global Variable</v-btn>
+                            <v-btn color="blue darken-1"  @click.native="dialog2 = false" v-on:click="dialog4 = true">Number Global Variable</v-btn>
                         </v-flex>
                         <v-flex xs12 sm12 md12>
-                            <v-btn color="blue darken-1" flat @click.native="dialog2 = false" v-on:click="dialog5 = true">Multivalued Global Variable</v-btn>
-                        </v-flex>
-                        <v-flex xs12 sm12 md12>
-                            <v-btn color="blue darken-1" flat @click.native="dialog2 = false" v-on:click="dialog6 = true">Delete Global Variable</v-btn>
+                            <v-btn color="warning"  @click.native="dialog2 = false" v-on:click="dialog6 = true">Delete Global Variable</v-btn>
                         </v-flex>
                     </v-layout>
                 </v-container>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" flat @click.native="dialog2 = false">Close</v-btn>
+                <v-btn color="error" @click.native="dialog2 = false">Close</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -267,9 +266,9 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" flat @click.native="dialog3 = false" v-on:click="addStringGlobal(var_name,var_type,var_value,var_required)">Add</v-btn>
-                <v-btn color="blue darken-1" flat @click.native="dialog3 = false" v-on:click="updateStringGlobal(var_name,var_type,var_value,var_required)">Update</v-btn>
-                <v-btn color="blue darken-1" flat @click.native="dialog3 = false">Close</v-btn>
+                <v-btn color="blue darken-1"  @click.native="dialog3 = false" v-on:click="addStringGlobal(var_name,var_type,var_value,var_required)">Add</v-btn>
+                <v-btn color="blue darken-1"  @click.native="dialog3 = false" v-on:click="updateStringGlobal(var_name,var_type,var_value,var_required)">Update</v-btn>
+                <v-btn color="error" @click.native="dialog3 = false">Close</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -299,42 +298,9 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" flat @click.native="dialog4 = false" v-on:click="addNumberGlobal(var_name,var_type,var_value,var_required)">Add</v-btn>
-                <v-btn color="blue darken-1" flat @click.native="dialog4 = false" v-on:click="updateNumberGlobal(var_name,var_type,var_value,var_required)">Update</v-btn>
-                <v-btn color="blue darken-1" flat @click.native="dialog4 = false">Close</v-btn>
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
-
-    <v-dialog v-model="dialog5" persistent max-width="500px">
-        <v-card>
-            <v-card-title>
-                <span class="headline" center>Multivalued Global Variable</span>
-            </v-card-title>
-            <v-card-text>
-                <v-container grid-list-md>
-                    <v-layout wrap>
-                      <v-flex xs12 sm12 md12>
-                          <v-text-field id="var_name" label="Variable Name" v-model="var_name"></v-text-field>
-                      </v-flex>
-                      <v-flex xs12 sm12 md12>
-                          <v-text-field id="var_type" label="Type" v-model="var_type"></v-text-field>
-                      </v-flex>
-                      <v-flex xs12 sm12 md12>
-                          <v-text-field id="var_value" label="Value" v-model="var_values"></v-text-field>
-                          <v-btn color="blue darken-1" flat v-on:click="addMultiValue(var_values)" >Add value</v-btn>
-                      </v-flex>
-                      <v-flex xs12 sm12 md12>
-                          <v-checkbox id="var_required" label="Required" v-model="var_required"></v-checkbox>
-                      </v-flex>
-                    </v-layout>
-                </v-container>
-            </v-card-text>
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" flat @click.native="dialog5 = false" v-on:click="addMultiGlobal(var_name,var_type,var_values,var_required)">Add</v-btn>
-                <v-btn color="blue darken-1" flat @click.native="dialog5 = false" v-on:click="updateMultiGlobal(var_name,var_type,var_values,var_required)">Update</v-btn>
-                <v-btn color="blue darken-1" flat @click.native="dialog5 = false">Close</v-btn>
+                <v-btn color="blue darken-1"  @click.native="dialog4 = false" v-on:click="addNumberGlobal(var_name,var_type,var_value,var_required)">Add</v-btn>
+                <v-btn color="blue darken-1"  @click.native="dialog4 = false" v-on:click="updateNumberGlobal(var_name,var_type,var_value,var_required)">Update</v-btn>
+                <v-btn color="error" @click.native="dialog4 = false">Close</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -355,8 +321,8 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" flat @click.native="dialog6 = false" v-on:click="deleteGlobal(var_name)">Delete</v-btn>
-                <v-btn color="blue darken-1" flat @click.native="dialog6 = false">Close</v-btn>
+                <v-btn color="warning" @click.native="dialog6 = false" v-on:click="deleteGlobal(var_name)">Delete</v-btn>
+                <v-btn color="error" @click.native="dialog6 = false">Close</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -381,8 +347,8 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" flat @click.native="fileDialog = false; fileName=''">Close</v-btn>
                 <v-btn color="blue darken-1" flat @click.native="fileDialog = false" v-on:click="exportTree(fileName)">Export</v-btn>
+                <v-btn color="error" @click.native="fileDialog = false; fileName=''">Close</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -488,10 +454,6 @@ export default {
                 {
                     name: "Skill Point",
                     value: "skillpoint"
-                },
-                {
-                    name: "Function",
-                    value: "function",
                 },
                 ],
             possible_colours: [{
@@ -600,30 +562,6 @@ export default {
         {
           this.multiValues.push(var_values);
           this.var_values = '';
-        },
-        addMultiGlobal: function(var_name, var_type, var_values, var_required)
-        {
-          controller.addMultiGlobal(var_name, var_type, this.multiValues, var_required);
-          var_name ="";
-          var_type ="";
-          var_values = "";
-          var_required = false;
-          whlie(this.multiValues.length > 0)
-          {
-            this.multiValues.pop();
-          }
-        },
-        updateMultiGlobal: function(var_name, var_type, var_values, var_required)
-        {
-          controller.updateMultiGlobal(var_name, var_type, this.multiValues, var_required);
-          var_name ="";
-          var_type ="";
-          var_values = "";
-          var_required = false;
-          whlie(this.multiValues.length > 0)
-          {
-            this.multiValues.pop();
-          }
         },
         deleteGlobal: function(var_name)
         {
