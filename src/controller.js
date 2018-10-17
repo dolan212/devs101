@@ -12,6 +12,81 @@ import {
 	LevelRule,
     FunctionRule,
 } from '@/rules'
+import {
+    Global,
+    GlobalString,
+    GlobalNumber,
+    GlobalMultiSelect
+} from '@/globalVars'
+
+export function addStringGlobal(name, type, value, required)
+{
+  try {
+    let globalVar = {
+      name : name,
+      type : type,
+      value : value,
+      required : required
+    }
+    store.commit('addGlobalVar', globalVar);
+  }
+  catch(exception) {
+    alert(exception);
+  }
+}
+
+export function updateStringGlobal(name, type, value, required)
+{
+  try {
+    let globalVar = {
+      name : name,
+      type : type,
+      value : value,
+      required : required
+    }
+    store.commit('setGlobals', globalVar);
+  }
+  catch(exception) {
+    alert(exception);
+  }
+}
+
+export function addNumberGlobal(name, type, value, required)
+{
+  try {
+    let globalVar = {
+      name : name,
+      type : type,
+      value : value,
+      required : required
+    }
+    store.commit('addGlobalVar', globalVar);
+  }
+  catch(exception) {
+    alert(exception);
+  }
+}
+
+export function updateNumberGlobal(name, type, value, required)
+{
+  try {
+    let globalVar = {
+      name : name,
+      type : type,
+      value : value,
+      required : required
+    }
+    store.commit('setGlobals', globalVar);
+  }
+  catch(exception) {
+    alert(exception);
+  }
+}
+
+export function deleteGlobal(globalVarName)
+{
+  store.commit('deleteGlovalVar', globalVarName)
+}
 
 export function addNode(label) {
     try {
@@ -44,6 +119,10 @@ export function addEdge(source, target) {
 
 export function getNodes() {
     return store.getters.getNodes;
+}
+
+export function getGlobals() {
+    return store.getters.getGlobals;
 }
 
 export function deleteRule(skill, rule) {
