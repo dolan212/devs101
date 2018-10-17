@@ -121,6 +121,10 @@ export function getNodes() {
     return store.getters.getNodes;
 }
 
+export function getGlobals() {
+    return store.getters.getGlobals;
+}
+
 export function deleteRule(skill, rule) {
     try {
         store.commit('deleteRule', {

@@ -77,7 +77,7 @@
                 <span>Automatically orders nodes</span>
             </v-tooltip>
             <v-tooltip left>
-                <v-btn color="info" block slot="activator"  id="btn_layout" @click.native.stop="dialog2 = true">Global Variables</v-btn>
+                <v-btn color="info" block slot="activator"  id="btn_layout" @click.native.stop="globFrom = true">Global Variables</v-btn>
                 <span>Add Global variables to the tree</span>
             </v-tooltip>
         </v-container>
@@ -95,7 +95,7 @@
     </v-navigation-drawer>
 
     <!-- Node settings drawer -->
-    
+
     <v-navigation-drawer :right="true" v-model="nodeDrawer" app>
         <v-toolbar flat>
             <v-list>
@@ -214,7 +214,7 @@
         </v-card>
     </v-dialog>
 
-    <v-dialog v-model="dialog2" persistent max-width="500px">
+    <v-dialog v-model="globFrom" persistent max-width="500px">
         <v-card>
             <v-card-title>
                 <span class="headline" center>Global Variables</span>
@@ -223,25 +223,25 @@
                 <v-container grid-list-md>
                     <v-layout wrap>
                         <v-flex xs12 sm12 md12>
-                            <v-btn color="blue darken-1"  @click.native="dialog2 = false" v-on:click="dialog3 = true">String Global Variable</v-btn>
+                            <v-btn block color="blue darken-1"  @click.native="globFrom = false" v-on:click="strGlobForm = true">String Global Variable</v-btn>
                         </v-flex>
                         <v-flex xs12 sm12 md12>
-                            <v-btn color="blue darken-1"  @click.native="dialog2 = false" v-on:click="dialog4 = true">Number Global Variable</v-btn>
+                            <v-btn block color="blue darken-1"  @click.native="globFrom = false" v-on:click="numGlobForm = true">Number Global Variable</v-btn>
                         </v-flex>
                         <v-flex xs12 sm12 md12>
-                            <v-btn color="warning"  @click.native="dialog2 = false" v-on:click="dialog6 = true">Delete Global Variable</v-btn>
+                            <v-btn block color="error"  @click.native="globFrom = false" v-on:click="deleteForm = true">Delete Global Variable</v-btn>
                         </v-flex>
                     </v-layout>
                 </v-container>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="error" @click.native="dialog2 = false">Close</v-btn>
+                <v-btn color="error" @click.native="globFrom = false">Close</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
 
-    <v-dialog v-model="dialog3" persistent max-width="500px">
+    <v-dialog v-model="strGlobForm" persistent max-width="500px">
         <v-card>
             <v-card-title>
                 <span class="headline" center>String/Word Global Variable</span>
@@ -250,30 +250,30 @@
                 <v-container grid-list-md fluid>
                     <v-layout wrap>
                       <v-flex xs12 sm12 md12>
-                          <v-text-field id="var_name" label="Variable Name" v-model="var_name"></v-text-field>
+                          <v-text-field id="var_name" label="Variable Name" v-model="strName"></v-text-field>
                       </v-flex>
                       <v-flex xs12 sm12 md12>
-                          <v-text-field id="var_type" label="Type" v-model="var_type"></v-text-field>
+                          <v-text-field id="var_type" label="Type" v-model="strType"></v-text-field>
                       </v-flex>
                       <v-flex xs12 sm12 md12>
-                          <v-text-field id="var_value" label="Value" v-model="var_value"></v-text-field>
+                          <v-text-field id="var_value" label="Value" v-model="strValue"></v-text-field>
                       </v-flex>
                       <v-flex xs12 sm12 md12>
-                          <v-checkbox id="var_required" label="Required" v-model="var_required"></v-checkbox>
+                          <v-checkbox id="var_required" label="Required" v-model="strRequired"></v-checkbox>
                       </v-flex>
                     </v-layout>
                 </v-container>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1"  @click.native="dialog3 = false" v-on:click="addStringGlobal(var_name,var_type,var_value,var_required)">Add</v-btn>
-                <v-btn color="blue darken-1"  @click.native="dialog3 = false" v-on:click="updateStringGlobal(var_name,var_type,var_value,var_required)">Update</v-btn>
-                <v-btn color="error" @click.native="dialog3 = false">Close</v-btn>
+                <v-btn color="blue darken-1"  @click.native="strGlobForm = false" v-on:click="addStringGlobal(strName,strType,strValue,strRequired)">Add</v-btn>
+                <v-btn color="blue darken-1"  @click.native="strGlobForm = false" v-on:click="updateStringGlobal(strName,strType,strValue,strRequired)">Update</v-btn>
+                <v-btn color="error" @click.native="strGlobForm = false">Close</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
 
-    <v-dialog v-model="dialog4" persistent max-width="500px">
+    <v-dialog v-model="numGlobForm" persistent max-width="500px">
         <v-card>
             <v-card-title>
                 <span class="headline" center>Number Global Variable</span>
@@ -282,30 +282,30 @@
                 <v-container grid-list-md>
                     <v-layout wrap>
                       <v-flex xs12 sm12 md12>
-                          <v-text-field id="var_name" label="Variable Name" v-model="var_name"></v-text-field>
+                          <v-text-field id="var_name" label="Variable Name" v-model="numName"></v-text-field>
                       </v-flex>
                       <v-flex xs12 sm12 md12>
-                          <v-text-field id="var_type" label="Type" v-model="var_type"></v-text-field>
+                          <v-text-field id="var_type" label="Type" v-model="numType"></v-text-field>
                       </v-flex>
                       <v-flex xs12 sm12 md12>
-                          <v-text-field id="var_value" label="Value" v-model="var_value"></v-text-field>
+                          <v-text-field id="var_value" label="Value" v-model="numValue"></v-text-field>
                       </v-flex>
                       <v-flex xs12 sm12 md12>
-                          <v-checkbox id="var_required" label="Required" v-model="var_required"></v-checkbox>
+                          <v-checkbox id="var_required" label="Required" v-model="numRequired"></v-checkbox>
                       </v-flex>
                     </v-layout>
                 </v-container>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1"  @click.native="dialog4 = false" v-on:click="addNumberGlobal(var_name,var_type,var_value,var_required)">Add</v-btn>
-                <v-btn color="blue darken-1"  @click.native="dialog4 = false" v-on:click="updateNumberGlobal(var_name,var_type,var_value,var_required)">Update</v-btn>
-                <v-btn color="error" @click.native="dialog4 = false">Close</v-btn>
+                <v-btn color="blue darken-1"  @click.native="numGlobForm = false" v-on:click="addNumberGlobal(numName,numType,numValue,numRequired)">Add</v-btn>
+                <v-btn color="blue darken-1"  @click.native="numGlobForm = false" v-on:click="updateNumberGlobal(numName,numType,numValue,numRequired)">Update</v-btn>
+                <v-btn color="error" @click.native="numGlobForm = false">Close</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
 
-    <v-dialog v-model="dialog6" persistent max-width="500px">
+    <v-dialog v-model="deleteForm" persistent max-width="500px">
         <v-card>
             <v-card-title>
                 <span class="headline" center>Delete a Global Variable</span>
@@ -314,15 +314,15 @@
                 <v-container grid-list-md>
                     <v-layout wrap>
                       <v-flex xs12 sm12 md12>
-                          <v-text-field id="var_name" label="Variable Name to be deleted" v-model="var_name"></v-text-field>
+                          <v-text-field id="var_name" label="Variable Name to be deleted" v-model="varName"></v-text-field>
                       </v-flex>
                     </v-layout>
                 </v-container>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="warning" @click.native="dialog6 = false" v-on:click="deleteGlobal(var_name)">Delete</v-btn>
-                <v-btn color="error" @click.native="dialog6 = false">Close</v-btn>
+                <v-btn color="warning" @click.native="deleteForm = false" v-on:click="deleteGlobal(varName)">Delete</v-btn>
+                <v-btn color="error" @click.native="deleteForm = false">Close</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -396,6 +396,15 @@ export default {
             miniVariant: false,
             fixed: false,
             nodeName: "",
+            strName :"",
+            strType :"",
+            strValue : "",
+            strRequired : false,
+            numName :"",
+            numType :"",
+            numValue : "",
+            numRequired : false,
+            varName : "",
             copyName: [],
             fileName: "",
             source: null,
@@ -418,7 +427,6 @@ export default {
                     }
                 ],
             nodes: [],
-            multiValues: [],
             noSelectionSnack: {
                 text: "Please select a skill first",
                 timeout: 6000,
@@ -435,11 +443,11 @@ export default {
             editDirection: 'top',
             isVisible: true,
             dialog: false,
-            dialog2: false,
-            dialog3: false,
-            dialog4: false,
+            globFrom: false,
+            strGlobForm: false,
+            numGlobForm: false,
             dialog5: false,
-            dialog6: false,
+            deleteForm: false,
             fileDialog: false,
             selectedNode: null,
             rules: [],
@@ -526,48 +534,42 @@ export default {
             }
             fr.readAsText(file);
         },
-        addStringGlobal: function(var_name, var_type, var_value, var_required)
+        addStringGlobal: function(name, type, value, required)
         {
-          controller.addStringGlobal(var_name, var_type, var_value, var_required);
-          var_name ="";
-          var_type ="";
-          var_value = "";
-          var_required = false;
+          controller.addStringGlobal(name, type, value, required);
+          this.strName ="";
+          this.strType ="";
+          this.strValue = "";
+          this.strRequired = false;
         },
-        updateStringGlobal: function(var_name, var_type, var_value, var_required)
+        updateStringGlobal: function(name, type, value, required)
         {
-          controller.updateStringGlobal(var_name, var_type, var_value, var_required);
-          var_name ="";
-          var_type ="";
-          var_value = "";
-          var_required = false;
+          controller.updateStringGlobal(name, type, value, required);
+          this.strName ="";
+          this.strType ="";
+          this.strValue = "";
+          this.strRequired = false;
         },
-        addNumberGlobal: function(var_name, var_type, var_value, var_required)
+        addNumberGlobal: function(name, type, value, required)
         {
-          controller.addStringGlobal(var_name, var_type, var_value, var_required);
-          var_name ="";
-          var_type ="";
-          var_value = "";
-          var_required = false;
+          controller.addNumberGlobal(name, type, value, required);
+          this.numName ="";
+          this.numType ="";
+          this.numValue = "";
+          this.numRequired = false;
         },
-        updateNumberGlobal: function(var_name, var_type, var_value, var_required)
+        updateNumberGlobal: function(name, type, value, required)
         {
-          controller.updateStringGlobal(var_name, var_type, var_value, var_required);
-          var_name ="";
-          var_type ="";
-          var_value = "";
-          var_required = false;
+          controller.updateNumberGlobal(name, type, value, required);
+          this.numName ="";
+          this.numType ="";
+          this.numValue = "";
+          this.numRequired = false;
         },
-        addMultiValue: function(var_values)
+        deleteGlobal: function(name)
         {
-          this.multiValues.push(var_values);
-          this.var_values = '';
-        },
-        deleteGlobal: function(var_name)
-        {
-          console.log(var_name);
-          controller.deleteGlobal(var_name);
-          var_name ="";
+          controller.deleteGlobal(name);
+          this.varName = "";
         },
         addNode: function (nodeLabel) {
             controller.addNode(nodeLabel);
