@@ -1,14 +1,15 @@
-# devs101
 Source code for the devs101 skill tree maker.
 
-# Trii User Manual
 # A project by Devs101
 # Client: Mark-Anthony Fouché
 Christopher Njaravani
+
 Charles Claassen
+
 Dail Nathan Jonker
 # Contributions from:
 Dylan Draper
+
 Brendan Bath
 
 Trii is a skill tree editor, where a user can create, customize, test, import and export
